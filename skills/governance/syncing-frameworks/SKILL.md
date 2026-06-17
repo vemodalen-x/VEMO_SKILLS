@@ -70,8 +70,8 @@ Per target: `up-to-date` (pinned tag == latest upstream tag) / `behind` (newer t
 Present a table — **no changes made yet**:
 ```
 repo          pinned      upstream-latest   status     behind-by
-Wildmeerkat   v0.11.0     v0.11.0           up-to-date  —
-Wildraccoon   v0.2.0      v0.3.0            behind      1 tag / 4 commits
+framework-a   v0.11.0     v0.11.0           up-to-date  —
+framework-b   v0.2.0      v0.3.0            behind      1 tag / 4 commits
 ...
 ```
 For `behind` targets, fetch and summarize the upstream CHANGELOG entries between pinned and latest (via `gh api` or the
@@ -97,7 +97,7 @@ leave the gitlink + profile change staged. Mirror the transition into `flow_log.
 - Any submodule in `detached/dirty` state — reported, never silently bumped.
 
 ## Notes
-- **Difference from the single-upstream reference** (Wildpanda governance-sync): no `governance_template_boundary` file list, no per-file diff, no
+- **Difference from the single-upstream reference**: no `governance_template_boundary` file list, no per-file diff, no
   file-copy — the unit of sync is the **whole pinned submodule at a tag**, not individual template-owned files.
 - Reads the live remote, so it is correct across org migrations (e.g. a project whose frameworks are split across two
   organizations) without edits.

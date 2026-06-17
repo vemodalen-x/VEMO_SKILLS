@@ -2,16 +2,26 @@
   <strong>🇨🇳 中文</strong> | <a href="README.md">🇬🇧 English</a>
 </p>
 
+<p align="center">
+  <img src="assets/logo.svg" alt="VEMO_SKILLS logo" width="132">
+</p>
+
 <h1 align="center">VEMO_SKILLS · 共享 Skill 主仓</h1>
 
 <p align="center">
-  <strong>可复用、治理级 skill 主体的唯一来源——子模块引入、重新生成、用提示词调用。</strong>
+  <strong>面向公开使用的可复用 agent skill 主仓——克隆、绑定、用提示词调用。</strong>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-23_skills-0f766e?style=for-the-badge" alt="Skill catalog: 23 skills"></a>
+  <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
+</p>
+
+<p align="center">
+  <img src="assets/skill-flow.svg" alt="VEMO_SKILLS skill lifecycle flow">
 </p>
 
 ## 第一性 — 这个家为何存在
@@ -27,7 +37,7 @@
 - **以文档记录为准（A2）— 用不上：** 这个家**自己不记任务记录、不存接续状态**；它的耐久记录就是版本化的源码加 CHANGELOG，由记这些记录的项目去消费。
 
 **体系位置。** 它是七实体里的**共享 skill 家**——不是领域框架，而是每个消费项目重新生成 skill 时的唯一源头。作为共享机制，
-它受**框架0**（Wildmeerkat）治理。它提供的东西——单一源头的主体、身份解耦、靠提示词触发的几个治理元 skill（`syncing-frameworks` /
+它由消费方自己的治理框架和发布流程接管。它提供的东西——单一源头的主体、身份解耦、靠提示词触发的几个治理元 skill（`syncing-frameworks` /
 `contributing-framework-changes` / `publishing-skills`）、`publishing-deliverables` 里的 R1–R32 样式和 entry-doc 规则，
 还有框架式的版本管理——详见下文。
 
@@ -42,8 +52,8 @@
   `team_bootstrap` 的引用会指向那些兄弟仓。它们在**被纳入完整受治理项目时**才存在，独立使用并不需要。
 
 ## 目的（Purpose）
-为治理生态提供通用、由模板托管的 **skill 主体**（由 Framework 0 — Wildmeerkat — 治理）。它是可复用 skill 的唯一来源；
-消费方项目以子模块方式引入并重新生成工作副本。与治理框架一样解耦：**通用机制与规则在这里；项目特定取值在业务仓
+为可复用 agent workflow 提供通用、由模板托管的 **skill 主体**。它是可复用 skill 的唯一来源；
+消费方项目以子模块或 clone 方式引入并重新生成工作副本。与治理框架一样解耦：**通用机制与规则在这里；项目特定取值在业务仓
 实例**（`project_profile.yaml`）里，运行时读取。面向为新项目接线的工程师，以及任何想用自然语言提示词同步或贡献治理框架的人。
 
 ## 快速上手（Quickstart）
@@ -64,8 +74,16 @@ python3 bin/vemo-skills score /path/to/another/skill-home
 ```
 
 完整版本阈值是 **9.5/10**。评分器会检查目录一致性、frontmatter、命名、引用、重新生成绑定、版本发布、
-公开文档、安全解耦、可执行验证和 attribution governance。基线与最终报告见
-`docs/ASSESSMENT_WILDSKILLS.md` 与 `docs/ASSESSMENT_VEMO_SKILLS.md`。
+公开文档、安全解耦、可执行验证和 attribution governance。可执行 eval 会把当前报告写到 `eval/out/report.json`。
+
+## 可视化地图（Visual map）
+
+<p align="center">
+  <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
+</p>
+
+本仓刻意保持小而可读：23 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
+可选引用模块放在同目录 `references/` 下。
 
 ## 布局（Layout）
 ```
@@ -75,10 +93,10 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 ```
 类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
 类目是功能分组，不是框架仓。
-- `orchestration/` — Framework 0（Wildmeerkat）skill：`breaking-down-prds`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
+- `orchestration/` — 阶段、交付和运营类 skill：`breaking-down-prds`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
 - `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`。
 - `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
-- `code/` — Framework 4（Wildpanda）代码/部署域 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`。
+- `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`。
 - `visualization/` — pipeline / 结果可视化 skill：`visualizing-processing-pipelines`（携带 `references/scripts/` 下的 numpy+opencv builder 与可直接运行的 `references/examples/` demo）。
 
 ## Skill 目录（Skill Catalog）
@@ -212,13 +230,13 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 （迁移到更新的治理规则）则留给消费方**自己的用户版本门**；这个 skill 从不自动升级。
 
 ### 贡献 / PR——把框架改进推回上游（任何贡献者）
-> "把我对 xxx_spec 的改进 PR 回上游" · "贡献回 Wildpanda" · "contribute this framework change" · "open a framework PR"
+> "把我对 xxx_spec 的改进 PR 回上游" · "贡献回上游框架" · "contribute this framework change" · "open a framework PR"
 
 `contributing-framework-changes` 探测你对目标仓的写权限，再走对应的**对等**路径——**无需配置，两条路都不算降级**：
 - **路径 A（你有 push 权限）** → 把一个 `contrib/*` 分支推到该仓，开一个**仓内 PR**。
 - **路径 B（你没有）** → 用 `gh repo fork` 派生该仓，推到你的 fork，开一个**跨仓 PR**。
 
-无论哪条，你都会得到一个针对框架默认分支的 PR。外部贡献者向自己并不拥有的框架（如 Wildpanda）发 PR，是**头等情形**，
+无论哪条，你都会得到一个针对框架默认分支的 PR。外部贡献者向自己并不拥有的框架发 PR，是**头等情形**，
 不是边角回退——复制提示词即可。
 
 ### 公告——为新注册的 skill 庆祝（发布后通知）

@@ -2,16 +2,26 @@
   <a href="README_zh.md">🇨🇳 中文</a> | <strong>🇬🇧 English</strong>
 </p>
 
+<p align="center">
+  <img src="assets/logo.svg" alt="VEMO_SKILLS logo" width="132">
+</p>
+
 <h1 align="center">VEMO_SKILLS · Shared Skill Home</h1>
 
 <p align="center">
-  <strong>One source of truth for reusable, governance-grade skill bodies — submodule it, regenerate, use by prompt.</strong>
+  <strong>A public, reusable skill hub for agent workflows — clone it, bind it, use it by prompt.</strong>
 </p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-23_skills-0f766e?style=for-the-badge" alt="Skill catalog: 23 skills"></a>
+  <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
+</p>
+
+<p align="center">
+  <img src="assets/skill-flow.svg" alt="VEMO_SKILLS skill lifecycle flow">
 </p>
 
 ## First Principles — what this home is *for*
@@ -33,8 +43,9 @@ two of the ecosystem's axioms are **n/a** here; see Framework 0 `charter_spec`):
   record is its versioned source + CHANGELOG, consumed by projects that own the ledger.
 
 **Where it sits.** It is the **shared skill home** among the seven governed entities — not a domain framework, but the
-single source every consuming project regenerates skills from. Governed by **Framework 0** (Wildmeerkat) as shared
-mechanism. The mechanics — single-source bodies, identity-decoupling, prompt-driven governance-meta skills
+single source every consuming project regenerates skills from. It is designed to be governed by the consumer's own
+framework and release process as a shared mechanism. The mechanics — single-source bodies, identity-decoupling,
+prompt-driven governance-meta skills
 (`syncing-frameworks` / `contributing-framework-changes` / `publishing-skills`), the R1–R32 style/entry-doc rules in
 `publishing-deliverables`, and framework-style versioning — are detailed below.
 
@@ -52,8 +63,8 @@ This README reads in two postures:
   into a full governed project**, not required for standalone use.
 
 ## Purpose
-Generic, template-owned **skill bodies** for the governance ecosystem (Framework 0 — Wildmeerkat — governed). It is
-the single source of truth for reusable skills; a consuming project submodules it and regenerates working copies.
+Generic, template-owned **skill bodies** for reusable agent workflows. It is the single source of truth for reusable
+skills; a consuming project submodules or clones it and regenerates working copies.
 Decoupled like the governance frameworks: **generic mechanism + rules live here; project-specific values live in the
 business-repo instance** (`project_profile.yaml`) and are read at runtime. For engineers wiring a new project, and for
 anyone who wants to sync or contribute governance frameworks via natural-language prompts.
@@ -76,8 +87,17 @@ python3 bin/vemo-skills score /path/to/another/skill-home
 ```
 
 The release threshold is **9.5/10**. The scorer checks catalog parity, frontmatter, naming, references, regen binding,
-version hygiene, public docs, security decoupling, executable verification, and attribution governance. Baseline and
-final reports live in `docs/ASSESSMENT_WILDSKILLS.md` and `docs/ASSESSMENT_VEMO_SKILLS.md`.
+version hygiene, public docs, security decoupling, executable verification, and attribution governance. The executable
+eval writes its current report to `eval/out/report.json`.
+
+## Visual map
+
+<p align="center">
+  <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
+</p>
+
+The repository is intentionally small and inspectable: 23 skills across five functional categories, with each
+`SKILL.md` carrying its own frontmatter and optional `references/` folder.
 
 ## Layout
 ```
@@ -87,10 +107,10 @@ skills/<category>/<name>/         # per functional category (skill_spec §9); ca
 ```
 Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
 `CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
-- `orchestration/` — Framework 0 (Wildmeerkat) skills: `breaking-down-prds`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
+- `orchestration/` — stage, delivery, and operations skills: `breaking-down-prds`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
 - `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`.
 - `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
-- `code/` — Framework 4 (Wildpanda) code / deploy-domain skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`.
+- `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`.
 - `visualization/` — pipeline / result visualization skills: `visualizing-processing-pipelines` (carries a `references/scripts/` numpy+opencv builder + a runnable `references/examples/` demo).
 
 ## Skill Catalog
@@ -235,7 +255,7 @@ works for any read-only user. **Applying** a pin bump (moving onto newer governa
 **own user version gate**; the skill never auto-updates.
 
 ### Contribute / PR — push a framework improvement upstream (any contributor)
-> "把我对 xxx_spec 的改进 PR 回上游" · "贡献回 Wildpanda" · "contribute this framework change" · "open a framework PR"
+> "把我对 xxx_spec 的改进 PR 回上游" · "贡献回上游框架" · "contribute this framework change" · "open a framework PR"
 
 `contributing-framework-changes` probes your write access to the target repo and takes the matching **peer** path — **no
 configuration, neither path a downgrade**:
@@ -243,7 +263,7 @@ configuration, neither path a downgrade**:
 - **Path B (you do not)** → it `gh repo fork`s the repo, pushes to your fork, and opens a **cross-repo PR**.
 
 Either way you get a PR against the framework's default branch. An external contributor PR-ing to a framework they
-don't own (e.g. Wildpanda) is a **first-class case**, not an edge fallback — copy the prompt and it works.
+do not own is a **first-class case**, not an edge fallback — copy the prompt and it works.
 
 ### Announce — celebrate newly-registered skills (post-release notify)
 > "公告一下新 skill" · "announce the new skills" · "发上新公告" · "skill 上新通知"

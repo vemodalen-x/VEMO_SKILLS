@@ -1,56 +1,16 @@
-# VEMO_SKILLS · Contribution Ledger (hub-wide, identity-free)
+# VEMO_SKILLS · Public contribution ledger
 #
-# The single cross-skill cumulative tally that the `skill-announce` ranking table (🏆 累计贡献排行榜) reads.
-# This is a HUB fact: it travels with the repo and is reusable by any consumer. It is IDENTITY-FREE by design —
-# it keys by a stable contributor LABEL, never an org-specific id (open_id / account). The label→open_id map for
-# @-mentions lives in the CONSUMING PROJECT's instance (`skill_hub.announce.contributor_open_id`), not here, so the
-# hub ledger stays decoupled (skill_spec §9).
+# This ledger is identity-light by design. It records public contribution labels
+# that can travel with the repository without exposing chat ids, account ids,
+# private names, or organization-specific handles. A consuming project may map
+# these labels to local identities in its own private instance config.
 #
-# Each entry: a contributor label + their list of contributions (item + source-type + date).
-#   source: feishu | pr   (how the contribution arrived; an org-neutral channel type, not an id)
-# `skill-announce` aggregates count = len(contributions) per contributor to rank the leaderboard.
+# Each entry: a contributor label plus contribution items.
+# source: project | pr
 
 contributors:
-  - label: 李程
+  - label: VEMO_SKILLS Authors
     contributions:
-      - item: cpp-code-review          # skill
-        source: feishu
-        date: 2026-06-10
-      - item: cpp-perf-optimize        # skill
-        source: feishu
-        date: 2026-06-10
-  - label: 张文政
-    contributions:
-      - item: embedded-cpp-rules       # 11-rule 规约 list → shared references module
-        source: feishu
-        date: 2026-06-10
-  - label: Dong Runze
-    contributions:
-      - item: naming-skills            # skill naming governance (rules + validator)
-        source: feishu
-        date: 2026-06-11
-  - label: 张帆
-    contributions:
-      - item: selecting-mobile-gpu-convolutions   # mobile-GPU conv-selection heuristics (3 measured rules)
-        source: feishu
-        date: 2026-06-11
-  - label: Shen Shanlan
-    contributions:
-      - item: polishing-chinese-prose   # Chinese-prose bureaucratese rules (R33–R38) from user "不是人话" feedback
-        source: feishu
-        date: 2026-06-11
-      - item: rendering-html-eval-reports   # idea: self-contained HTML eval-report skill (user-originated)
-        source: feishu
-        date: 2026-06-11
-      - item: validating-on-device-inference   # idea: on-device acceptance methodology skill (user-pointed, device-window)
-        source: feishu
-        date: 2026-06-12
-      - item: attending-group-mentions   # idea: reactive group-chat attendance skill (user-pointed)
-        source: feishu
-        date: 2026-06-12
-      - item: packaging-device-sdk-releases   # idea: mobile SDK release-packaging skill (user-pointed, first release)
-        source: feishu
-        date: 2026-06-12
-      - item: bumping-library-versions   # idea: split version management into its own skill (user-pointed)
-        source: feishu
-        date: 2026-06-12
+      - item: initial-public-skill-home
+        source: project
+        date: 2026-06-17

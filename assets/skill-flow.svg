@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="360" viewBox="0 0 1120 360" role="img" aria-labelledby="title desc">
+  <title id="title">VEMO_SKILLS lifecycle flow</title>
+  <desc id="desc">A left to right diagram showing authoring, registering, binding, using, syncing, and contributing skills.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <style>
+      .label{font:600 18px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}
+      .body{font:14px Inter,Segoe UI,Arial,sans-serif;fill:#475569}
+      .box{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.5}
+      .accent1{fill:#DBEAFE}
+      .accent2{fill:#CCFBF1}
+      .accent3{fill:#DCFCE7}
+      .accent4{fill:#FEF3C7}
+      .line{stroke:#334155;stroke-width:2.4;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1120" height="360" rx="24" fill="#F8FAFC"/>
+  <text x="42" y="48" class="label">Skill lifecycle</text>
+  <text x="42" y="76" class="body">One source, regenerated working copies, explicit user adoption.</text>
+  <g transform="translate(42 118)">
+    <rect class="box" x="0" y="0" width="156" height="116" rx="8"/>
+    <rect class="accent1" x="16" y="16" width="42" height="42" rx="8"/>
+    <text x="72" y="38" class="label">Author</text>
+    <text x="16" y="76" class="body">Write a generic</text>
+    <text x="16" y="96" class="body">SKILL.md body</text>
+  </g>
+  <path class="line" d="M208 176h62"/>
+  <g transform="translate(282 118)">
+    <rect class="box" x="0" y="0" width="170" height="116" rx="8"/>
+    <rect class="accent2" x="16" y="16" width="42" height="42" rx="8"/>
+    <text x="72" y="38" class="label">Register</text>
+    <text x="16" y="76" class="body">Place under</text>
+    <text x="16" y="96" class="body">skills/category/name</text>
+  </g>
+  <path class="line" d="M464 176h62"/>
+  <g transform="translate(538 118)">
+    <rect class="box" x="0" y="0" width="168" height="116" rx="8"/>
+    <rect class="accent3" x="16" y="16" width="42" height="42" rx="8"/>
+    <text x="72" y="38" class="label">Release</text>
+    <text x="16" y="76" class="body">Tag the hub and</text>
+    <text x="16" y="96" class="body">pin by version</text>
+  </g>
+  <path class="line" d="M718 176h62"/>
+  <g transform="translate(792 118)">
+    <rect class="box" x="0" y="0" width="158" height="116" rx="8"/>
+    <rect class="accent4" x="16" y="16" width="42" height="42" rx="8"/>
+    <text x="72" y="38" class="label">Bind</text>
+    <text x="16" y="76" class="body">Regenerate to</text>
+    <text x="16" y="96" class="body">.claude/skills</text>
+  </g>
+  <path class="line" d="M962 176h58"/>
+  <g transform="translate(1020 139)">
+    <circle cx="40" cy="40" r="38" fill="#0F766E"/>
+    <text x="40" y="36" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">Use</text>
+    <text x="40" y="56" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" fill="#CCFBF1">by prompt</text>
+  </g>
+  <g transform="translate(300 272)">
+    <path d="M0 0h540" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 8" fill="none"/>
+    <text x="0" y="34" class="body">syncing-frameworks reports upstream changes; contributing-framework-changes opens PRs back to the source</text>
+  </g>
+</svg>

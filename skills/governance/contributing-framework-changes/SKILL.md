@@ -126,6 +126,6 @@ B8. **Cleanup**: remove the temporary `fork` remote (`git -C <path> remote remov
 - Contributor `Co-Authored-By` is mandatory.
 - **No identity is hardcoded**: owner/repo come from the remote, the contributor from `gh api user`, the path from a
   live permission probe. The maintainer path (A) and the external-contributor path (B) are **equal first-class cases**.
-- **Difference from the single-upstream reference** (Wildpanda governance-contribute): no temp-clone, no file-copy —
+- **Difference from the single-upstream reference**: no temp-clone, no file-copy —
   the change is already in the submodule clone; we branch + PR it in place. The fork path is preserved as a peer for
   contributors without write access, not as a fallback.

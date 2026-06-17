@@ -1,15 +1,31 @@
-# Critique log
+# Public Release Review Log
 
-VEMO_SKILLS was scored in the same spirit as VEMO: identify the objection, ship the fix, then rerun the check.
+This log records the public-release review for VEMO_SKILLS v1.0.0.
 
-## Round 1 — "Is this only a copied skill tree?"
-Response: added `bin/vemo-skills`, `tools/vemo_skills_check.py`, and `eval/run.py`. The repo can now prove catalog
-parity, reference integrity, release hygiene, and security decoupling with executable checks.
+## Review Scope
 
-## Round 2 — "Can it be uploaded as a standalone repo?"
-Response: added public docs, security notes, contribution guide, roadmap, `.gitignore`, a release task record, and
-identity cleanup. The public surface no longer depends on local paths or private repository names.
+- Root public docs: `README.md`, `README_zh.md`, `CHANGELOG.md`, `CONTRIBUTING.md`,
+  `SECURITY.md`, `ROADMAP.md`, `THIRD-PARTY-NOTICES.md`, and `CONVENTIONS.md`.
+- Release tooling: `bin/vemo-skills`, `tools/vemo_skills_check.py`, and `eval/run.py`.
+- Skill bodies under `skills/**/SKILL.md` and public reference modules under
+  `skills/**/references/**`.
+- Public release task record under `tasks/`.
 
-## Round 3 — "Where is the before/after evidence?"
-Response: recorded the source Wildskills baseline in `ASSESSMENT_WILDSKILLS.md` and the final target score in
-`ASSESSMENT_VEMO_SKILLS.md`. Both use the same scorer.
+## Findings Addressed
+
+- Removed internal baseline report references from public docs and checker requirements.
+- Replaced private contributor names and chat-source labels with an identity-light public ledger.
+- Removed internal framework names and local source-path references from the public release surface.
+- Added repository-local visuals so README images render from relative paths.
+- Kept third-party attribution focused on external sources and license scope.
+
+## Release Criteria
+
+- `python3 bin/vemo-skills selfcheck` passes.
+- `python3 bin/vemo-skills eval` passes.
+- Sensitive-reference scans find no credentials, private paths, internal source names, or old source-baseline markers.
+- `README.md` and `README_zh.md` include the same skill catalog tokens.
+
+## Status
+
+Ready for public v1.0.0 upload after the final verification commands pass.

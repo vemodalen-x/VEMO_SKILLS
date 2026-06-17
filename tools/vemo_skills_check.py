@@ -47,6 +47,11 @@ PRIVATE_PATTERNS = [
     re.compile("/" + "home" + r"/[A-Za-z0-9_.-]+"),
     re.compile("/" + "media" + r"/[A-Za-z0-9_.-]+"),
     re.compile("Claude" + "Test"),
+    re.compile("Wild" + r"(?:skills|panda|meerkat)", re.I),
+    re.compile("b7b" + "1246f" + r"(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", re.I),
+    re.compile("Shen" + r"\s+" + "Shan" + "lan", re.I),
+    re.compile("Dong" + r"\s+" + "Run" + "ze", re.I),
+    re.compile("李" + "程|张" + "文政|张" + "帆"),
     re.compile("junxian" + "wusg", re.I),
     re.compile("BST" + "-AII"),
 ]
@@ -267,7 +272,6 @@ def check_public_docs(root: Path):
     needed = [
         "README.md", "README_zh.md", "LICENSE", "CONTRIBUTING.md", "SECURITY.md",
         "ROADMAP.md", "docs/INDEX.md", "docs/QUICKSTART.md", "docs/CRITIQUE_LOG.md",
-        "docs/ASSESSMENT_WILDSKILLS.md", "docs/ASSESSMENT_VEMO_SKILLS.md",
     ]
     missing = [p for p in needed if not (root / p).exists()]
     ok = not missing

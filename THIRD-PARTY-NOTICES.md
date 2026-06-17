@@ -12,7 +12,7 @@ of the permissive and Creative-Commons sources in one auditable place.
 | [markmap](https://github.com/markmap/markmap) (markmap-js) | MIT | `skills/orchestration/visualizing-governance` | interactive-overview rendering tooling (not text) |
 | [tflite](https://pypi.org/project/tflite/) (TFLite flatbuffer schema, Python bindings) | Apache-2.0 | `skills/code/gating-tflite-op-envelopes/references/envelope_gate.py` | invoked library (not vendored) — the generated `tflite.Model` schema classes parse the flatbuffer for op codes + `min_runtime_version`; same convention as the markmap row |
 | [zh-style-guide](https://github.com/yikeke/zh-style-guide) (yikeke) | MIT | `skills/governance/polishing-chinese-prose` | Chinese-prose checks (R14–R20 翻译腔), Vale-style |
-| 余光中《中文的常态与变态》 (essay) | (idea cited as fact; not reproduced) | `skills/governance/polishing-chinese-prose` (R33 文牍腔) | one theoretical framing only — "名词化是恶性西化，中文活力在动词与短句"; the R33–R39 rules themselves derive from team user-feedback, not this essay |
+| 余光中《中文的常态与变态》 (essay) | (idea cited as fact; not reproduced) | `skills/governance/polishing-chinese-prose` (R33 文牍腔) | one theoretical framing only — the R33–R39 rules themselves are original project-authored checklist text, not reproduced from the essay |
 | Microsoft Style Guide — "Scannable content" | CC-BY-4.0 | `skills/orchestration/publishing-deliverables/references/technical-report-style.md` (R21–R28) | scannability thresholds |
 | Google developer documentation style guidance | (dev-docs guidance) | `technical-report-style.md` (R26) | table-vs-list container rule |
 | [arc42](https://github.com/arc42/arc42-template) (arc42-template) | **CC-BY-SA** | `skills/research/structuring-solution-docs/references/arc42-mapping.md` | section skeleton (S1–S12) transcribed as a checklist |
@@ -28,11 +28,10 @@ courtesy. VEMO_SKILLS' primary license (MIT) is unaffected.
 
 ## polishing-chinese-prose bureaucratese band (R33–R39) — scope note
 
-The 文牍腔 band (R33–R39) in the `polishing-chinese-prose` skill is **original text authored here**, distilled from **the team's own
-user-feedback** (the user's repeated "不是人话" critiques, with the actual coined-abbreviation examples 盘验/坐实/折入/
-入账派工). 余光中's essay《中文的常态与变态》is cited for **one theoretical framing only** (nominalization as malign
-Westernization — the R33 rationale); the concrete rules, the replacement table, and the "念出来测试" criterion are
-**not** from the essay. Two further Chinese-style guides were reviewed for this band —
+The 文牍腔 band (R33–R39) in the `polishing-chinese-prose` skill is **original text authored here** as a practical
+plain-language checklist. 余光中's essay《中文的常态与变态》is cited for **one theoretical framing only**; the concrete
+rules, replacement examples, and read-aloud test are **not** from the essay. Two further Chinese-style guides were
+reviewed for this band —
 [richardchien/chinese-writing-style-guide](https://github.com/richardchien/chinese-writing-style-guide) (no LICENSE)
 and [RightCapitalHQ/chinese-style-guide](https://github.com/RightCapitalHQ/chinese-style-guide) (MIT) — but they
 cover mostly spacing/punctuation/terminology, **not bureaucratese**; **no expression from either was used**, so neither

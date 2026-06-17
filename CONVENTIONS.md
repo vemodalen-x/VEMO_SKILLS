@@ -1,7 +1,7 @@
 # VEMO_SKILLS · Home Conventions
 
 > **Operating procedure** of this shared skill home. This doc states the *home-local procedure*; the *rules* it
-> implements live in Framework 0 `Wildmeerkat/master_spec/skill_spec/skill_spec.md`. **Consolidate-with-pointers,
+> implements live in the consumer's governing skill specification. **Consolidate-with-pointers,
 > not duplication** — where a rule is owned by `skill_spec`, this doc points at it rather than restating it.
 > Adoption (a skill entering a project's toolset) is **out of scope** here and stays a user-consent decision
 > (skill_spec §6).
@@ -109,7 +109,7 @@ conventions (the home's own responsibility); stages 2–3 are pointers to `team_
   **product-style front matter** block above the governed sections: a centered title + one-line tagline, **static
   badges**, and **Why / Features** sections, plus a **"reading this repo two ways"** standalone-vs-governed note.
 - **This is a home-local convention, NOT a generic entry-doc rule.** It deliberately does **not** live in
-  `readme-style.md` (R29–R32): the internal framework READMEs (Wildmeerkat, etc.) are orientation docs, not product
+  `readme-style.md` (R29–R32): framework READMEs are orientation docs, not product
   pages, and must not inherit a product-framing obligation. The convention is scoped to this home only.
 - **Identity red line on badges (skill_spec §9 / §6 above):** badges MUST be **static or repo-relative** — a license
   badge linking to the in-repo [`LICENSE`](LICENSE), a version badge pointing at [`VERSION`](VERSION), a changelog

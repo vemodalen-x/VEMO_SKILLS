@@ -1,7 +1,7 @@
 ---
 name: selecting-mobile-gpu-convolutions
 category: code
-description: Decide between standard and separable (depthwise+pointwise) convolutions for mobile-GPU (OpenCL / TFLite delegate) deployment using three measured heuristics — first-frame time tracks OpenCL kernel count (not FLOPs), warmup gain tracks arithmetic intensity, steady-state time tracks FLOPs ÷ GPU utilization. Use at model-design time to narrow conv choices and on-device to confirm. Read-only advisory — heuristics from one denoising project; verify on the target runtime. Reversal conditions (large channels / kernel fusion) apply.
+description: Decide between standard and separable (depthwise+pointwise) convolutions for mobile-GPU (OpenCL / TFLite delegate) deployment using three measured heuristics — first-frame time tracks OpenCL kernel count (not FLOPs), warmup gain tracks arithmetic intensity, steady-state time tracks FLOPs ÷ GPU utilization. Use at model-design time to narrow conv choices and on-device to confirm. Read-only advisory — heuristics from one anonymized field benchmark; verify on the target runtime. Reversal conditions (large channels / kernel fusion) apply.
 ---
 
 # Selecting Mobile-GPU Convolutions
@@ -10,10 +10,10 @@ Choose between **standard** and **separable (depthwise + pointwise)** convolutio
 (OpenCL / TFLite GPU delegate), using three measured heuristics about what actually drives on-device latency. This is
 **read-only advisory** — it dispenses decision rules; it does not edit models or code.
 
-> **Heuristics, not laws.** The three rules below are derived from **one** foreign denoising project, **two** models,
-> **one** mobile GPU / runtime 〔实测·张帆·dn_bayer_71 (standard conv) vs PMRIDv10 (separable)〕. They are a
+> **Heuristics, not laws.** The three rules below are derived from **one** anonymized field benchmark, **two** models,
+> and **one** mobile GPU / runtime. They are a
 > **design-time heuristic to narrow choices**, NOT a guarantee for your model / GPU / runtime. **The portable part is
-> the proportionality; every concrete number is evidence, not fact** — each carries its source tag. **Always confirm on
+> the proportionality; every concrete number is evidence, not fact** — each carries an anonymized evidence tag. **Always confirm on
 > the target device** (see Checklist). Reversal conditions (large channels / kernel fusion) can flip the conclusion —
 > see *When this holds*.
 
@@ -29,22 +29,22 @@ Choose between **standard** and **separable (depthwise + pointwise)** convolutio
 OpenCL kernels are JIT-compiled on first execution, so first-frame cost tracks **how many kernels** compile.
 A separable conv splits each layer into **DW + PW = 2 kernels** (unless the runtime fuses them), roughly doubling the
 first-frame compile overhead.
-- 〔实测·张帆·去噪项目〕standard conv (dn_bayer_71) ~18 kernels / **150 ms** first-frame (1,164M FLOPs) vs separable
-  (PMRIDv10) ~35 kernels / **176 ms** (830M FLOPs). **Fewer FLOPs, yet slower first-frame** — kernel count, not FLOPs.
+- 〔measured field benchmark〕standard-conv model: ~18 kernels / **150 ms** first-frame (1,164M FLOPs) vs separable-conv
+  model: ~35 kernels / **176 ms** (830M FLOPs). **Fewer FLOPs, yet slower first-frame** — kernel count, not FLOPs.
 
 ### R2 — Warmup gain ∝ arithmetic intensity
 How much a model speeds up after warmup tracks whether its dominant layers are **compute-bound** (high arithmetic
 intensity → caching weights + running the shader hot pays off) or **memory-bound** (low AI, e.g. depthwise → the
 bottleneck is bandwidth, which warmup cannot fix).
-- 〔实测·张帆·去噪项目〕standard-conv main layers AI > 17.5 → warmup **−41%**; depthwise AI ≈ 4.5 → only **−19%**.
+- 〔measured field benchmark〕standard-conv main layers AI > 17.5 → warmup **−41%**; depthwise AI ≈ 4.5 → only **−19%**.
 
 ### R3 — Steady-state time ∝ FLOPs ÷ GPU utilization (equivalent compute) — stronger predictor than FLOPs
 Raw FLOPs predict steady-state latency poorly; **FLOPs ÷ GPU-utilization** ("equivalent compute") predicts it better,
 because a structure that keeps the GPU busy does more useful work per FLOP.
-- 〔实测·张帆·去噪项目〕dn_bayer_71 has **1.4×** the FLOPs of PMRIDv10 (1,164M vs 830M) yet runs **1.6× faster** in
+- 〔measured field benchmark〕the standard-conv model has **1.4×** the FLOPs of the separable-conv model (1,164M vs 830M) yet runs **1.6× faster** in
   steady state (**89 ms vs 142 ms**). Equivalent compute: 1,164M / ~30% util = 3,880M vs 830M / ~10% util = 8,300M.
 - **Honesty (source caveat)**: the measured 142/89 ≈ 1.60× is only **direction-consistent** with the
-  equivalent-compute ratio 8,300/3,880 ≈ 2.1× — "the difference comes from PMRIDv10's full-resolution standard-conv
+  equivalent-compute ratio 8,300/3,880 ≈ 2.1× — the separable model's full-resolution standard-conv
   layer's compensating contribution." Treat equivalent compute as a **direction indicator, not an exact multiplier**.
 
 ### Bottom line
@@ -76,6 +76,6 @@ the on-device cost predictor.**
   SIMD / cache / multithread); **this** skill chooses **model-architecture convolutions** for the **GPU** (OpenCL /
   TFLite delegate) at design / deploy time. Different compute target, different artifact — "optimize an already-chosen
   C++ hot path → `optimizing-cpp-performance`; decide standard vs separable conv → here."
-- **Decoupling (skill_spec §9)**: the numbers are a foreign project's measured **evidence**, not facts about any
+- **Decoupling (skill_spec §9)**: the numbers are anonymized measured **evidence**, not facts about any
   consuming project; this body carries **zero hardcoded project / identity values**. The target runtime, GPU, and
   channel widths are confirmed by the consuming project at runtime — this body assumes none of them.

@@ -33,7 +33,7 @@ An entry-doc `README.md` SHOULD contain these sections (a missing one is a **war
   only advisorily. The exception is named here so it is visible, not silent.
 
 ## Bilingual pair (R32)
-An entry doc ships as a **language pair**, not a single file (reference convention: external Wildpanda v1.8.0):
+An entry doc ships as a **language pair**, not a single file (reference convention: this repository's bilingual README pair):
 - **`README.md` (English) + `README_zh.md` (Chinese), same directory.** Both files MUST exist.
 - **Bidirectional language switcher** at top-of-file. The current language is bold; the other is a link to its file:
   - EN side: `<a href="README_zh.md">🇨🇳 中文</a> | <strong>🇬🇧 English</strong>`
@@ -44,7 +44,7 @@ An entry doc ships as a **language pair**, not a single file (reference conventi
   a tiered language-policy ADR + its bilingual-README provision): **the English README is canonical; English wins on
   drift.** R32 governs only the *structure* of the pair; do not restate the policy, and do not hardcode an ADR number
   (instance value — `skill_spec` §9 decoupling).
-- The flag glyphs (🇨🇳/🇬🇧) are reference-convention content reproduced from Wildpanda — keep parity.
+- The flag glyphs (🇨🇳/🇬🇧) are part of this repository's bilingual README convention — keep parity.
 
 ## Machine check
 - `R29`: scan the README's headings; any required section absent → **warning** (list the missing section).
