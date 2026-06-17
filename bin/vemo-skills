@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+"""vemo-skills: CLI for the VEMO_SKILLS skill home."""
+
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CHECK = os.path.join(ROOT, "tools", "vemo_skills_check.py")
+
+HELP = """vemo-skills <command>
+  status                         repository summary
+  catalog                        list registered <category>/<skill> tokens
+  score [path]                   score this repo, or another skill home
+  selfcheck                      score + fail if below release threshold
+  eval                           run executable conformance suite
+  bind [--dest .claude/skills]    regenerate Claude Code skill copies
+"""
+
+
+def run_check(*args: str) -> int:
+    return subprocess.run(["python3", CHECK, *args]).returncode
+
+
+def status() -> int:
+    version = "unknown"
+    try:
+        version = open(os.path.join(ROOT, "VERSION"), encoding="utf-8").read().strip()
+    except OSError:
+        pass
+    print("VEMO_SKILLS status")
+    print(f"  root    : {ROOT}")
+    print(f"  version : {version}")
+    print("  command : vemo-skills selfcheck")
+    return run_check("--root", ROOT, "score")
+
+
+def main(argv=None) -> int:
+    args = list(sys.argv[1:] if argv is None else argv)
+    if not args or args[0] in ("help", "-h", "--help"):
+        print(HELP)
+        return 0
+    cmd = args.pop(0)
+    if cmd == "status":
+        return status()
+    if cmd == "catalog":
+        return run_check("--root", ROOT, "catalog")
+    if cmd == "score":
+        target = args[0] if args else ROOT
+        return run_check("--root", target, "score")
+    if cmd == "selfcheck":
+        return run_check("--root", ROOT, "selfcheck")
+    if cmd == "eval":
+        return subprocess.run(["python3", os.path.join(ROOT, "eval", "run.py")]).returncode
+    if cmd == "bind":
+        return run_check("--root", ROOT, "bind", *args)
+    print("unknown command:", cmd)
+    print(HELP)
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

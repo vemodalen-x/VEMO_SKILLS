@@ -1,0 +1,64 @@
+{
+  "passed": 11,
+  "total": 11,
+  "rate": 1.0,
+  "score": 10.0,
+  "threshold": 9.5,
+  "checks": [
+    {
+      "name": "score reaches release threshold",
+      "pass": true,
+      "got": "10.0"
+    },
+    {
+      "name": "catalog parity",
+      "pass": true,
+      "got": "23 skills; catalog parity clean"
+    },
+    {
+      "name": "frontmatter layout",
+      "pass": true,
+      "got": "23 SKILL.md files checked"
+    },
+    {
+      "name": "naming and descriptions",
+      "pass": true,
+      "got": "all hard naming rules pass"
+    },
+    {
+      "name": "reference integrity",
+      "pass": true,
+      "got": "reference paths resolve"
+    },
+    {
+      "name": "regen binding",
+      "pass": true,
+      "got": "docs=True cli=True sample_copy=True"
+    },
+    {
+      "name": "release hygiene",
+      "pass": true,
+      "got": "version=1.0.0 changelog=True gitignore=True task=True"
+    },
+    {
+      "name": "public docs",
+      "pass": true,
+      "got": "public docs complete"
+    },
+    {
+      "name": "security decoupling",
+      "pass": true,
+      "got": "no private paths/org identities/secrets"
+    },
+    {
+      "name": "attribution governance",
+      "pass": true,
+      "got": "attribution and governance docs present"
+    },
+    {
+      "name": "CLI catalog command",
+      "pass": true,
+      "got": "code=0 count=23"
+    }
+  ]
+}
