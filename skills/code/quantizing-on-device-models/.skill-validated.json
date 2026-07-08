@@ -1,0 +1,77 @@
+{
+  "skill_name": "quantizing-on-device-models",
+  "validated": true,
+  "tier": "lint",
+  "tier_meaning": "frontmatter + naming rules only; NOT a behavioral/trigger eval",
+  "validator": "tools/skill_creator.py",
+  "validator_sha": "2267c8eee4c30f09f3a2059d735637174a8eb036c13a57f5b3549bb6f00324af",
+  "timestamp": "2026-07-08T05:15:17Z",
+  "git_commit": "bd2edf1cdafba2274bab02f6560c4b37a7e7c751",
+  "checks": [
+    {
+      "rule": "SKILL.md present",
+      "pass": true,
+      "evidence": "found"
+    },
+    {
+      "rule": "frontmatter parses",
+      "pass": true,
+      "evidence": "4 keys"
+    },
+    {
+      "rule": "name present",
+      "pass": true,
+      "evidence": "quantizing-on-device-models"
+    },
+    {
+      "rule": "name charset (kebab)",
+      "pass": true,
+      "evidence": "quantizing-on-device-models"
+    },
+    {
+      "rule": "name <= 64 chars",
+      "pass": true,
+      "evidence": "len=27"
+    },
+    {
+      "rule": "name gerund-led (verb+ing)",
+      "pass": true,
+      "evidence": "quantizing"
+    },
+    {
+      "rule": "name == directory",
+      "pass": true,
+      "evidence": "name='quantizing-on-device-models' dir='quantizing-on-device-models'"
+    },
+    {
+      "rule": "category present",
+      "pass": true,
+      "evidence": "code"
+    },
+    {
+      "rule": "category == directory",
+      "pass": true,
+      "evidence": "category='code' dir='code'"
+    },
+    {
+      "rule": "description present",
+      "pass": true,
+      "evidence": "len=718"
+    },
+    {
+      "rule": "description <= 1024 chars",
+      "pass": true,
+      "evidence": "len=718"
+    },
+    {
+      "rule": "description no angle brackets",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "rule": "description has when-to-use cue",
+      "pass": true,
+      "evidence": "cue found"
+    }
+  ]
+}

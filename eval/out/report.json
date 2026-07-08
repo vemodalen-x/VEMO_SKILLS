@@ -13,12 +13,12 @@
     {
       "name": "catalog parity",
       "pass": true,
-      "got": "24 skills; catalog parity clean"
+      "got": "28 skills; catalog parity clean"
     },
     {
       "name": "frontmatter layout",
       "pass": true,
-      "got": "24 SKILL.md files checked"
+      "got": "28 SKILL.md files checked"
     },
     {
       "name": "naming and descriptions",
@@ -38,7 +38,7 @@
     {
       "name": "release hygiene",
       "pass": true,
-      "got": "version=1.1.0 changelog=True gitignore=True task=True"
+      "got": "version=1.2.0 changelog=True gitignore=True task=True"
     },
     {
       "name": "public docs",
@@ -68,7 +68,7 @@
     {
       "name": "CLI catalog command",
       "pass": true,
-      "got": "code=0 count=24"
+      "got": "code=0 count=28"
     }
   ]
 }
