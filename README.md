@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-23_skills-0f766e?style=for-the-badge" alt="Skill catalog: 23 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-24_skills-0f766e?style=for-the-badge" alt="Skill catalog: 24 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -108,7 +108,7 @@ skills/<category>/<name>/         # per functional category (skill_spec §9); ca
 Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
 `CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
 - `orchestration/` — stage, delivery, and operations skills: `breaking-down-prds`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
-- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`.
+- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
 - `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
 - `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`.
 - `visualization/` — pipeline / result visualization skills: `visualizing-processing-pipelines` (carries a `references/scripts/` numpy+opencv builder + a runnable `references/examples/` demo).
@@ -134,6 +134,7 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | governance | `governance/naming-skills` | validate a skill's name + description against the authoring naming rules (≤64 / charset / gerund / folder-match; desc what+when+keywords) | authoring / renaming / publishing a skill, or auditing the home | read-only validator; reports pass/fail, does not rename |
 | governance | `governance/announcing-framework-releases` | announce a **framework** version release as a Lark card (framework / old→new version / change-class / consumer-impact + optional 🏆 leaderboard, instance-gated) | after a framework release is tagged + push-verified | framework-update notify; confirm before send; group/maintainer instance-owned, repo-url runtime-resolved; leaderboard reuses the hub ledger + skill_hub maps |
 | governance | `governance/polishing-chinese-prose` | the canonical Chinese-prose authority — checkable rules in two bands (翻译腔 R14–R20 + 文牍腔 R33–R38) + EN→zh term table | authoring/reviewing Chinese deliverables, the README_zh mirror's fluency, or any Chinese agent reply | cited by name as the prose authority; 翻译腔 instance-activated, 文牍腔 agent-layer always-on |
+| governance | `governance/authoring-skills-with-evals` | author + eval-improve a skill via the repo's skill-creator harness (behavioral eval, trigger eval, train/test-split description tuning) | creating or revising a skill, or a description under/over-triggers | owns the eval loop; complements naming-skills + publishing-skills; validates and tunes, never adopts |
 | research | `research/challenging-assumptions` | adversarial design partner — challenge assumptions, apply mental models | thinking through an ambiguous / high-stakes decision | advisory; does not produce the deliverable |
 | research | `research/reviewing-decisions` | review decision records (MADR) for completeness (6-field floor + cross-model red-team) | the research-solution agent finalizes the solution_document | advisory |
 | research | `research/structuring-solution-docs` | arc42-style solution-doc scaffolding (structure-as-checkable-rules) | authoring the solution / design doc after the survey | structural aid |
@@ -315,6 +316,16 @@ The class set, threshold, caveat text, ladder/ablation values, and privacy polic
 committed to git**. Distinct from `publishing-deliverables` (which publishes a doc to the team wiki) — the two compose
 but are different functions.
 
+### Author a skill with evals: eval-driven authoring (create / revise / tune triggering)
+> "建一个带 eval 的 skill" · "author a skill with evals" · "skill 描述不触发" · "improve the skill description"
+
+`authoring-skills-with-evals` runs the eval-driven loop from Anthropic's official skill-creator, adapted to this
+home: **lint** the shape (`validate` writes `.skill-validated.json` with an honest `tier`), **measure** whether the
+description triggers (`trigger-eval`, tri-state; an infrastructure outage is reported *skipped*, never a false "no
+trigger"), and **optimize** the description with a **train/test split** so it cannot overfit the eval set
+(`describe-improve`). The behavioral layer complements the static release scorer; a skill is done only when it passes
+both. The two model-in-the-loop commands need the `claude` CLI and skip cleanly without it.
+
 ### Keyword triggers (中英对照)
 The trigger sub-table for the **Skill Catalog** above — the keywords that invoke each prompt-triggered skill (中英对照).
 | skill | 中文 | English |
@@ -325,6 +336,7 @@ The trigger sub-table for the **Skill Catalog** above — the keywords that invo
 | `announcing-skills` | skill 上新公告 · 公告新 skill · 上新通知 | announce new skills · skill release announcement |
 | `announcing-framework-releases` | 公告框架版本更新 · 框架版本公告 · 发框架升级公告 | announce framework release · framework version update · framework release announcement |
 | `naming-skills` | 校验 skill 命名 · skill 命名校验 · 命名规范检查 | name a skill · check skill naming · audit naming |
+| `authoring-skills-with-evals` | 建带 eval 的 skill · eval 驱动写 skill · skill 描述不触发 · 优化 skill 描述 | author a skill with evals · eval-driven skill authoring · description not triggering · improve skill description |
 | `reviewing-cpp-code` | C/C++ 代码检查 · 代码规范审查 | C/C++ code review · coding-standard check |
 | `optimizing-cpp-performance` | C/C++ 性能优化 · NEON 向量化 · cache 优化 | C/C++ perf optimize · NEON vectorize · cache optimization |
 | `selecting-mobile-gpu-convolutions` | 标准卷积还是可分离 · 移动 GPU 卷积选型 · 端侧卷积选择 | mobile GPU conv selection · standard vs separable conv · on-device conv choice |

@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-23_skills-0f766e?style=for-the-badge" alt="Skill catalog: 23 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-24_skills-0f766e?style=for-the-badge" alt="Skill catalog: 24 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -94,7 +94,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
 类目是功能分组，不是框架仓。
 - `orchestration/` — 阶段、交付和运营类 skill：`breaking-down-prds`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
-- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`。
+- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
 - `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
 - `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`。
 - `visualization/` — pipeline / 结果可视化 skill：`visualizing-processing-pipelines`（携带 `references/scripts/` 下的 numpy+opencv builder 与可直接运行的 `references/examples/` demo）。
@@ -119,6 +119,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | governance | `governance/naming-skills` | 按命名规范校验 skill 的 name 与 description（≤64 / 字符集 / 动名词 / 与父目录同名；desc 做什么+何时用+触发词） | 创作 / 改名 / 发布 skill，或审计主仓 | 只读校验器；报 pass/fail，不改名 |
 | governance | `governance/announcing-framework-releases` | 把**框架**版本发布以 Lark 卡片公告（框架 / 旧→新版本 / 变更分类 / 消费方影响） | 框架发布 tag 落定且 push 核验后 | 框架更新通知（无排行榜）；发送前确认；群/维护者实例所有，仓库地址运行时解析 |
 | governance | `governance/polishing-chinese-prose` | 中文文风的权威源——两段可检查规则（翻译腔 R14–R20 + 文牍腔 R33–R39）+ EN→zh 术语表 | 写/审中文交付物、审 README_zh 镜像通顺度，或 agent 用中文回复时 | 别的 skill 按名引为文风权威；翻译腔实例激活、文牍腔 agent 层 always-on |
+| governance | `governance/authoring-skills-with-evals` | 用 skill-creator 式流程做 skill 的创作与评测改进（行为 eval、触发 eval、训练/测试集切分的描述调优） | 创作或修订 skill，或描述触发不准（漏触发/误触发）时 | 拥有 eval 环节；与 naming-skills、publishing-skills 互补；只校验与调优，不采纳 |
 | research | `research/challenging-assumptions` | 对抗式设计伙伴——挑战假设、套用思维模型 | 思考一个模糊 / 高风险决策时 | 只作咨询；不产出交付物 |
 | research | `research/reviewing-decisions` | 审查决策记录（MADR）是否完整（6 字段底线 + 跨模型红队） | research-solution agent 定稿 solution_document 时 | 只作咨询 |
 | research | `research/structuring-solution-docs` | arc42 风格的方案文档脚手架（结构即可校验规则） | 调研后撰写方案 / 设计文档时 | 结构辅助 |
@@ -279,6 +280,14 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 都是**实例取值**（解耦，`skill_spec` §9）；图按实例策略嵌去标识版，HTML 是本地工件、**不入 git**。与 `publishing-deliverables`
 （把文档发到团队 wiki）不同——两者可组合，但是不同功能。
 
+### 用 eval 写 skill：eval 驱动的创作（创建 / 修订 / 调触发）
+> "建一个带 eval 的 skill" · "author a skill with evals" · "skill 描述不触发" · "优化 skill 描述"
+
+`authoring-skills-with-evals` 跑一套 eval 驱动的创作流程（取自 Anthropic 官方 skill-creator，适配本主仓）：先 **lint**
+形态（`validate` 写出带诚实 `tier` 的 `.skill-validated.json`），再 **测触发**（`trigger-eval`，三态；基础设施故障记为
+*skipped*，绝不误判成"没触发"），最后用**训练/测试集切分**优化描述以防过拟合（`describe-improve`）。行为层与静态发布评分器
+互补；一个 skill 只有两层都过才算完成。两个依赖模型的命令需要 `claude` CLI，缺失时干净跳过。
+
 ### 关键词触发（中英对照）
 上文 **Skill 目录** 的触发词子表——每个提示词触发 skill 的调用关键词（中英对照）。
 | skill | 中文 | English |
@@ -289,6 +298,7 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 | `announcing-skills` | skill 上新公告 · 公告新 skill · 上新通知 | announce new skills · skill release announcement |
 | `announcing-framework-releases` | 公告框架版本更新 · 框架版本公告 · 发框架升级公告 | announce framework release · framework version update · framework release announcement |
 | `naming-skills` | 校验 skill 命名 · skill 命名校验 · 命名规范检查 | name a skill · check skill naming · audit naming |
+| `authoring-skills-with-evals` | 建带 eval 的 skill · eval 驱动写 skill · skill 描述不触发 · 优化 skill 描述 | author a skill with evals · eval-driven skill authoring · description not triggering · improve skill description |
 | `reviewing-cpp-code` | C/C++ 代码检查 · 代码规范审查 | C/C++ code review · coding-standard check |
 | `optimizing-cpp-performance` | C/C++ 性能优化 · NEON 向量化 · cache 优化 | C/C++ perf optimize · NEON vectorize · cache optimization |
 | `selecting-mobile-gpu-convolutions` | 标准卷积还是可分离 · 移动 GPU 卷积选型 · 端侧卷积选择 | mobile GPU conv selection · standard vs separable conv · on-device conv choice |
