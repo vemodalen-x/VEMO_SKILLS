@@ -6,6 +6,20 @@ This project uses semantic versioning for public releases. Generic skill bodies,
 catalog metadata, executable checks, and documentation are kept in the same
 release so consumers can pin a complete skill home by tag.
 
+## [Unreleased]
+
+### Added
+- New orchestration skill `designing-diagnostic-prompts`, which turns Human 3.0-style self-discovery and Mr. Ranedeer-style
+  tutoring patterns into a generic prompt/agent design workflow: intake, configuration, constraint finding, plan, loop,
+  and boundary.
+- `docs/PLAYBOOK_GENERALIZATION.md`: guidance for converting repo-local playbook procedures into reusable shared skills.
+
+### Changed
+- Catalog grows 28 -> 29 skills; README.md and README_zh.md catalog rows, layout, badge, and keyword-trigger table kept
+  in parity.
+- `bin/vemo-skills` and `eval/run.py` now use the current Python interpreter instead of hardcoding `python3`, improving
+  Windows support.
+
 ## [1.2.0] — 2026-07-08
 
 ### Added

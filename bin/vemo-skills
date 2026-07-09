@@ -10,6 +10,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHECK = os.path.join(ROOT, "tools", "vemo_skills_check.py")
 CREATOR = os.path.join(ROOT, "tools", "skill_creator.py")
+PY = sys.executable or "python3"
 
 HELP = """vemo-skills <command>
   status                            repository summary
@@ -28,11 +29,11 @@ HELP = """vemo-skills <command>
 
 
 def run_check(*args: str) -> int:
-    return subprocess.run(["python3", CHECK, *args]).returncode
+    return subprocess.run([PY, CHECK, *args]).returncode
 
 
 def run_creator(*args: str) -> int:
-    return subprocess.run(["python3", CREATOR, *args]).returncode
+    return subprocess.run([PY, CREATOR, *args]).returncode
 
 
 def status() -> int:
@@ -64,7 +65,7 @@ def main(argv=None) -> int:
     if cmd == "selfcheck":
         return run_check("--root", ROOT, "selfcheck")
     if cmd == "eval":
-        return subprocess.run(["python3", os.path.join(ROOT, "eval", "run.py")]).returncode
+        return subprocess.run([PY, os.path.join(ROOT, "eval", "run.py")]).returncode
     if cmd == "bind":
         return run_check("--root", ROOT, "bind", *args)
     if cmd in ("validate", "trigger-eval", "describe-improve"):

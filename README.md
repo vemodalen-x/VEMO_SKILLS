@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-28_skills-0f766e?style=for-the-badge" alt="Skill catalog: 28 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-29_skills-0f766e?style=for-the-badge" alt="Skill catalog: 29 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -74,6 +74,8 @@ anyone who wants to sync or contribute governance frameworks via natural-languag
   step regenerates each skill into `.claude/skills/<name>/` (the Claude Code discovery root — a gitignored build
   artifact). Single source = this repo; never hand-edit the regenerated copies.
 - **Use a skill**: trigger by natural language in any session (see **Use via Prompt** below) or by the skill's keyword.
+- **Generalize a playbook**: convert only reusable, project-neutral procedures into skills; see
+  [docs/PLAYBOOK_GENERALIZATION.md](docs/PLAYBOOK_GENERALIZATION.md).
 - **Bump**: when this repo releases, the consuming project bumps its pin on a user version gate (`syncing-frameworks`).
 
 ## VEMO-style verification
@@ -85,6 +87,7 @@ python3 bin/vemo-skills selfcheck
 python3 bin/vemo-skills eval
 python3 bin/vemo-skills score /path/to/another/skill-home
 ```
+On Windows, use `python bin/vemo-skills ...` if `python3` is not installed.
 
 The release threshold is **9.5/10**. The scorer checks catalog parity, frontmatter, naming, references, regen binding,
 version hygiene, public docs, security decoupling, executable verification, and attribution governance. The executable
@@ -96,7 +99,7 @@ eval writes its current report to `eval/out/report.json`.
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-The repository is intentionally small and inspectable: 28 skills across five functional categories, with each
+The repository is intentionally small and inspectable: 29 skills across five functional categories, with each
 `SKILL.md` carrying its own frontmatter and optional `references/` folder.
 
 ## Layout
@@ -107,7 +110,7 @@ skills/<category>/<name>/         # per functional category (skill_spec §9); ca
 ```
 Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
 `CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
-- `orchestration/` — stage, delivery, and operations skills: `breaking-down-prds`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
+- `orchestration/` — stage, delivery, prompt-flow, and operations skills: `breaking-down-prds`, `designing-diagnostic-prompts`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
 - `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
 - `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
 - `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`, `converting-pytorch-to-tflite`, `loading-model-checkpoints`, `evaluating-segmentation-models`, `quantizing-on-device-models`.
@@ -122,6 +125,7 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | category | skill | does | when to use | boundary |
 |---|---|---|---|---|
 | orchestration | `orchestration/breaking-down-prds` | break a PRD into governed, traceable tasks | turning a PRD into actionable work at kickoff / a major feature | authoring aid; does not gate |
+| orchestration | `orchestration/designing-diagnostic-prompts` | design multi-turn diagnostic or tutoring prompts with intake, configuration, constraint-finding, plan, and feedback loops | creating Human 3.0-style self-discovery prompts, Mr. Ranedeer-style tutor prompts, custom GPTs, coaching flows, or onboarding interviews | prompt/flow design only; project facts and acceptance gates stay in the consumer repo |
 | orchestration | `orchestration/publishing-deliverables` | publish a deliverable to the team wiki + notify reviewers (report style R1–R32; Chinese prose via `polishing-chinese-prose`) | a stage produces a deliverable to file to the wiki | follows instance routing/notify; no hardcoded ids |
 | orchestration | `orchestration/visualizing-governance` | render the governance system (mermaid / SVG / markmap HTML) | a README needs its governance diagram, or onboarding material | render-don't-author; every node traces to a source |
 | orchestration | `orchestration/rendering-html-eval-reports` | render pre-computed results into a single self-contained HTML report (base64 images, provenance header) — eval type (per-class accuracy vs threshold, confusion matrix incl. abstain/reject column, latency dist, all-errors gallery) or training-experiment type (experiment ladder, training curves, ablation table, measured-vs-inferred labels, limitations) | an eval run or training-experiment sweep's results should become a shareable local HTML artifact | render-only (does not run inference/train); eval type collects ALL errors, samples correct; de-identified images per instance policy, HTML not in git; wiki publish → `publishing-deliverables` |
@@ -341,6 +345,7 @@ The trigger sub-table for the **Skill Catalog** above — the keywords that invo
 | `announcing-framework-releases` | 公告框架版本更新 · 框架版本公告 · 发框架升级公告 | announce framework release · framework version update · framework release announcement |
 | `naming-skills` | 校验 skill 命名 · skill 命名校验 · 命名规范检查 | name a skill · check skill naming · audit naming |
 | `authoring-skills-with-evals` | 建带 eval 的 skill · eval 驱动写 skill · skill 描述不触发 · 优化 skill 描述 | author a skill with evals · eval-driven skill authoring · description not triggering · improve skill description |
+| `designing-diagnostic-prompts` | 诊断提示词 · 人生顾问提示词 · 导师提示词 · 自我探索 prompt · 定制 GPT 流程 | diagnostic prompt · Human 3.0-style prompt · Mr. Ranedeer-style tutor · coaching prompt · custom GPT flow |
 | `reviewing-cpp-code` | C/C++ 代码检查 · 代码规范审查 | C/C++ code review · coding-standard check |
 | `optimizing-cpp-performance` | C/C++ 性能优化 · NEON 向量化 · cache 优化 | C/C++ perf optimize · NEON vectorize · cache optimization |
 | `selecting-mobile-gpu-convolutions` | 标准卷积还是可分离 · 移动 GPU 卷积选型 · 端侧卷积选择 | mobile GPU conv selection · standard vs separable conv · on-device conv choice |

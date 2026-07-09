@@ -2,23 +2,23 @@
   "passed": 13,
   "total": 13,
   "rate": 1.0,
-  "score": 10.0,
+  "score": 9.68,
   "threshold": 9.5,
   "checks": [
     {
       "name": "score reaches release threshold",
       "pass": true,
-      "got": "10.0"
+      "got": "9.68"
     },
     {
       "name": "catalog parity",
       "pass": true,
-      "got": "28 skills; catalog parity clean"
+      "got": "29 skills; catalog parity clean"
     },
     {
       "name": "frontmatter layout",
       "pass": true,
-      "got": "28 SKILL.md files checked"
+      "got": "29 SKILL.md files checked"
     },
     {
       "name": "naming and descriptions",
@@ -68,7 +68,7 @@
     {
       "name": "CLI catalog command",
       "pass": true,
-      "got": "code=0 count=28"
+      "got": "code=0 count=29"
     }
   ]
 }

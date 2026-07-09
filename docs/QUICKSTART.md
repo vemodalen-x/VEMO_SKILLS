@@ -24,6 +24,7 @@ cd VEMO_SKILLS
 ```bash
 python3 bin/vemo-skills catalog
 ```
+On Windows, use `python bin/vemo-skills ...` if `python3` is not installed.
 
 Each line is a stable `<category>/<skill>` token backed by
 `skills/<category>/<skill>/SKILL.md`.

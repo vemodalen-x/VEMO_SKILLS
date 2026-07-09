@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-28_skills-0f766e?style=for-the-badge" alt="Skill catalog: 28 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-29_skills-0f766e?style=for-the-badge" alt="Skill catalog: 29 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -82,7 +82,7 @@ python3 bin/vemo-skills score /path/to/another/skill-home
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-本仓刻意保持小而可读：28 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
+本仓刻意保持小而可读：29 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
 可选引用模块放在同目录 `references/` 下。
 
 ## 布局（Layout）
@@ -93,7 +93,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 ```
 类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
 类目是功能分组，不是框架仓。
-- `orchestration/` — 阶段、交付和运营类 skill：`breaking-down-prds`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
+- `orchestration/` — 阶段、交付、提示流程和运营类 skill：`breaking-down-prds`、`designing-diagnostic-prompts`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
 - `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
 - `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
 - `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`、`converting-pytorch-to-tflite`、`loading-model-checkpoints`、`evaluating-segmentation-models`、`quantizing-on-device-models`。
@@ -107,6 +107,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | 类目 | skill | 做什么 | 何时用 | 边界 |
 |---|---|---|---|---|
 | orchestration | `orchestration/breaking-down-prds` | 把 PRD 拆成受治理、可溯源的任务 | 在 kickoff / 重大功能把 PRD 变成可执行工作 | 创作辅助；不设门 |
+| orchestration | `orchestration/designing-diagnostic-prompts` | 设计多轮诊断或导师提示词：先采集信息，再配置风格/深度、定位约束、产出计划并循环反馈 | 写 Human 3.0 式自我探索提示词、Mr. Ranedeer 式导师提示词、定制 GPT、教练流程或 onboarding 访谈 | 只负责提示词/流程设计；项目事实和验收门留在消费仓 |
 | orchestration | `orchestration/publishing-deliverables` | 把交付物发布到团队 wiki 并通知评审（报告样式 R1–R32；中文文风走 `polishing-chinese-prose`） | 某阶段产出交付物要归档到 wiki | 遵循实例路由与通知；不硬编码 id |
 | orchestration | `orchestration/visualizing-governance` | 渲染治理系统（mermaid / SVG / markmap HTML） | README 要治理图，或产出 onboarding 材料 | 只渲染、不创作；每个节点都可溯源 |
 | orchestration | `orchestration/rendering-html-eval-reports` | 把算好的结果渲染成一份自含 HTML 报告（图 base64 内嵌、带 provenance 头）——评测型（逐类准确率对验收线、含弃判/拒识列的混淆矩阵、延迟分布、错例全收画廊）或训练实验型（实验阶梯、训练曲线、消融表、实测/推测标注、局限性） | 一次评测或一轮训练实验的结果要变成可分享的本地 HTML 工件 | 只渲染、不跑推理/不训练；评测型错例全收、判对抽样；按实例策略嵌去标识图、HTML 不入 git；发 wiki 找 `publishing-deliverables` |
@@ -303,6 +304,7 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 | `announcing-framework-releases` | 公告框架版本更新 · 框架版本公告 · 发框架升级公告 | announce framework release · framework version update · framework release announcement |
 | `naming-skills` | 校验 skill 命名 · skill 命名校验 · 命名规范检查 | name a skill · check skill naming · audit naming |
 | `authoring-skills-with-evals` | 建带 eval 的 skill · eval 驱动写 skill · skill 描述不触发 · 优化 skill 描述 | author a skill with evals · eval-driven skill authoring · description not triggering · improve skill description |
+| `designing-diagnostic-prompts` | 诊断提示词 · 人生顾问提示词 · 导师提示词 · 自我探索 prompt · 定制 GPT 流程 | diagnostic prompt · Human 3.0-style prompt · Mr. Ranedeer-style tutor · coaching prompt · custom GPT flow |
 | `reviewing-cpp-code` | C/C++ 代码检查 · 代码规范审查 | C/C++ code review · coding-standard check |
 | `optimizing-cpp-performance` | C/C++ 性能优化 · NEON 向量化 · cache 优化 | C/C++ perf optimize · NEON vectorize · cache optimization |
 | `selecting-mobile-gpu-convolutions` | 标准卷积还是可分离 · 移动 GPU 卷积选型 · 端侧卷积选择 | mobile GPU conv selection · standard vs separable conv · on-device conv choice |

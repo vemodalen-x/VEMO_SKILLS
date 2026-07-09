@@ -12,10 +12,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CHECK = ROOT / "tools" / "vemo_skills_check.py"
 OUT = ROOT / "eval" / "out" / "report.json"
+PY = sys.executable or "python3"
 
 
 def run(*args: str):
-    proc = subprocess.run(["python3", str(CHECK), "--root", str(ROOT), *args],
+    proc = subprocess.run([PY, str(CHECK), "--root", str(ROOT), *args],
                           capture_output=True, text=True)
     return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
 
@@ -50,7 +51,7 @@ add("attribution governance", by_dim["attribution_governance"]["pass"], by_dim["
 
 CREATOR = ROOT / "tools" / "skill_creator.py"
 add("skill-creator harness present", CREATOR.exists(), "tools/skill_creator.py" if CREATOR.exists() else "missing")
-st = subprocess.run(["python3", str(CREATOR), "selftest"], capture_output=True, text=True)
+st = subprocess.run([PY, str(CREATOR), "selftest"], capture_output=True, text=True)
 add("skill-creator selftest passes", st.returncode == 0,
     (st.stdout.strip().splitlines() or [st.stderr.strip()])[-1])
 

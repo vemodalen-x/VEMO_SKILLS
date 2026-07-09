@@ -6,6 +6,7 @@ skill home.
 ## Start Here
 
 - [Quickstart](QUICKSTART.md) — attach or clone the skill hub, bind skills into a consumer project, and run checks.
+- [Playbook Generalization](PLAYBOOK_GENERALIZATION.md) — convert repo-local agent playbook procedures into reusable skills.
 - [Public Release Review](CRITIQUE_LOG.md) — release-readiness review notes for the public v1.0.0 package.
 
 ## Root Documents
