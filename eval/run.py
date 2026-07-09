@@ -48,6 +48,12 @@ add("public docs", by_dim["public_packaging_docs"]["pass"], by_dim["public_packa
 add("security decoupling", by_dim["security_decoupling"]["pass"], by_dim["security_decoupling"]["evidence"])
 add("attribution governance", by_dim["attribution_governance"]["pass"], by_dim["attribution_governance"]["evidence"])
 
+CREATOR = ROOT / "tools" / "skill_creator.py"
+add("skill-creator harness present", CREATOR.exists(), "tools/skill_creator.py" if CREATOR.exists() else "missing")
+st = subprocess.run(["python3", str(CREATOR), "selftest"], capture_output=True, text=True)
+add("skill-creator selftest passes", st.returncode == 0,
+    (st.stdout.strip().splitlines() or [st.stderr.strip()])[-1])
+
 code, out, err = run("catalog")
 catalog_count = len([line for line in out.splitlines() if line.strip()])
 add("CLI catalog command", code == 0 and catalog_count == report["skills"], f"code={code} count={catalog_count}")

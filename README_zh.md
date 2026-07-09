@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-23_skills-0f766e?style=for-the-badge" alt="Skill catalog: 23 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-28_skills-0f766e?style=for-the-badge" alt="Skill catalog: 28 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -82,7 +82,7 @@ python3 bin/vemo-skills score /path/to/another/skill-home
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-本仓刻意保持小而可读：23 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
+本仓刻意保持小而可读：28 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
 可选引用模块放在同目录 `references/` 下。
 
 ## 布局（Layout）
@@ -94,9 +94,9 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
 类目是功能分组，不是框架仓。
 - `orchestration/` — 阶段、交付和运营类 skill：`breaking-down-prds`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
-- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`。
+- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
 - `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
-- `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`。
+- `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`、`converting-pytorch-to-tflite`、`loading-model-checkpoints`、`evaluating-segmentation-models`、`quantizing-on-device-models`。
 - `visualization/` — pipeline / 结果可视化 skill：`visualizing-processing-pipelines`（携带 `references/scripts/` 下的 numpy+opencv builder 与可直接运行的 `references/examples/` demo）。
 
 ## Skill 目录（Skill Catalog）
@@ -119,6 +119,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | governance | `governance/naming-skills` | 按命名规范校验 skill 的 name 与 description（≤64 / 字符集 / 动名词 / 与父目录同名；desc 做什么+何时用+触发词） | 创作 / 改名 / 发布 skill，或审计主仓 | 只读校验器；报 pass/fail，不改名 |
 | governance | `governance/announcing-framework-releases` | 把**框架**版本发布以 Lark 卡片公告（框架 / 旧→新版本 / 变更分类 / 消费方影响） | 框架发布 tag 落定且 push 核验后 | 框架更新通知（无排行榜）；发送前确认；群/维护者实例所有，仓库地址运行时解析 |
 | governance | `governance/polishing-chinese-prose` | 中文文风的权威源——两段可检查规则（翻译腔 R14–R20 + 文牍腔 R33–R39）+ EN→zh 术语表 | 写/审中文交付物、审 README_zh 镜像通顺度，或 agent 用中文回复时 | 别的 skill 按名引为文风权威；翻译腔实例激活、文牍腔 agent 层 always-on |
+| governance | `governance/authoring-skills-with-evals` | 用 skill-creator 式流程做 skill 的创作与评测改进（行为 eval、触发 eval、训练/测试集切分的描述调优） | 创作或修订 skill，或描述触发不准（漏触发/误触发）时 | 拥有 eval 环节；与 naming-skills、publishing-skills 互补；只校验与调优，不采纳 |
 | research | `research/challenging-assumptions` | 对抗式设计伙伴——挑战假设、套用思维模型 | 思考一个模糊 / 高风险决策时 | 只作咨询；不产出交付物 |
 | research | `research/reviewing-decisions` | 审查决策记录（MADR）是否完整（6 字段底线 + 跨模型红队） | research-solution agent 定稿 solution_document 时 | 只作咨询 |
 | research | `research/structuring-solution-docs` | arc42 风格的方案文档脚手架（结构即可校验规则） | 调研后撰写方案 / 设计文档时 | 结构辅助 |
@@ -128,6 +129,10 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | code | `code/validating-on-device-inference` | 在真机上验收转换后的模型：推包→跑→收结果和日志，**先**判 host↔device 数值一致性（逐元素容差+argmax；低精度预算用 softmax/决策距离而非裸 logit；金丝雀余量=margin÷设备偏差），**再**采性能（预热与计时轮分离、延迟报分布并标注测试平台、delegate 开关各测且数值复验、功耗只作标注代理；替测平台弱于目标时保守外推——过门=方向性通过、不过门=不判死、余量薄须打折扣并标「目标平台须实测」） | 转换后的模型要在目标硬件上签收 | 方法论清单；出 PASS/FAIL 行、只读只测；设备/模型/阈值全部由调用方读入；静态包络门是上板前检查、本 skill 是设备运行期检查 |
 | code | `code/gating-tflite-op-envelopes` | 静态把 `.tflite`/`.task` 对调用方给的**运行时包络**核对（解 flatbuffer 查自定义算子 + `min_runtime_version`，不加载运行时）；逐包络出 PASS/REJECT 并列出违规算子/版本 | 采纳某候选模型前为某运行时筛查 / 记模型卡运行时判定 | 只读模型；版本未知则保守判失败，零算子解析拒绝盖章（退出码 2）；包络版本为调用方入参 |
 | code | `code/bumping-library-versions` | 验收通过后升库四段版本号 `X.Y.Z.W`：末位=修 bug +1 / 倒二=加特性 +1（清末位）/ 双事并发=倒二+1（清末位）/ 前两段人裁；保持版本号单源、三处一致（源码常量 / 初始化日志 / `getVersion()`）；升完显式报「旧→新」 | 发库版本要往前升时 | 只在验收构建+运行通过后才升；前两段绝不自动升；版本字段名/文件由调用方指定；自身管版本规则、`packaging-device-sdk-releases` 按名引用；**code 类目首个写动作 skill——只写版本常量/日志行这一处、不碰任何逻辑（显式标注的例外）** |
+| code | `code/converting-pytorch-to-tflite` | 把 PyTorch/ONNX checkpoint 导成数值一致的手机 TFLite（fp16 / int8-hybrid），并把相机色彩变换（YUV/BGR）折进第一层卷积 | 导模型上端侧，或转换后输出与 PyTorch 参考漂移时 | 方法论 + 数值一致闸；驱动转换器、不自带；静态门 = gating-tflite-op-envelopes，上板签收 = validating-on-device-inference |
+| code | `code/loading-model-checkpoints` | 当 state_dict 嵌套 / 前缀 / 架构 / 输入通道不确定时稳健加载 PyTorch checkpoint（按最大 key 重叠选前缀、打印 missing/unexpected） | checkpoint 加载到随机权重、或报 key 不匹配时 | 只读/实例化；标注 weights_only 安全注意；不训练/调参 |
+| code | `code/evaluating-segmentation-models` | 用对的指标评测分割/抠图：mask 用 IoU/mIoU + 边界 F，抠图用 trimap 未知带内的 SAD/MSE/Grad/Conn，分类别、看边缘 | 分割/抠图模型签收、比 checkpoint、或核查转换/量化后的模型 | 只读/测量、出 PASS/FAIL；渲染 = rendering-html-eval-reports；上板 = validating-on-device-inference |
+| code | `code/quantizing-on-device-models` | 为手机/NPU 沿阶梯量化（fp16 -> int8 动态 -> full-int8 PTQ -> QAT）；逐通道 + 输入非对称、敏感层留 float、按精度-时延预算过门 | fp16 端上太慢/太大、要做 INT8、选校准集、或量化后精度回退时 | 规划 + 验证（决策空间一致而非裸 logit）；驱动转换器、不自带 |
 | visualization | `visualization/visualizing-processing-pipelines` | 把多步处理 pipeline（图像 / 数据 / ML）渲成一份自含 HTML 报告——逐步骤前后拖拽对比滑块、差异热力图、内联 base64 图、what/why/formula 注解、耗时条、pass/fail 指标；携带一个 pipeline 无关的 numpy+opencv builder，可出静态 `.html` 或交互式参数滑块服务 | 要可视化 / 讲解 / 调试 / 归档 / 演示一条图像 / 数据 / ML pipeline；前后对比滑块；算法逐步图解或参数调试 playground；把散落的中间结果汇成一份可分享文件 | 渲染/讲解辅助——由你驱动 builder、它不替你跑 pipeline；对比与差异图需同尺寸 BGR-uint8 对；base64 内联故大图须降采样（`display_width`）；与 `rendering-html-eval-reports`（评测/训练指标）不同——本 skill 讲解 pipeline 各步骤 |
 
 ## 治理图（Governance diagram）
@@ -279,6 +284,14 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 都是**实例取值**（解耦，`skill_spec` §9）；图按实例策略嵌去标识版，HTML 是本地工件、**不入 git**。与 `publishing-deliverables`
 （把文档发到团队 wiki）不同——两者可组合，但是不同功能。
 
+### 用 eval 写 skill：eval 驱动的创作（创建 / 修订 / 调触发）
+> "建一个带 eval 的 skill" · "author a skill with evals" · "skill 描述不触发" · "优化 skill 描述"
+
+`authoring-skills-with-evals` 跑一套 eval 驱动的创作流程（取自 Anthropic 官方 skill-creator，适配本主仓）：先 **lint**
+形态（`validate` 写出带诚实 `tier` 的 `.skill-validated.json`），再 **测触发**（`trigger-eval`，三态；基础设施故障记为
+*skipped*，绝不误判成"没触发"），最后用**训练/测试集切分**优化描述以防过拟合（`describe-improve`）。行为层与静态发布评分器
+互补；一个 skill 只有两层都过才算完成。两个依赖模型的命令需要 `claude` CLI，缺失时干净跳过。
+
 ### 关键词触发（中英对照）
 上文 **Skill 目录** 的触发词子表——每个提示词触发 skill 的调用关键词（中英对照）。
 | skill | 中文 | English |
@@ -289,12 +302,17 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 | `announcing-skills` | skill 上新公告 · 公告新 skill · 上新通知 | announce new skills · skill release announcement |
 | `announcing-framework-releases` | 公告框架版本更新 · 框架版本公告 · 发框架升级公告 | announce framework release · framework version update · framework release announcement |
 | `naming-skills` | 校验 skill 命名 · skill 命名校验 · 命名规范检查 | name a skill · check skill naming · audit naming |
+| `authoring-skills-with-evals` | 建带 eval 的 skill · eval 驱动写 skill · skill 描述不触发 · 优化 skill 描述 | author a skill with evals · eval-driven skill authoring · description not triggering · improve skill description |
 | `reviewing-cpp-code` | C/C++ 代码检查 · 代码规范审查 | C/C++ code review · coding-standard check |
 | `optimizing-cpp-performance` | C/C++ 性能优化 · NEON 向量化 · cache 优化 | C/C++ perf optimize · NEON vectorize · cache optimization |
 | `selecting-mobile-gpu-convolutions` | 标准卷积还是可分离 · 移动 GPU 卷积选型 · 端侧卷积选择 | mobile GPU conv selection · standard vs separable conv · on-device conv choice |
 | `validating-on-device-inference` | 上板测试 · 真机验收 · host↔device 一致性 · 设备端签收 · 延迟 p50/p90 | on-device validation · device sign-off · host↔device parity · on-device latency · delegate re-verify |
 | `gating-tflite-op-envelopes` | 过一下运行时包络 · 静态算子包络核对 · tflite 自定义算子检查 | runtime envelope gate · check tflite custom ops · screen .tflite/.task for adoption |
 | `bumping-library-versions` | 升库版本号 · 改版本号 · 发版升号 · 四段版本号 | bump library version · version bump after acceptance · four-segment version |
+| `converting-pytorch-to-tflite` | 导出 tflite · pytorch/onnx 转 tflite · 端侧模型转换 · YUV/BGR 色彩折叠 · tflite 输出不一致 | export to tflite · pytorch/onnx to tflite · convert model for mobile · YUV/BGR colour fold · tflite output mismatch |
+| `loading-model-checkpoints` | 加载 checkpoint · state_dict 不匹配 · missing/unexpected keys · 去 module. 前缀 · 权重加载到随机 | load a checkpoint · state_dict mismatch · missing/unexpected keys · strip module. prefix · loaded onto random weights |
+| `evaluating-segmentation-models` | 评测分割 · 抠图指标 · IoU/边界 F · SAD MSE Grad Conn · 逐类准确率 · 这个 mask 好不好 | evaluate segmentation · matting metrics · IoU/boundary F · SAD MSE Grad Conn · per-class accuracy · is this mask good |
+| `quantizing-on-device-models` | 量化模型 · int8/PTQ/QAT · 代表集/校准 · 逐通道量化 · 量化后掉点 · fp16 还是 int8 | quantize model · int8/PTQ/QAT · representative/calibration set · per-channel quant · accuracy drop after quant · fp16 vs int8 |
 | `polishing-chinese-prose` | 中文不通顺 · 不是人话 · 中文文风校验 · 润色中文 | polish Chinese prose · plain Chinese · Chinese style check · 文牍腔/翻译腔 |
 | `rendering-html-eval-reports` | 出 HTML 评测报告 · 评测结果生成网页报告 · 自含评测报告 · 出训练实验报告 · 训练实验/消融生成网页报告 | render eval report · self-contained eval HTML · HTML eval report · render training-experiment report · ablation report HTML |
 | `attending-group-mentions` | 群值守 · 值守群消息 · 回复群里的 @ · 群里有人 @ 机器人 | attend the group chat · answer @bot mentions · staff group chat |

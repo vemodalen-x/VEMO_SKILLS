@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-23_skills-0f766e?style=for-the-badge" alt="Skill catalog: 23 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-28_skills-0f766e?style=for-the-badge" alt="Skill catalog: 28 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -96,7 +96,7 @@ eval writes its current report to `eval/out/report.json`.
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-The repository is intentionally small and inspectable: 23 skills across five functional categories, with each
+The repository is intentionally small and inspectable: 28 skills across five functional categories, with each
 `SKILL.md` carrying its own frontmatter and optional `references/` folder.
 
 ## Layout
@@ -108,9 +108,9 @@ skills/<category>/<name>/         # per functional category (skill_spec §9); ca
 Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
 `CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
 - `orchestration/` — stage, delivery, and operations skills: `breaking-down-prds`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
-- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`.
+- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
 - `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
-- `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`.
+- `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`, `converting-pytorch-to-tflite`, `loading-model-checkpoints`, `evaluating-segmentation-models`, `quantizing-on-device-models`.
 - `visualization/` — pipeline / result visualization skills: `visualizing-processing-pipelines` (carries a `references/scripts/` numpy+opencv builder + a runnable `references/examples/` demo).
 
 ## Skill Catalog
@@ -134,6 +134,7 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | governance | `governance/naming-skills` | validate a skill's name + description against the authoring naming rules (≤64 / charset / gerund / folder-match; desc what+when+keywords) | authoring / renaming / publishing a skill, or auditing the home | read-only validator; reports pass/fail, does not rename |
 | governance | `governance/announcing-framework-releases` | announce a **framework** version release as a Lark card (framework / old→new version / change-class / consumer-impact + optional 🏆 leaderboard, instance-gated) | after a framework release is tagged + push-verified | framework-update notify; confirm before send; group/maintainer instance-owned, repo-url runtime-resolved; leaderboard reuses the hub ledger + skill_hub maps |
 | governance | `governance/polishing-chinese-prose` | the canonical Chinese-prose authority — checkable rules in two bands (翻译腔 R14–R20 + 文牍腔 R33–R38) + EN→zh term table | authoring/reviewing Chinese deliverables, the README_zh mirror's fluency, or any Chinese agent reply | cited by name as the prose authority; 翻译腔 instance-activated, 文牍腔 agent-layer always-on |
+| governance | `governance/authoring-skills-with-evals` | author + eval-improve a skill via the repo's skill-creator harness (behavioral eval, trigger eval, train/test-split description tuning) | creating or revising a skill, or a description under/over-triggers | owns the eval loop; complements naming-skills + publishing-skills; validates and tunes, never adopts |
 | research | `research/challenging-assumptions` | adversarial design partner — challenge assumptions, apply mental models | thinking through an ambiguous / high-stakes decision | advisory; does not produce the deliverable |
 | research | `research/reviewing-decisions` | review decision records (MADR) for completeness (6-field floor + cross-model red-team) | the research-solution agent finalizes the solution_document | advisory |
 | research | `research/structuring-solution-docs` | arc42-style solution-doc scaffolding (structure-as-checkable-rules) | authoring the solution / design doc after the survey | structural aid |
@@ -143,6 +144,10 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | code | `code/validating-on-device-inference` | accept a converted model on the real device: push → run → collect results+logs, judge host↔device numerical **consistency** (elementwise tol + argmax; reduced-precision budget in softmax/decision space, NOT raw logit; canary headroom = margin ÷ deviation) FIRST, then **performance** (warmup-separated latency distribution + the platform measured on, delegate on/off re-verified, power as labelled proxy; weaker-than-target platform extrapolates conservatively — pass=directional, fail=inconclusive, thin margin discounted + "target must be measured") | a converted model must be signed off on the target hardware | methodology checklist; emits PASS/FAIL rows, read/measure-only; all device/model/threshold values caller-supplied; static op-envelope gating is the pre-device check, this is the device-runtime one |
 | code | `code/gating-tflite-op-envelopes` | statically gate a `.tflite`/`.task` against caller-supplied **runtime envelopes** (parse the flatbuffer for custom ops + `min_runtime_version`, no runtime load); PASS/REJECT per envelope with offending ops/version | screening a candidate model for a runtime before adoption / recording a model card's runtime verdict | read-only on the model; fails closed on unknown version, refuses a zero-op parse (exit 2); envelope versions are caller inputs |
 | code | `code/bumping-library-versions` | bump a library's four-segment `X.Y.Z.W` version after acceptance passes: W=bug-fix +1 / Z=feature +1 (reset W) / both=Z +1 (reset W) / X.Y human-set; keep it single-sourced across 3 agreeing surfaces (constant / init-log / `getVersion()`); report old→new explicitly | a library release is cut and its version must advance | bumps only after acceptance build+run passed; X.Y never auto-bumped; version-field name/file caller-specified; owns the version rule that `packaging-device-sdk-releases` references; **first write-action skill in `code` — writes ONLY the version constant/log line, no logic (declared exception)** |
+| code | `code/converting-pytorch-to-tflite` | export a PyTorch/ONNX checkpoint to a numerically faithful mobile TFLite (fp16 / int8-hybrid); fold the camera colour transform (YUV/BGR) into the first conv | exporting a model for on-device deploy, or a converted model drifts from the PyTorch reference | methodology + parity gate; drives the converter, doesn't vendor one; static gate = gating-tflite-op-envelopes, device sign-off = validating-on-device-inference |
+| code | `code/loading-model-checkpoints` | load a PyTorch checkpoint robustly when state_dict nesting / key prefix / arch / in-channels are uncertain (pick prefix by max key-overlap, print missing/unexpected) | a checkpoint loads onto random weights or reports key mismatches | read/instantiate only; flags the weights_only security caveat; no train/tune |
+| code | `code/evaluating-segmentation-models` | evaluate seg/matting with the right metrics: IoU/mIoU + boundary-F for masks, SAD/MSE/Grad/Conn in the trimap band for matting, per-class and at edges | signing off a seg/matting model, comparing checkpoints, or checking a converted/quantized model | read/measure only, emits PASS/FAIL; rendering = rendering-html-eval-reports; device = validating-on-device-inference |
+| code | `code/quantizing-on-device-models` | quantize for mobile/NPU up a ladder (fp16 -> int8-dynamic -> full-int8 PTQ -> QAT); per-channel + asymmetric inputs, keep sensitive layers float, gate on accuracy-vs-latency | fp16 too slow/large on device, planning INT8, choosing a calibration set, or accuracy regressed after quant | planning + verify (decision-space parity, not raw logits); drives the converter, not vendored |
 | visualization | `visualization/visualizing-processing-pipelines` | render a multi-step processing pipeline (image / data / ML) into one self-contained HTML report — per-stage before/after drag-to-compare slider, diff heatmap, inline base64 images, what/why/formula annotations, timing bars, pass/fail metrics; ships a pipeline-agnostic numpy+opencv builder for a static `.html` or an interactive parameter-slider server | visualizing / explaining / debugging / documenting / presenting an image / data / ML pipeline; before/after comparison sliders; an algorithm walkthrough or parameter-tuning playground; turning scattered intermediate results into one shareable file | render/explain aid — you drive the bundled builder, it does not run your pipeline; compare & diff need same-size BGR-uint8 pairs; base64-inline so downscale large frames (`display_width`); distinct from `rendering-html-eval-reports` (eval/training metrics) — this explains pipeline stages |
 
 ## Governance diagram
@@ -315,6 +320,16 @@ The class set, threshold, caveat text, ladder/ablation values, and privacy polic
 committed to git**. Distinct from `publishing-deliverables` (which publishes a doc to the team wiki) — the two compose
 but are different functions.
 
+### Author a skill with evals: eval-driven authoring (create / revise / tune triggering)
+> "建一个带 eval 的 skill" · "author a skill with evals" · "skill 描述不触发" · "improve the skill description"
+
+`authoring-skills-with-evals` runs the eval-driven loop from Anthropic's official skill-creator, adapted to this
+home: **lint** the shape (`validate` writes `.skill-validated.json` with an honest `tier`), **measure** whether the
+description triggers (`trigger-eval`, tri-state; an infrastructure outage is reported *skipped*, never a false "no
+trigger"), and **optimize** the description with a **train/test split** so it cannot overfit the eval set
+(`describe-improve`). The behavioral layer complements the static release scorer; a skill is done only when it passes
+both. The two model-in-the-loop commands need the `claude` CLI and skip cleanly without it.
+
 ### Keyword triggers (中英对照)
 The trigger sub-table for the **Skill Catalog** above — the keywords that invoke each prompt-triggered skill (中英对照).
 | skill | 中文 | English |
@@ -325,12 +340,17 @@ The trigger sub-table for the **Skill Catalog** above — the keywords that invo
 | `announcing-skills` | skill 上新公告 · 公告新 skill · 上新通知 | announce new skills · skill release announcement |
 | `announcing-framework-releases` | 公告框架版本更新 · 框架版本公告 · 发框架升级公告 | announce framework release · framework version update · framework release announcement |
 | `naming-skills` | 校验 skill 命名 · skill 命名校验 · 命名规范检查 | name a skill · check skill naming · audit naming |
+| `authoring-skills-with-evals` | 建带 eval 的 skill · eval 驱动写 skill · skill 描述不触发 · 优化 skill 描述 | author a skill with evals · eval-driven skill authoring · description not triggering · improve skill description |
 | `reviewing-cpp-code` | C/C++ 代码检查 · 代码规范审查 | C/C++ code review · coding-standard check |
 | `optimizing-cpp-performance` | C/C++ 性能优化 · NEON 向量化 · cache 优化 | C/C++ perf optimize · NEON vectorize · cache optimization |
 | `selecting-mobile-gpu-convolutions` | 标准卷积还是可分离 · 移动 GPU 卷积选型 · 端侧卷积选择 | mobile GPU conv selection · standard vs separable conv · on-device conv choice |
 | `validating-on-device-inference` | 上板测试 · 真机验收 · host↔device 一致性 · 设备端签收 · 延迟 p50/p90 | on-device validation · device sign-off · host↔device parity · on-device latency · delegate re-verify |
 | `gating-tflite-op-envelopes` | 过一下运行时包络 · 静态算子包络核对 · tflite 自定义算子检查 | runtime envelope gate · check tflite custom ops · screen .tflite/.task for adoption |
 | `bumping-library-versions` | 升库版本号 · 改版本号 · 发版升号 · 四段版本号 | bump library version · version bump after acceptance · four-segment version |
+| `converting-pytorch-to-tflite` | 导出 tflite · pytorch/onnx 转 tflite · 端侧模型转换 · YUV/BGR 色彩折叠 · tflite 输出不一致 | export to tflite · pytorch/onnx to tflite · convert model for mobile · YUV/BGR colour fold · tflite output mismatch |
+| `loading-model-checkpoints` | 加载 checkpoint · state_dict 不匹配 · missing/unexpected keys · 去 module. 前缀 · 权重加载到随机 | load a checkpoint · state_dict mismatch · missing/unexpected keys · strip module. prefix · loaded onto random weights |
+| `evaluating-segmentation-models` | 评测分割 · 抠图指标 · IoU/边界 F · SAD MSE Grad Conn · 逐类准确率 · 这个 mask 好不好 | evaluate segmentation · matting metrics · IoU/boundary F · SAD MSE Grad Conn · per-class accuracy · is this mask good |
+| `quantizing-on-device-models` | 量化模型 · int8/PTQ/QAT · 代表集/校准 · 逐通道量化 · 量化后掉点 · fp16 还是 int8 | quantize model · int8/PTQ/QAT · representative/calibration set · per-channel quant · accuracy drop after quant · fp16 vs int8 |
 | `polishing-chinese-prose` | 中文不通顺 · 不是人话 · 中文文风校验 · 润色中文 | polish Chinese prose · plain Chinese · Chinese style check · 文牍腔/翻译腔 |
 | `rendering-html-eval-reports` | 出 HTML 评测报告 · 评测结果生成网页报告 · 自含评测报告 · 出训练实验报告 · 训练实验/消融生成网页报告 | render eval report · self-contained eval HTML · HTML eval report · render training-experiment report · ablation report HTML |
 | `attending-group-mentions` | 群值守 · 值守群消息 · 回复群里的 @ · 群里有人 @ 机器人 | attend the group chat · answer @bot mentions · staff group chat |

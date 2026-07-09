@@ -9,19 +9,30 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHECK = os.path.join(ROOT, "tools", "vemo_skills_check.py")
+CREATOR = os.path.join(ROOT, "tools", "skill_creator.py")
 
 HELP = """vemo-skills <command>
-  status                         repository summary
-  catalog                        list registered <category>/<skill> tokens
-  score [path]                   score this repo, or another skill home
-  selfcheck                      score + fail if below release threshold
-  eval                           run executable conformance suite
-  bind [--dest .claude/skills]    regenerate Claude Code skill copies
+  status                            repository summary
+  catalog                           list registered <category>/<skill> tokens
+  score [path]                      score this repo, or another skill home
+  selfcheck                         score + fail if below release threshold
+  eval                              run executable conformance suite
+  bind [--dest .claude/skills]       regenerate Claude Code skill copies
+
+  authoring (eval-driven, modeled on Anthropic's official skill-creator):
+  validate <skill_dir>              lint frontmatter/naming + write .skill-validated.json (tier=lint)
+  trigger-eval <skill_dir> ...      measure whether the description triggers (needs claude CLI)
+  describe-improve <skill_dir> ...  train/test-split description optimization (needs claude CLI)
+  author-selftest                   hermetic self-test of the authoring harness (no model)
 """
 
 
 def run_check(*args: str) -> int:
     return subprocess.run(["python3", CHECK, *args]).returncode
+
+
+def run_creator(*args: str) -> int:
+    return subprocess.run(["python3", CREATOR, *args]).returncode
 
 
 def status() -> int:
@@ -56,6 +67,10 @@ def main(argv=None) -> int:
         return subprocess.run(["python3", os.path.join(ROOT, "eval", "run.py")]).returncode
     if cmd == "bind":
         return run_check("--root", ROOT, "bind", *args)
+    if cmd in ("validate", "trigger-eval", "describe-improve"):
+        return run_creator(cmd, *args)
+    if cmd == "author-selftest":
+        return run_creator("selftest")
     print("unknown command:", cmd)
     print(HELP)
     return 2
