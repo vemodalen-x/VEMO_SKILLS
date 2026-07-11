@@ -6,19 +6,24 @@ This project uses semantic versioning for public releases. Generic skill bodies,
 catalog metadata, executable checks, and documentation are kept in the same
 release so consumers can pin a complete skill home by tag.
 
-## [Unreleased]
+## [1.3.0] - Unreleased
 
 ### Added
+- New governance skill `governing-project-fleets`, which operates VEMO's private PC-wide control plane through a
+  consent-gated inventory -> profile -> register -> assess -> preview -> apply -> verify workflow. It keeps discovery
+  read-only, refuses force-overwrite guidance, and separates local readiness from certification or remote authority.
 - New orchestration skill `designing-diagnostic-prompts`, which turns Human 3.0-style self-discovery and Mr. Ranedeer-style
   tutoring patterns into a generic prompt/agent design workflow: intake, configuration, constraint finding, plan, loop,
   and boundary.
 - `docs/PLAYBOOK_GENERALIZATION.md`: guidance for converting repo-local playbook procedures into reusable shared skills.
 
 ### Changed
-- Catalog grows 28 -> 29 skills; README.md and README_zh.md catalog rows, layout, badge, and keyword-trigger table kept
+- Catalog grows 28 -> 30 skills; README.md and README_zh.md catalog rows, layout, badge, and keyword-trigger table kept
   in parity.
 - `bin/vemo-skills` and `eval/run.py` now use the current Python interpreter instead of hardcoding `python3`, improving
   Windows support.
+- GitHub pull requests and main pushes now run selfcheck + executable eval under a least-privilege, concurrency-bounded
+  workflow with checkout pinned to the verified v6.0.2 commit.
 
 ## [1.2.0] — 2026-07-08
 

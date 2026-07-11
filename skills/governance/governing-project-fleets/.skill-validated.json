@@ -1,0 +1,77 @@
+{
+  "skill_name": "governing-project-fleets",
+  "validated": true,
+  "tier": "lint",
+  "tier_meaning": "frontmatter + naming rules only; NOT a behavioral/trigger eval",
+  "validator": "tools/skill_creator.py",
+  "validator_sha": "06491ed42e29bd2bffad744936f319833b35c7534cdb939bf027ddbcbc382ab4",
+  "timestamp": "2026-07-11T03:26:48Z",
+  "git_commit": "8ac5d7aa0ec080ccd731601bd33a10365b54a9ab",
+  "checks": [
+    {
+      "rule": "SKILL.md present",
+      "pass": true,
+      "evidence": "found"
+    },
+    {
+      "rule": "frontmatter parses",
+      "pass": true,
+      "evidence": "3 keys"
+    },
+    {
+      "rule": "name present",
+      "pass": true,
+      "evidence": "governing-project-fleets"
+    },
+    {
+      "rule": "name charset (kebab)",
+      "pass": true,
+      "evidence": "governing-project-fleets"
+    },
+    {
+      "rule": "name <= 64 chars",
+      "pass": true,
+      "evidence": "len=24"
+    },
+    {
+      "rule": "name gerund-led (verb+ing)",
+      "pass": true,
+      "evidence": "governing"
+    },
+    {
+      "rule": "name == directory",
+      "pass": true,
+      "evidence": "name='governing-project-fleets' dir='governing-project-fleets'"
+    },
+    {
+      "rule": "category present",
+      "pass": true,
+      "evidence": "governance"
+    },
+    {
+      "rule": "category == directory",
+      "pass": true,
+      "evidence": "category='governance' dir='governance'"
+    },
+    {
+      "rule": "description present",
+      "pass": true,
+      "evidence": "len=337"
+    },
+    {
+      "rule": "description <= 1024 chars",
+      "pass": true,
+      "evidence": "len=337"
+    },
+    {
+      "rule": "description no angle brackets",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "rule": "description has when-to-use cue",
+      "pass": true,
+      "evidence": "cue found"
+    }
+  ]
+}
