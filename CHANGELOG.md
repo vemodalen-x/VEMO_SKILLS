@@ -22,6 +22,8 @@ release so consumers can pin a complete skill home by tag.
   in parity.
 - `bin/vemo-skills` and `eval/run.py` now use the current Python interpreter instead of hardcoding `python3`, improving
   Windows support.
+- GitHub pull requests and main pushes now run selfcheck + executable eval under a least-privilege, concurrency-bounded
+  workflow with checkout pinned to the verified v6.0.2 commit.
 
 ## [1.2.0] — 2026-07-08
 

@@ -1,0 +1,29 @@
+name: vemo-skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vemo-skills-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Verify skill-home quality gates
+        run: python3 bin/vemo-skills selfcheck
+
+      - name: Run executable conformance suite
+        run: python3 bin/vemo-skills eval
