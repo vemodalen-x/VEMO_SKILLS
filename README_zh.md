@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-29_skills-0f766e?style=for-the-badge" alt="Skill catalog: 29 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-30_skills-0f766e?style=for-the-badge" alt="Skill catalog: 30 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -82,7 +82,7 @@ python3 bin/vemo-skills score /path/to/another/skill-home
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-本仓刻意保持小而可读：29 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
+本仓刻意保持小而可读：30 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
 可选引用模块放在同目录 `references/` 下。
 
 ## 布局（Layout）
@@ -94,7 +94,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
 类目是功能分组，不是框架仓。
 - `orchestration/` — 阶段、交付、提示流程和运营类 skill：`breaking-down-prds`、`designing-diagnostic-prompts`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
-- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
+- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`governing-project-fleets`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
 - `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
 - `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`、`converting-pytorch-to-tflite`、`loading-model-checkpoints`、`evaluating-segmentation-models`、`quantizing-on-device-models`。
 - `visualization/` — pipeline / 结果可视化 skill：`visualizing-processing-pipelines`（携带 `references/scripts/` 下的 numpy+opencv builder 与可直接运行的 `references/examples/` demo）。
@@ -114,6 +114,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | orchestration | `orchestration/attending-group-mentions` | 群值守：按游标拉 @bot 提及、分类（要报告/数据/状态/问题/越权决策）、能办的办（用 bot 身份发文件/链接；数字只从指名台账或报告里引、禁编造），回复必 @ 提问人、用实例策略的中文（走 `polishing-chinese-prose`）；决策类转 @ 用户 | 群里有人 @ 机器人、要按需回复时 | 反应式应答（只在被 @ 时回、且回提问人）；决策一律上报不擅答；群/身份/游标/词表/open_id 实例所有；主动外推找 `announcing-skills`／`publishing-deliverables` |
 | orchestration | `orchestration/packaging-device-sdk-releases` | 把算法库打成可交付的手机 SDK 发布包：版本号由 `bumping-library-versions` 指派（按名引）、标准包结构（最小对外头 / 按 ABI 的 libs / 带许可标注的 models / RELEASE_NOTES / USAGE 使用说明 / 可编译的 examples/ 示例源 / THIRD_PARTY）、随包双报告（质量走 `rendering-html-eval-reports`、性能走 `validating-on-device-inference` + 内存系统差值法）、清单+sha+解包回验 | 一个已构建的算法库要打成带版本、可审计的手机 SDK 包 | 产物组装；组合版本 + 评测报告 + 上板验收三个 skill（自身管包结构/许可标注/内存差值法/发布校验）；USAGE 与示例照真实头文件写、禁发明接口；打包≠发布——对外发送由人/lead 拍板；库名/版本/平台/群实例所有 |
 | governance | `governance/syncing-frameworks` | 报告锚定的框架子模块上游是否前进；在版本门上升级版本钉 | 会话开始，或要检查框架更新 | 只报告；应用 = 消费方版本门；从不自动 |
+| governance | `governance/governing-project-fleets` | 操作 VEMO 的本机项目注册表、策略档位、就绪报告与预览优先接管 | 治理本机全部 Git 项目、扫描仓库、选择档位或安全铺开 VEMO | 发现只读；采纳/应用须用户同意；就绪不等于认证；不强制覆盖 |
 | governance | `governance/contributing-framework-changes` | 开一个 PR，把本地框架改动带回其仓 | 要把本地框架改进推回上游 | 始终走 PR；身份与路径运行时解析；从不合并 |
 | governance | `governance/publishing-skills` | 按声明类目把 skill 放进主仓并维护目录 | 在 VEMO_SKILLS 新增 / 移动 / 改名 skill | 只负责放置与注册；是否采纳仍由用户决定 |
 | governance | `governance/announcing-skills` | 把新注册的 **skill** 以喜庆 Lark 卡片公告（上新表 + 可选 🏆 累计贡献排行榜，按实例开关） | 一次 skill-hub 发布新增 skill 后 | skill 上新通知；群/身份/仓库地址实例所有；贡献名册身份无关；排行榜由 include_leaderboard 控 |
@@ -235,6 +236,13 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 仓 / 锚定 / 上游 / 落后多少 的表）。它**不需要写权限**——报告这条路对任何只读用户都走得通。**应用**一次版本钉升级
 （迁移到更新的治理规则）则留给消费方**自己的用户版本门**；这个 skill 从不自动升级。
 
+### 治理本机项目群——盘点、档位与安全采纳
+> "治理本机所有项目" · "扫描本地 Git 仓库" · "PC-wide VEMO rollout" · "fleet readiness report"
+
+`governing-project-fleets` 按一条明示流程操作 VEMO 的本机私有控制面：只读发现 → 选择档位 → 用户同意后注册 →
+评估就绪度 → 接管预览 → 明示应用 → 审计链核验。它不把“发现”偷换成“采纳”，不强制覆盖项目自有文件，也不把本机就绪度
+包装成认证或远端源码/构建平台的权威结论。
+
 ### 贡献 / PR——把框架改进推回上游（任何贡献者）
 > "把我对 xxx_spec 的改进 PR 回上游" · "贡献回上游框架" · "contribute this framework change" · "open a framework PR"
 
@@ -298,6 +306,7 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 | skill | 中文 | English |
 |---|---|---|
 | `syncing-frameworks` | 检查框架更新 · 同步框架 · 框架版本 | check framework updates · sync frameworks · framework version |
+| `governing-project-fleets` | 治理本机所有项目 · 扫描本地仓库 · 项目治理档位 · Fleet 就绪报告 | govern all PC projects · scan local repositories · project governance profiles · fleet readiness report |
 | `contributing-framework-changes` | 贡献框架 · 推框架改动 · 贡献回上游 | contribute framework · framework PR · contribute back upstream |
 | `publishing-skills` | 发布 skill · 归类 skill · 新增 skill | publish a skill · categorize a skill · add a skill |
 | `announcing-skills` | skill 上新公告 · 公告新 skill · 上新通知 | announce new skills · skill release announcement |

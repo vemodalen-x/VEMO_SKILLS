@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-29_skills-0f766e?style=for-the-badge" alt="Skill catalog: 29 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-30_skills-0f766e?style=for-the-badge" alt="Skill catalog: 30 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -99,7 +99,7 @@ eval writes its current report to `eval/out/report.json`.
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-The repository is intentionally small and inspectable: 29 skills across five functional categories, with each
+The repository is intentionally small and inspectable: 30 skills across five functional categories, with each
 `SKILL.md` carrying its own frontmatter and optional `references/` folder.
 
 ## Layout
@@ -111,7 +111,7 @@ skills/<category>/<name>/         # per functional category (skill_spec §9); ca
 Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
 `CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
 - `orchestration/` — stage, delivery, prompt-flow, and operations skills: `breaking-down-prds`, `designing-diagnostic-prompts`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
-- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
+- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `governing-project-fleets`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
 - `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
 - `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`, `converting-pytorch-to-tflite`, `loading-model-checkpoints`, `evaluating-segmentation-models`, `quantizing-on-device-models`.
 - `visualization/` — pipeline / result visualization skills: `visualizing-processing-pipelines` (carries a `references/scripts/` numpy+opencv builder + a runnable `references/examples/` demo).
@@ -132,6 +132,7 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | orchestration | `orchestration/attending-group-mentions` | staff a group chat: pull @bot mentions by cursor, triage (report/data/status/question/decision), serve the serviceable (send file/link as bot; answer numbers only by quoting a named ledger/report — no fabrication), reply to the asker with a post @-tag in instance-policy Chinese; escalate decision-class to the user | a bot should respond on demand when colleagues @ it in a group | reactive inbound-servicing (replies only when @'d, to the asker); decisions escalate, never auto-committed; group/identity/cursor/wordlist/open_id instance-owned; proactive push → `announcing-skills`/`publishing-deliverables` |
 | orchestration | `orchestration/packaging-device-sdk-releases` | assemble an algorithm lib into a deliverable mobile SDK package: version assigned by `bumping-library-versions` (referenced), standard layout (minimal headers / per-ABI libs / license-annotated models / RELEASE_NOTES / USAGE doc / a compilable examples/ source / THIRD_PARTY), two ship-along reports (quality via `rendering-html-eval-reports`, performance via `validating-on-device-inference` + the memory system-delta method), manifest+sha+unpack-reverify | a built algorithm lib must become a versioned, auditable phone SDK package | artifact-producer; composes the version + eval-report + on-device-validation skills (owns layout / license-annotation / memory-delta / verification); USAGE + examples written against real headers (no invented API); packaging ≠ releasing — outward send is a human/lead decision; lib/version/platform/group instance-owned |
 | governance | `governance/syncing-frameworks` | report whether pinned framework submodules advanced upstream; bump pins on a version gate | session start, or checking for framework updates | reports only; apply = consumer version gate; never auto |
+| governance | `governance/governing-project-fleets` | operate VEMO's private PC-wide project registry, policy profiles, readiness reports, and preview-first onboarding | governing all local Git projects, scanning repositories, choosing profiles, or rolling out VEMO safely | discovery is read-only; adoption/apply require consent; readiness is not certification; no force overwrite |
 | governance | `governance/contributing-framework-changes` | open a PR carrying a local framework change back to its repo | pushing a local framework improvement upstream | always a PR; identity/path resolved at runtime; never merges |
 | governance | `governance/publishing-skills` | place a skill into the home by its declared category + maintain the catalog | adding / moving / renaming a skill in VEMO_SKILLS | placement + registration only; adoption stays a user-consent decision |
 | governance | `governance/announcing-skills` | announce newly-registered **skill(s)** as a celebratory Lark card (上新表 + optional 🏆 contribution leaderboard, instance-gated) | after a skill-hub release adds skills | skill-hub 上新 notify; group/identity/repo-url instance-owned; ledger identity-free; leaderboard gated by include_leaderboard |
@@ -263,6 +264,14 @@ decision** (the Skill Scout proposes → the user consents → publish runs).
 works for any read-only user. **Applying** a pin bump (moving onto newer governance rules) is held for the consumer's
 **own user version gate**; the skill never auto-updates.
 
+### Govern a PC project fleet — inventory, profiles, and safe adoption
+> "治理本机所有项目" · "扫描本地 Git 仓库" · "PC-wide VEMO rollout" · "fleet readiness report"
+
+`governing-project-fleets` operates VEMO's private local control plane through an explicit sequence: read-only
+discovery → profile selection → user-consented registration → readiness assessment → onboarding dry-run → explicit
+apply → audit verification. It never treats discovery as adoption, never force-overwrites project-owned files, and
+keeps local readiness separate from certification and remote source/build authority.
+
 ### Contribute / PR — push a framework improvement upstream (any contributor)
 > "把我对 xxx_spec 的改进 PR 回上游" · "贡献回上游框架" · "contribute this framework change" · "open a framework PR"
 
@@ -339,6 +348,7 @@ The trigger sub-table for the **Skill Catalog** above — the keywords that invo
 | skill | 中文 | English |
 |---|---|---|
 | `syncing-frameworks` | 检查框架更新 · 同步框架 · 框架版本 | check framework updates · sync frameworks · framework version |
+| `governing-project-fleets` | 治理本机所有项目 · 扫描本地仓库 · 项目治理档位 · Fleet 就绪报告 | govern all PC projects · scan local repositories · project governance profiles · fleet readiness report |
 | `contributing-framework-changes` | 贡献框架 · 推框架改动 · 贡献回上游 | contribute framework · framework PR · contribute back upstream |
 | `publishing-skills` | 发布 skill · 归类 skill · 新增 skill | publish a skill · categorize a skill · add a skill |
 | `announcing-skills` | skill 上新公告 · 公告新 skill · 上新通知 | announce new skills · skill release announcement |
