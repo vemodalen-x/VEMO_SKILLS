@@ -1,7 +1,6 @@
 ---
 name: naming-skills
-category: governance
-description: Validate and standardize a skill's name + description against the authoring naming rules — name ≤64 chars, lowercase letters/digits/hyphens only, no leading/trailing hyphen, name == parent folder, gerund (verb+ing) form; description ≤1024 chars, non-empty, says what-it-does + when-to-use with trigger keywords. Use when authoring, renaming, or publishing a skill, or auditing the home for naming conformance. Read-only validator — reports pass/fail per rule, does not rename.
+description: 'Validate and standardize a skill''s name + description against the authoring naming rules — name ≤64 chars, lowercase letters/digits/hyphens only, no leading/trailing hyphen, name == parent folder, gerund (verb+ing) form; description ≤1024 chars, non-empty, says what-it-does + when-to-use with trigger keywords. Use when authoring, renaming, or publishing a skill, or auditing the home for naming conformance. Read-only validator — reports pass/fail per rule, does not rename.'
 allowed-tools: Read, Grep, Glob
 ---
 

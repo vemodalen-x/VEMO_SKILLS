@@ -15,11 +15,25 @@ release so consumers can pin a complete skill home by tag.
 - New orchestration skill `designing-diagnostic-prompts`, which turns Human 3.0-style self-discovery and Mr. Ranedeer-style
   tutoring patterns into a generic prompt/agent design workflow: intake, configuration, constraint finding, plan, loop,
   and boundary.
+- Seven skills generalized from a PC-wide audit of completed Codex project workflows:
+  - `curating-offline-knowledge-bases` for source ledgers, A-E completeness, learning topologies, lexical-first retrieval,
+    and integrity checks;
+  - `transcribing-long-form-media` for caption-first, checkpointed ASR and selective visual verification;
+  - `architecting-auditable-agent-workflows` for typed tools, explicit decision rights, durable state, provenance, and
+    independent validation;
+  - `planning-constraint-aware-itineraries` for timezone-aware deterministic scheduling and locked local replanning;
+  - `validating-cpu-first-ai-products` for joint demand, quality, performance, privacy, license, and unit-economics gates;
+  - `packaging-windows-desktop-apps` for reproducible Windows artifacts, manifests, and clean-path smoke tests;
+  - `auditing-public-releases` for source/history/archive/CI/tag/remote-release verification.
 - `docs/PLAYBOOK_GENERALIZATION.md`: guidance for converting repo-local playbook procedures into reusable shared skills.
+- `docs/CODEX_PROJECT_SKILL_AUDIT.md`: sanitized evidence map, deduplication decisions, deferred candidates, and reuse
+  topology for the nine local Codex workspaces reviewed.
 
 ### Changed
-- Catalog grows 28 -> 30 skills; README.md and README_zh.md catalog rows, layout, badge, and keyword-trigger table kept
+- Catalog grows 28 -> 37 skills; README.md and README_zh.md catalog rows, layout, badge, and keyword-trigger table kept
   in parity.
+- All 37 skills now use portable standard frontmatter. Functional category is derived from
+  `skills/<category>/<name>/`, and the checker rejects the former non-standard top-level `category` extension.
 - `bin/vemo-skills` and `eval/run.py` now use the current Python interpreter instead of hardcoding `python3`, improving
   Windows support.
 - GitHub pull requests and main pushes now run selfcheck + executable eval under a least-privilege, concurrency-bounded

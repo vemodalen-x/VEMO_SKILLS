@@ -1,7 +1,6 @@
 ---
 name: visualizing-processing-pipelines
-category: visualization
-description: Generate a single self-contained HTML report that visualizes and explains a multi-step processing pipeline. Each stage gets a before/after drag-to-compare slider, a difference heatmap, inline base64 images, what/why/formula annotations, timing bars, and pass/fail metrics. Use when the user wants to visualize, explain, debug, document, or present an image / data / ML pipeline; build before/after comparison sliders; create an algorithm walkthrough or a parameter-tuning playground; or turn scattered intermediate results into one shareable file. Covers both a static exported .html and an interactive server with live parameter sliders.
+description: 'Generate a single self-contained HTML report that visualizes and explains a multi-step processing pipeline. Each stage gets a before/after drag-to-compare slider, a difference heatmap, inline base64 images, what/why/formula annotations, timing bars, and pass/fail metrics. Use when the user wants to visualize, explain, debug, document, or present an image / data / ML pipeline; build before/after comparison sliders; create an algorithm walkthrough or a parameter-tuning playground; or turn scattered intermediate results into one shareable file. Covers both a static exported .html and an interactive server with live parameter sliders.'
 license: MIT
 ---
 

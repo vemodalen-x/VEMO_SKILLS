@@ -2,7 +2,7 @@
 
 VEMO_SKILLS governs a reusable skill home. Contributions should preserve three invariants:
 
-- `skills/<category>/<name>/SKILL.md` frontmatter is the source of truth for `name` and `category`.
+- `SKILL.md` uses standard portable frontmatter; `name` comes from frontmatter and `category` comes from the parent directory.
 - README catalog tokens match the skill tree in both English and Chinese READMEs.
 - Generic skill bodies contain no project-specific values; those belong in the consuming project instance.
 

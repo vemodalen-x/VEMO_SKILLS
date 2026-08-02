@@ -1,7 +1,6 @@
 ---
 name: quantizing-on-device-models
-category: code
-description: Quantize a model for on-device (mobile / NPU) deployment and verify it still meets quality — choose fp16 vs int8 (dynamic-range PTQ, full-int8 PTQ with a representative dataset, or QAT), pick per-channel weights and input symmetry, decide which layers stay float, and gate on an accuracy-vs-latency budget. Use when a fp16 model is too slow or large on device, when planning an INT8 conversion, when choosing a calibration set, or when a quantized model's accuracy regresses. Verifies parity in decision space (argmax / IoU), not raw logits. Triggers: quantize model, int8 / PTQ / QAT, representative dataset, calibration set, per-channel quantization, accuracy drop after quant, fp16 vs int8, shrink model for mobile.
+description: 'Quantize a model for on-device (mobile / NPU) deployment and verify it still meets quality — choose fp16 vs int8 (dynamic-range PTQ, full-int8 PTQ with a representative dataset, or QAT), pick per-channel weights and input symmetry, decide which layers stay float, and gate on an accuracy-vs-latency budget. Use when a fp16 model is too slow or large on device, when planning an INT8 conversion, when choosing a calibration set, or when a quantized model''s accuracy regresses. Verifies parity in decision space (argmax / IoU), not raw logits. Triggers: quantize model, int8 / PTQ / QAT, representative dataset, calibration set, per-channel quantization, accuracy drop after quant, fp16 vs int8, shrink model for mobile.'
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 

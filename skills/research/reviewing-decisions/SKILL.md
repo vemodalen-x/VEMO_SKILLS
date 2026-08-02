@@ -1,7 +1,6 @@
 ---
 name: reviewing-decisions
-category: research
-description: Reliability ruleset for technical design decisions — a lightweight design-review discipline. Each key decision must carry 6 fields (options/evidence/trade-offs/assumptions/failure-modes/validation); a cross-model red-team pass critiques the doc before publish. Use when the research-solution agent finalizes the solution_document. Owned by Framework 1 (research). Generic; reviewer models/decisions are instance values.
+description: 'Reliability ruleset for technical design decisions — a lightweight design-review discipline. Each key decision must carry 6 fields (options/evidence/trade-offs/assumptions/failure-modes/validation); a cross-model red-team pass critiques the doc before publish. Use when the research-solution agent finalizes the solution_document. Owned by Framework 1 (research). Generic; reviewer models/decisions are instance values.'
 ---
 
 # Decision Review (reliability discipline)

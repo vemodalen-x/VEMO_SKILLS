@@ -1,7 +1,6 @@
 ---
 name: bumping-library-versions
-category: code
-description: Bump a device/library's four-segment version after an acceptance build+run passes, and keep the version single-sourced. The four segments X.Y.Z.W are embedded in three agreeing surfaces — a source string constant, the init log line, and a getVersion() API. Bump rules: W (last) = bug-fix +1; Z (penultimate) = feature +1 and reset W to 0; both-in-one-release = Z +1 and reset W to 0; X.Y (first two) = major/platform-line, human-set only. Precondition: the acceptance build+run has already succeeded. After bumping, report old → new explicitly. Use when releasing a library and the version must advance. Identity-decoupled — the version-string field name + file are caller parameters; no project names embedded.
+description: 'Bump a device/library''s four-segment version after an acceptance build+run passes, and keep the version single-sourced. The four segments X.Y.Z.W are embedded in three agreeing surfaces — a source string constant, the init log line, and a getVersion() API. Bump rules: W (last) = bug-fix +1; Z (penultimate) = feature +1 and reset W to 0; both-in-one-release = Z +1 and reset W to 0; X.Y (first two) = major/platform-line, human-set only. Precondition: the acceptance build+run has already succeeded. After bumping, report old → new explicitly. Use when releasing a library and the version must advance. Identity-decoupled — the version-string field name + file are caller parameters; no project names embedded.'
 allowed-tools: Read, Edit, Bash
 ---
 

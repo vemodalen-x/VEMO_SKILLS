@@ -4,9 +4,9 @@
   "tier": "lint",
   "tier_meaning": "frontmatter + naming rules only; NOT a behavioral/trigger eval",
   "validator": "tools/skill_creator.py",
-  "validator_sha": "2267c8eee4c30f09f3a2059d735637174a8eb036c13a57f5b3549bb6f00324af",
-  "timestamp": "2026-07-08T05:15:17Z",
-  "git_commit": "bd2edf1cdafba2274bab02f6560c4b37a7e7c751",
+  "validator_sha": "ad54d24d2b0898cdcbb0311563cf97643ffe514035465aac9e642517ecbfbbd5",
+  "timestamp": "2026-08-02T15:38:17Z",
+  "git_commit": "fa6da91b6244d848fe92f49c1791ac35d5e2b32a",
   "checks": [
     {
       "rule": "SKILL.md present",
@@ -16,7 +16,7 @@
     {
       "rule": "frontmatter parses",
       "pass": true,
-      "evidence": "4 keys"
+      "evidence": "3 keys"
     },
     {
       "rule": "name present",
@@ -44,14 +44,9 @@
       "evidence": "name='converting-pytorch-to-tflite' dir='converting-pytorch-to-tflite'"
     },
     {
-      "rule": "category present",
+      "rule": "standard frontmatter keys",
       "pass": true,
-      "evidence": "code"
-    },
-    {
-      "rule": "category == directory",
-      "pass": true,
-      "evidence": "category='code' dir='code'"
+      "evidence": "ok"
     },
     {
       "rule": "description present",

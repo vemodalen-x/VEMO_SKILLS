@@ -1,7 +1,6 @@
 ---
 name: governing-project-fleets
-category: governance
-description: Operate VEMO's private local fleet control plane to discover, register, assess, and preview-first onboard Git projects across one PC. Use when the user asks to govern all PC projects, scan local repositories, choose solo/team/regulated profiles, generate fleet readiness reports, or roll out VEMO without overwriting project-owned files.
+description: 'Operate VEMO''s private local fleet control plane to discover, register, assess, and preview-first onboard Git projects across one PC. Use when the user asks to govern all PC projects, scan local repositories, choose solo/team/regulated profiles, generate fleet readiness reports, or roll out VEMO without overwriting project-owned files.'
 ---
 
 # Project Fleet Governance

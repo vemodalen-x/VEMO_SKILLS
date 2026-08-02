@@ -1,7 +1,6 @@
 ---
 name: publishing-deliverables
-category: orchestration
-description: Publish a project deliverable (proposal / research report / experiment report / design doc) to the project's Feishu (Lark) wiki as a clean technical-report-styled document — tables and flowcharts for structured info. Use when a stage produces a deliverable that should be filed to the team Feishu wiki. Owned by Framework 0 (orchestration); style is constrained by ml-paper-writing + the local style spec.
+description: 'Publish a project deliverable (proposal / research report / experiment report / design doc) to the project''s Feishu (Lark) wiki as a clean technical-report-styled document — tables and flowcharts for structured info. Use when a stage produces a deliverable that should be filed to the team Feishu wiki. Owned by Framework 0 (orchestration); style is constrained by ml-paper-writing + the local style spec.'
 ---
 
 # Publish Deliverable to Feishu

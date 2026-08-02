@@ -2,7 +2,7 @@
 """VEMO_SKILLS repository checker.
 
 Stdlib-only checks for a skill-home repository:
-- skill frontmatter and category placement
+- standard skill frontmatter and category-directory placement
 - README / README_zh catalog parity
 - reference file integrity
 - public-release hygiene
@@ -43,6 +43,8 @@ SECRET_PATTERNS = [
     re.compile(r"gh[pousr]_[A-Za-z0-9_]{20,}"),
 ]
 
+STANDARD_FRONTMATTER_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
+
 PRIVATE_PATTERNS = [
     re.compile("/" + "home" + r"/[A-Za-z0-9_.-]+"),
     re.compile("/" + "media" + r"/[A-Za-z0-9_.-]+"),
@@ -64,6 +66,15 @@ def read(path: Path) -> str:
         return path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return ""
+
+
+def parse_scalar(value: str) -> str:
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] == "'":
+        return value[1:-1].replace("''", "'")
+    if len(value) >= 2 and value[0] == value[-1] == '"':
+        return value[1:-1].replace(r'\"', '"').replace(r"\\", "\\")
+    return value
 
 
 def text_files(root: Path):
@@ -91,12 +102,13 @@ def parse_frontmatter(path: Path) -> dict[str, str]:
     i = 0
     while i < len(lines):
         raw = lines[i]
-        if not raw.strip() or raw.lstrip().startswith("#") or ":" not in raw:
+        if (not raw.strip() or raw.lstrip().startswith("#") or ":" not in raw
+                or raw.startswith((" ", "\t"))):
             i += 1
             continue
         key, value = raw.split(":", 1)
         key = key.strip()
-        value = value.strip().strip("\"'")
+        value = parse_scalar(value)
         if value in (">", "|"):
             block = []
             i += 1
@@ -129,7 +141,8 @@ def skills(root: Path):
             "category_dir": parts[1],
             "name_dir": parts[2],
             "name": fm.get("name", ""),
-            "category": fm.get("category", ""),
+            "category": parts[1],
+            "frontmatter_keys": sorted(fm),
             "description": fm.get("description", ""),
         })
     return rows
@@ -178,13 +191,14 @@ def check_catalog(root: Path, rows):
 def check_frontmatter(rows):
     issues = []
     for r in rows:
-        for key in ("name", "category", "description"):
+        for key in ("name", "description"):
             if not r[key]:
                 issues.append(f"{r['rel']}: missing {key}")
         if r["name"] and r["name"] != r["name_dir"]:
             issues.append(f"{r['rel']}: name != directory")
-        if r["category"] and r["category"] != r["category_dir"]:
-            issues.append(f"{r['rel']}: category != directory")
+        unexpected = set(r["frontmatter_keys"]) - STANDARD_FRONTMATTER_KEYS
+        if unexpected:
+            issues.append(f"{r['rel']}: non-standard frontmatter keys {sorted(unexpected)}")
     ok = bool(rows) and not issues
     return points("frontmatter_layout", ok, f"{len(rows)} SKILL.md files checked" if ok else "; ".join(issues[:8]))
 

@@ -1,131 +1,93 @@
-# VEMO_SKILLS · Home Conventions
+# VEMO_SKILLS Home Conventions
 
-> **Operating procedure** of this shared skill home. This doc states the *home-local procedure*; the *rules* it
-> implements live in the consumer's governing skill specification. **Consolidate-with-pointers,
-> not duplication** — where a rule is owned by `skill_spec`, this doc points at it rather than restating it.
-> Adoption (a skill entering a project's toolset) is **out of scope** here and stays a user-consent decision
-> (skill_spec §6).
+This document defines the operating procedure of the shared skill home. Skill registration and skill adoption are
+separate: this repository can publish a skill, but each consumer decides whether to activate it.
 
-## 0. Skill lifecycle — registration is the precondition
-A skill becomes usable in stages, **in order**. Registration is the **gate stage**: nothing downstream can see a skill
-that is not registered.
+## 0. Skill lifecycle
 
-1. **Register (into the home)** — what `publishing-skills` does: write `skills/<category>/<name>/SKILL.md` with a declared
-   `category:` → place into / create the category folder → add the README Skill-Catalog row + Use-via-Prompt entry
-   (multiset-checked) → CHANGELOG entry + version bump. **This is the act of registration.** A skill not registered
-   here does not exist for any downstream stage.
-2. **Bind (into a consuming project)** — a registered skill reaches a project by: pinning the VEMO_SKILLS submodule
-   (commit/tag) → `team_bootstrap` regenerates it into `.claude/skills/<name>/` (byte-identical, §5) → the project's
-   `project_profile.yaml` `shared_skills.provides` reflects it. **Registration ≠ adoption**: entering a team's *active
-   toolset* is a **user-consent decision** (skill_spec §6) — binding makes a registered skill *available*, consent
-   makes it *adopted*. The regen materializes **every** registered skill, **including the governance-meta skills
-   themselves** (`skills/governance/` — `syncing-frameworks`, `contributing-framework-changes`, `publishing-skills`): there is **no
-   separate installer** for the maintenance toolchain — acquiring this repo + regen binds the meta skills like any
-   other (see the README **Getting started** section for the first-acquisition commands).
-3. **Then sync / contribute** — only after a skill is registered (and, for sync, **released = registered + tagged**):
-   - `syncing-frameworks` compares the pinned **released** version against the upstream latest — an unregistered/untagged
-     skill is invisible to it.
-   - `contributing-framework-changes` opens a PR against a **registered** skill in its repo — there is nothing to PR for a skill
-     that was never registered.
+The lifecycle is ordered:
 
-So the chain is **register → bind (+consent = adopt) → sync / contribute**. The rest of this doc details stage 1's
-conventions (the home's own responsibility); stages 2–3 are pointers to `team_bootstrap`, `syncing-frameworks`, and
-`contributing-framework-changes`.
+1. **Register:** place the portable source at `skills/<category>/<name>/`, update both catalogs, validate, and record
+   the release change.
+2. **Bind:** a consumer pins a released revision and regenerates registered skills into its configured discovery
+   directory.
+3. **Adopt:** the consumer activates a bound skill only with the applicable user consent.
+4. **Sync or contribute:** released skills can be compared with upstream or changed through a pull request.
 
-## 1. Category layout (declare-and-create)
-- Skills live under `skills/<category>/<name>/`. A **category** is a functional grouping (`governance/`,
-  `orchestration/`, `research/`, `code/`), **not** a framework repo — `governance/` is owned by no single framework,
-  while a domain category like `code/` groups skills owned by a domain framework (skill_spec §7). (Rule: skill_spec §9.)
-- The category set is **declare-and-create, not a fixed enum**: a skill declares its `category`; publishing places it
-  under `skills/<category>/`, creating the folder if the category is new. The category set is whatever the filesystem
-  holds — there is no hardcoded list anywhere.
-- **Mechanism**: the `publishing-skills` skill (`skills/governance/publishing-skills/`) performs placement + registration.
+Registration is a precondition for the later stages, but it never implies adoption.
 
-## 2. Declared-category field (single source of truth)
-- Every `SKILL.md` carries `category:` in frontmatter. The directory path is a **derived placement target**, not the
-  source. If frontmatter and path disagree, the **frontmatter wins** and the skill is mis-placed (a check, §5).
-- Frontmatter floor: `name:`, `category:`, `description:`.
-- **Naming conformance**: `name:` and `description:` must pass the skill-naming rules — `name` ≤64 chars, lowercase
-  letters/digits/hyphens only, no leading/trailing hyphen, **gerund (verb+ing)** form, and `name` == its parent folder;
-  `description` non-empty / ≤1024 chars / what-it-does + when-to-use + trigger keywords. The **rule is owned by
-  `skill_spec` §9** (naming clause); the **authority + machine-check is the `naming-skills` skill**
-  (`skills/governance/naming-skills/`), which `publishing-skills` runs as its pre-registration gate. This doc points at
-  those rather than restating them (consolidate-with-pointers).
+## 1. Category layout
 
-## 3. README maintenance obligation (+ Skill-Catalog row format)
-- Every skill **add / move / rename / remove** updates `README.md`: **Skill-Catalog row** + category-layout line +
-  Use-via-Prompt entry + keyword-triggers (trigger sub-table) row (for prompt-triggered skills). README entry-doc style:
-  the **R29+ entry-doc family** (`skills/orchestration/publishing-deliverables/references/readme-style.md`, incl. the
-  R32 bilingual pair). R30: never hardcode a version number — point at `VERSION` + `CHANGELOG.md`.
-- **Skill-Catalog row format (home-local — like the §9 product-front-matter convention, NOT a generic entry-doc rule).**
-  The README **Skill Catalog** carries one structured row per registered skill, with these columns:
-  - **category** — must **equal** the skill's frontmatter `category:` (a derived value, checked for equality).
-  - **skill** — the `` `<category>/<name>` `` identifier token; `<name>` must **equal** the frontmatter `name:` (derived,
-    checked for equality). This token is what the §4 multiset diff extracts as set A — **it must be preserved**.
-  - **does** / **when to use** / **boundary** — curated one-line cells; each must be **non-empty** (no machine truth to
-    compare against, so completeness, not equality).
-  Trigger keywords are **not** a catalog column — they live in the **Use via Prompt → Keyword triggers** sub-table; each
-  prompt-triggered skill must have a row there (coverage). The catalog absorbs the old "role table"; the keyword table is
-  relocated under Use-via-Prompt as the trigger sub-table (not removed). Bilingual mirror (R32). The machine check that
-  enforces this is `publishing-skills` Step 5 (catalog-column completeness + derived-equality + trigger coverage).
+- Skills live under `skills/<category>/<name>/`.
+- The immediate directory under `skills/` is the category source of truth.
+- Categories are functional groupings such as `governance`, `orchestration`, `research`, `code`, or `visualization`.
+- The category set is not a hardcoded enum. A publisher may create a new category after the author explicitly selects
+  it; the publisher must not infer one silently.
+- A category is repository organization, not portable skill metadata.
 
-## 4. README ⇄ skills consistency check (machine, multiset — not count)
-- Set A = README **Skill-Catalog** rows' `` `<category>/<name>` `` skill tokens. Set B = every `skills/*/*/SKILL.md`
-  keyed by frontmatter `name:` + `category:`. Assert **A == B as multisets**; report `only-in-README` (orphan row) and
-  `only-in-tree` (unregistered skill). A multiset diff catches a rename / wrong-folder placement that a count compare
-  misses. (The catalog keeps the `<category>/<name>` token specifically so this extraction is unchanged.)
-- **Declared-category ⇄ placement-path**: for every `SKILL.md`, `category:` must equal the `<dir>` it sits under.
+## 2. Standard frontmatter
 
-## 5. Regen byte-identical (build-artifact rule)
-- A consuming project regenerates each skill into `.claude/skills/<name>/` (the Claude Code discovery root) — a
-  **gitignored build artifact**, single source = this home (skill_spec §9). After any skill-body change, verify
-  `diff -r skills/<category>/<name> .claude/skills/<name>` is clean. Never hand-edit the regenerated copies.
+Every `SKILL.md` uses the standard skill frontmatter floor:
 
-## 6. Identity decoupling (red line)
-- Skill bodies carry **zero hardcoded project/identity values** — no org, account, project path, wiki id, chat id, or
-  language switch. Identity, upstream, and permission are resolved at runtime (`git remote get-url origin` /
-  `gh api user` / a live `permissions.push` probe). (Rule: skill_spec §9 identity dimension.) The home repo name is
-  allowed as an *example* only if annotated "resolved at runtime".
-- **Self-check**: `grep -Ei '<org>|<account>'` on a published `SKILL.md` → 0 hits.
-
-## 7. Versioning + release
-- This home is versioned + pinned like a framework repo (own `VERSION` / `CHANGELOG.md`; PR-merged + tagged via
-  `Framework_Release.procedure`). Tri-consistency: **VERSION == CHANGELOG top == (at release) git tag**. A consuming
-  project pins a commit/tag and bumps it on a **user version gate** (`syncing-frameworks`).
-- **PR-only (ruled 2026-06-11)**: every change to this repo lands via **branch → PR → merge** — direct pushes to the
-  default branch are prohibited, for maintainers too.
-- **Weekly official release train**: the official release (tag + announcement card) is cut **once a week (Friday)**.
-  PRs merged by the Friday cutoff ride that week's train; unmerged PRs wait for the next one.
-- **Merged-PR-only contribution counting**: a PR-sourced contribution enters the contributor ledger / leaderboard only
-  after its PR is **merged (accepted)**. Open or rejected PRs are not counted and do not ship in the release.
-
-## 8. Who runs publishing (actor constraint)
-- The **Skill Scout** proposes a skill → the **user consents** → `publishing-skills` places + registers it. This is a role
-  constraint on the actor, **not** a separate agent-categorization system: agents are framework-homed (registry_spec),
-  there is no parallel agent-folder layout in this home. Adoption stays the user-consent red line (skill_spec §6).
-
-## 9. Product front matter (home-local — VEMO_SKILLS-as-standalone-output)
-- Because VEMO_SKILLS is published as an **independent repo** (not only a submodule), its `README.md` carries a
-  **product-style front matter** block above the governed sections: a centered title + one-line tagline, **static
-  badges**, and **Why / Features** sections, plus a **"reading this repo two ways"** standalone-vs-governed note.
-- **This is a home-local convention, NOT a generic entry-doc rule.** It deliberately does **not** live in
-  `readme-style.md` (R29–R32): framework READMEs are orientation docs, not product
-  pages, and must not inherit a product-framing obligation. The convention is scoped to this home only.
-- **Identity red line on badges (skill_spec §9 / §6 above):** badges MUST be **static or repo-relative** — a license
-  badge linking to the in-repo [`LICENSE`](LICENSE), a version badge pointing at [`VERSION`](VERSION), a changelog
-  badge. **No `shields.io` org-pathed badges** (e.g. `…/github/v/release/<org>/<repo>`) — those hardcode the team org
-  and breach decoupling. A logo, if added, uses a repo-relative asset path, never an external/org-hosted URL.
-- The bilingual pair (R32) applies: the zh mirror reproduces the front matter (HTML title + tagline + static badges)
-  and stays heading-skeleton-parallel; its prose follows the zh-mirror fluency rubric (the `polishing-chinese-prose`
-  翻译腔 band R14–R20, the R32 advisory leg — see §3).
-
-> **Standalone summary of skill_spec §9 (generic/instance decoupling)** — for readers using this repo *outside* a
-> governed project (where `skill_spec` itself is not present): skill bodies carry zero hardcoded project/identity
-> values; generic mechanism + rules live here; all project-specific values live in the consumer's instance and are
-> read at runtime. (Full rule: `skill_spec` §9, present in a governed project. This is a summary pointer, not a
-> restatement that forks the rule.)
-
+```yaml
 ---
-> Pointers: rules → `skill_spec` (§6 adoption pipeline + consent, §7 grouping, §9 decoupling). Style → `readme-style.md`
-> (R29–R32, incl. the R32 bilingual pair + its `polishing-chinese-prose` advisory rubric). Sync/contribute of frameworks →
-> `syncing-frameworks` / `contributing-framework-changes`.
+name: gerund-led-kebab-name
+description: What the skill does and when it should trigger.
+---
+```
+
+Standard optional fields may be used when needed. Do not add a top-level `category` field: generic Codex/Agent Skills
+validators reject repository-specific extensions, and category is already encoded by the parent directory.
+
+The frontmatter `name` must equal the skill directory. Names and descriptions must pass `naming-skills`; hard naming
+or trigger-description failures block registration.
+
+## 3. README maintenance
+
+Every add, move, rename, or remove updates `README.md` and `README_zh.md` together:
+
+- one Skill Catalog row;
+- the category layout list;
+- a Use-via-Prompt entry and keyword-trigger row when user-triggered;
+- total count and category visualization when present.
+
+Each catalog row has category, skill token, does, when-to-use, and boundary columns. Category comes from the path;
+name comes from frontmatter. The three curated cells must be non-empty.
+
+## 4. Catalog consistency
+
+Set A is every `<category>/<name>` token in each README catalog. Set B is every `skills/*/*/SKILL.md`, with category
+from the parent directory and name from frontmatter. Assert A equals B in both languages. This catches missing rows,
+orphan rows, wrong paths, and stale names.
+
+The checker also rejects a top-level frontmatter `category`, validates `name == directory`, and verifies references.
+
+## 5. Regeneration
+
+The home source is canonical. Consumer copies in discovery directories are generated build artifacts and remain
+gitignored. After a skill-body change, regenerate and compare source and consumer copy byte-for-byte. Never hand-edit
+the generated copy as an alternate source.
+
+## 6. Identity decoupling
+
+Generic skill bodies contain no organization, account, project path, wiki ID, chat ID, credential, or private data.
+Resolve identity, remote, permissions, thresholds, and project policy at runtime. Consumer-specific values stay in the
+consumer project.
+
+## 7. Versioning and release
+
+- Keep `VERSION`, the current changelog release block, and the eventual release tag consistent.
+- Every change lands through branch -> pull request -> merge; do not push directly to the default branch.
+- Releases follow the repository's weekly train. Only merged contributions ship or count as accepted contributions.
+- The pull request reports selfcheck, author-selftest, eval, and any behavioral-test evidence.
+
+## 8. Publishing authority
+
+The author or scout proposes a skill, the user consents, and `publishing-skills` places and registers it. This actor
+rule does not create a second agent-folder hierarchy. Adoption remains a separate consumer decision.
+
+## 9. Standalone repository surface
+
+Because this skill home is also a standalone public repository, its README may contain a centered title, static
+repo-relative badges, Why/Features sections, and a standalone-versus-governed explanation. Do not use badges or assets
+that hardcode an organization/repository identity. Keep the English and Chinese entry documents structurally aligned.

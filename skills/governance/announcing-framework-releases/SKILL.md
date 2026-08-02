@@ -1,7 +1,6 @@
 ---
 name: announcing-framework-releases
-category: governance
-description: Announce a governance framework's formal version release to the team chat as a Feishu (Lark) interactive card — framework name + code, old→new version, change-class summary (Added / Changed / ⚠️ BREAKING) extracted from its CHANGELOG, a one-line consumer-impact verdict (sync now? breaking?), repo + CHANGELOG links, maintainer, plus an optional 🏆 cumulative contribution leaderboard (instance-gated by include_leaderboard, computed from the same hub ledger as announcing-skills). Use after a framework release is tagged and push-verified. Identity-decoupled — group and the maintainer/contributor open_id maps are instance values; repo URL is resolved at runtime from the submodule remote.
+description: 'Announce a governance framework''s formal version release to the team chat as a Feishu (Lark) interactive card — framework name + code, old→new version, change-class summary (Added / Changed / ⚠️ BREAKING) extracted from its CHANGELOG, a one-line consumer-impact verdict (sync now? breaking?), repo + CHANGELOG links, maintainer, plus an optional 🏆 cumulative contribution leaderboard (instance-gated by include_leaderboard, computed from the same hub ledger as announcing-skills). Use after a framework release is tagged and push-verified. Identity-decoupled — group and the maintainer/contributor open_id maps are instance values; repo URL is resolved at runtime from the submodule remote.'
 ---
 
 # Announcing Framework Releases

@@ -73,14 +73,15 @@ def skill_body(skill_md: Path) -> str:
 # validate + provenance marker
 # --------------------------------------------------------------------------- #
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+STANDARD_FRONTMATTER_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
 
 
 def validate_skill(skill_dir: Path) -> tuple[bool, list[dict]]:
     """Lint a skill's frontmatter + naming. Returns (ok, per-rule checks).
 
-    Mirrors the ``naming-skills`` A1-A5 / B1-B3 rules and Anthropic's frontmatter
-    spec (kebab name <=64, description <=1024, no angle brackets). Category is the
-    VEMO_SKILLS-required extra field and must equal the parent directory.
+    Mirrors the ``naming-skills`` A1-A5 / B1-B3 rules and the standard skill
+    frontmatter contract (kebab name <=64, description <=1024, no angle brackets).
+    Functional category is derived from the parent directory, not frontmatter.
     """
     skill_dir = Path(skill_dir)
     checks: list[dict] = []
@@ -101,7 +102,6 @@ def validate_skill(skill_dir: Path) -> tuple[bool, list[dict]]:
     rule("frontmatter parses", True, f"{len(fm)} keys")
 
     name = fm.get("name", "")
-    category = fm.get("category", "")
     desc = fm.get("description", "")
 
     rule("name present", bool(name), name or "<missing>")
@@ -111,9 +111,9 @@ def validate_skill(skill_dir: Path) -> tuple[bool, list[dict]]:
          name.split("-", 1)[0] if name else "<missing>")
     rule("name == directory", name == skill_dir.name, f"name={name!r} dir={skill_dir.name!r}")
 
-    rule("category present", bool(category), category or "<missing>")
-    rule("category == directory", category == skill_dir.parent.name,
-         f"category={category!r} dir={skill_dir.parent.name!r}")
+    unexpected = set(fm) - STANDARD_FRONTMATTER_KEYS
+    rule("standard frontmatter keys", not unexpected,
+         "ok" if not unexpected else f"unexpected={sorted(unexpected)}")
 
     rule("description present", bool(desc), f"len={len(desc)}")
     rule("description <= 1024 chars", len(desc) <= 1024, f"len={len(desc)}")
@@ -460,16 +460,26 @@ def selftest() -> int:
         good = Path(td) / "code" / "reviewing-widgets"
         good.mkdir(parents=True)
         (good / "SKILL.md").write_text(
-            "---\nname: reviewing-widgets\ncategory: code\n"
+            "---\nname: reviewing-widgets\n"
             "description: Review widget code for defects. Use when a widget change needs a check before commit.\n"
             "---\n\n# Reviewing Widgets\n", encoding="utf-8")
         ok, _ = validate_skill(good)
         check("validate accepts a good skill", ok, "")
 
+        quoted = Path(td) / "code" / "reviewing-owner-s-code"
+        quoted.mkdir(parents=True)
+        (quoted / "SKILL.md").write_text(
+            "---\nname: reviewing-owner-s-code\n"
+            "description: 'Review an owner''s code. Use when the owner''s change needs review.'\n"
+            "---\n# x\n", encoding="utf-8")
+        quoted_fm = parse_frontmatter(quoted / "SKILL.md")
+        check("parser decodes YAML single-quote escapes", quoted_fm.get("description") ==
+              "Review an owner's code. Use when the owner's change needs review.", "")
+
         noun = Path(td) / "code" / "widget-reviewer"
         noun.mkdir(parents=True)
         (noun / "SKILL.md").write_text(
-            "---\nname: widget-reviewer\ncategory: code\n"
+            "---\nname: widget-reviewer\n"
             "description: Review widgets. Use when reviewing.\n---\n# x\n", encoding="utf-8")
         ok_n, checks_n = validate_skill(noun)
         gerund_failed = any(c["rule"].startswith("name gerund") and not c["pass"] for c in checks_n)
@@ -478,11 +488,21 @@ def selftest() -> int:
         nocue = Path(td) / "code" / "scanning-things"
         nocue.mkdir(parents=True)
         (nocue / "SKILL.md").write_text(
-            "---\nname: scanning-things\ncategory: code\ndescription: Scans things thoroughly.\n---\n# x\n",
+            "---\nname: scanning-things\ndescription: Scans things thoroughly.\n---\n# x\n",
             encoding="utf-8")
         ok_c, checks_c = validate_skill(nocue)
         cue_failed = any("when-to-use" in c["rule"] and not c["pass"] for c in checks_c)
         check("validate rejects a description with no when-to-use cue", (not ok_c) and cue_failed, "")
+
+        legacy = Path(td) / "code" / "reviewing-legacy-widgets"
+        legacy.mkdir(parents=True)
+        (legacy / "SKILL.md").write_text(
+            "---\nname: reviewing-legacy-widgets\ncategory: code\n"
+            "description: Review legacy widgets. Use when legacy widget code needs review.\n---\n# x\n",
+            encoding="utf-8")
+        ok_l, checks_l = validate_skill(legacy)
+        standard_failed = any(c["rule"] == "standard frontmatter keys" and not c["pass"] for c in checks_l)
+        check("validate rejects non-standard top-level category", (not ok_l) and standard_failed, "")
 
         # 3. marker round-trips, tier honest, sha matches
         marker_path = write_validation_marker(good, [{"rule": "x", "pass": True, "evidence": ""}], tier="lint")

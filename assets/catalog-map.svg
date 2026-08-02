@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1120" height="420" viewBox="0 0 1120 420" role="img" aria-labelledby="title desc">
   <title id="title">VEMO_SKILLS catalog map</title>
-  <desc id="desc">A category map for the 23 public skills in VEMO_SKILLS.</desc>
+  <desc id="desc">A category map for the 37 public skills in VEMO_SKILLS.</desc>
   <style>
     .title{font:700 24px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}
     .label{font:700 18px Inter,Segoe UI,Arial,sans-serif;fill:#0F172A}
@@ -12,25 +12,25 @@
   <text x="42" y="82" class="body">Functional categories, not private project ownership.</text>
   <g transform="translate(54 132)">
     <circle cx="152" cy="116" r="98" fill="#DBEAFE" stroke="#60A5FA" stroke-width="2"/>
-    <text x="152" y="104" text-anchor="middle" class="count">6</text>
+    <text x="152" y="104" text-anchor="middle" class="count">10</text>
     <text x="152" y="136" text-anchor="middle" class="label">orchestration</text>
     <text x="152" y="162" text-anchor="middle" class="body">delivery and operations</text>
   </g>
   <g transform="translate(292 132)">
     <circle cx="152" cy="116" r="98" fill="#CCFBF1" stroke="#14B8A6" stroke-width="2"/>
-    <text x="152" y="104" text-anchor="middle" class="count">7</text>
+    <text x="152" y="104" text-anchor="middle" class="count">10</text>
     <text x="152" y="136" text-anchor="middle" class="label">governance</text>
     <text x="152" y="162" text-anchor="middle" class="body">hub and release skills</text>
   </g>
   <g transform="translate(530 132)">
     <circle cx="152" cy="116" r="98" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
-    <text x="152" y="104" text-anchor="middle" class="count">3</text>
+    <text x="152" y="104" text-anchor="middle" class="count">5</text>
     <text x="152" y="136" text-anchor="middle" class="label">research</text>
     <text x="152" y="162" text-anchor="middle" class="body">decisions and docs</text>
   </g>
   <g transform="translate(768 132)">
     <circle cx="152" cy="116" r="98" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
-    <text x="152" y="104" text-anchor="middle" class="count">6</text>
+    <text x="152" y="104" text-anchor="middle" class="count">11</text>
     <text x="152" y="136" text-anchor="middle" class="label">code</text>
     <text x="152" y="162" text-anchor="middle" class="body">review, runtime, release</text>
   </g>

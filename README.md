@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-30_skills-0f766e?style=for-the-badge" alt="Skill catalog: 30 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-37_skills-0f766e?style=for-the-badge" alt="Skill catalog: 37 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -99,21 +99,21 @@ eval writes its current report to `eval/out/report.json`.
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-The repository is intentionally small and inspectable: 30 skills across five functional categories, with each
+The repository is intentionally small and inspectable: 37 skills across five functional categories, with each
 `SKILL.md` carrying its own frontmatter and optional `references/` folder.
 
 ## Layout
 ```
-skills/<category>/<name>/         # per functional category (skill_spec §9); category declared in SKILL.md frontmatter
-  SKILL.md                        # generic body — zero hardcoded project values; carries `category:`
+skills/<category>/<name>/         # per functional category; the parent directory owns category
+  SKILL.md                        # portable standard frontmatter; zero hardcoded project values
   references/                     # generic reference modules (optional, e.g. readme-style, technical-report-style)
 ```
-Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
-`CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
-- `orchestration/` — stage, delivery, prompt-flow, and operations skills: `breaking-down-prds`, `designing-diagnostic-prompts`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
-- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `governing-project-fleets`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
-- `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
-- `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`, `converting-pytorch-to-tflite`, `loading-model-checkpoints`, `evaluating-segmentation-models`, `quantizing-on-device-models`.
+Categories are **explicit-and-create** (the publisher receives a category and creates the folder if new) — see
+`CONVENTIONS.md`. Category comes from the path, not custom skill frontmatter; it is a functional grouping, not a framework repo.
+- `orchestration/` — stage, delivery, prompt-flow, and operations skills: `breaking-down-prds`, `designing-diagnostic-prompts`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`, `architecting-auditable-agent-workflows`, `planning-constraint-aware-itineraries`, `transcribing-long-form-media`.
+- `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `governing-project-fleets`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`, `auditing-public-releases`.
+- `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`, `curating-offline-knowledge-bases`, `validating-cpu-first-ai-products`.
+- `code/` — code review, runtime, and release skills: `reviewing-cpp-code`, `optimizing-cpp-performance` (each carries the shared `references/embedded-cpp-rules.md`, kept in parity), `selecting-mobile-gpu-convolutions`, `validating-on-device-inference`, `gating-tflite-op-envelopes` (carries `references/envelope_gate.py`), `bumping-library-versions`, `converting-pytorch-to-tflite`, `loading-model-checkpoints`, `evaluating-segmentation-models`, `quantizing-on-device-models`, `packaging-windows-desktop-apps`.
 - `visualization/` — pipeline / result visualization skills: `visualizing-processing-pipelines` (carries a `references/scripts/` numpy+opencv builder + a runnable `references/examples/` demo).
 
 ## Skill Catalog
@@ -131,18 +131,24 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | orchestration | `orchestration/rendering-html-eval-reports` | render pre-computed results into a single self-contained HTML report (base64 images, provenance header) — eval type (per-class accuracy vs threshold, confusion matrix incl. abstain/reject column, latency dist, all-errors gallery) or training-experiment type (experiment ladder, training curves, ablation table, measured-vs-inferred labels, limitations) | an eval run or training-experiment sweep's results should become a shareable local HTML artifact | render-only (does not run inference/train); eval type collects ALL errors, samples correct; de-identified images per instance policy, HTML not in git; wiki publish → `publishing-deliverables` |
 | orchestration | `orchestration/attending-group-mentions` | staff a group chat: pull @bot mentions by cursor, triage (report/data/status/question/decision), serve the serviceable (send file/link as bot; answer numbers only by quoting a named ledger/report — no fabrication), reply to the asker with a post @-tag in instance-policy Chinese; escalate decision-class to the user | a bot should respond on demand when colleagues @ it in a group | reactive inbound-servicing (replies only when @'d, to the asker); decisions escalate, never auto-committed; group/identity/cursor/wordlist/open_id instance-owned; proactive push → `announcing-skills`/`publishing-deliverables` |
 | orchestration | `orchestration/packaging-device-sdk-releases` | assemble an algorithm lib into a deliverable mobile SDK package: version assigned by `bumping-library-versions` (referenced), standard layout (minimal headers / per-ABI libs / license-annotated models / RELEASE_NOTES / USAGE doc / a compilable examples/ source / THIRD_PARTY), two ship-along reports (quality via `rendering-html-eval-reports`, performance via `validating-on-device-inference` + the memory system-delta method), manifest+sha+unpack-reverify | a built algorithm lib must become a versioned, auditable phone SDK package | artifact-producer; composes the version + eval-report + on-device-validation skills (owns layout / license-annotation / memory-delta / verification); USAGE + examples written against real headers (no invented API); packaging ≠ releasing — outward send is a human/lead decision; lib/version/platform/group instance-owned |
+| orchestration | `orchestration/architecting-auditable-agent-workflows` | design typed, versioned agent workflows with explicit LLM/deterministic/human authority, provenance, independent validation, idempotency, and durable recovery | building a production agent, copilot, tool-calling automation, durable job, or human-in-the-loop workflow | architecture/evidence contract only; thresholds, permissions, and deployment gates remain consumer-owned |
+| orchestration | `orchestration/planning-constraint-aware-itineraries` | create timezone-aware, versioned itineraries with explicit hard/soft constraints, real transit/buffer items, independent validation, locked local replan, and export round-trip | building a travel-planning agent or validating/replanning a detailed itinerary | never invents live travel facts or lets LLM prose override feasibility; official travel checks remain with the traveler |
+| orchestration | `orchestration/transcribing-long-form-media` | turn authorized long media into timestamped learning evidence via caption-first extraction, local ASR fallback, keyframe/OCR verification, checkpoints, and continuous coverage | transcribing or learning from a lecture, playlist, podcast, interview, or multi-hour recording | no access-control bypass or default full-transcript publication; accuracy claims require independent reference data |
 | governance | `governance/syncing-frameworks` | report whether pinned framework submodules advanced upstream; bump pins on a version gate | session start, or checking for framework updates | reports only; apply = consumer version gate; never auto |
 | governance | `governance/governing-project-fleets` | operate VEMO's private PC-wide project registry, policy profiles, readiness reports, and preview-first onboarding | governing all local Git projects, scanning repositories, choosing profiles, or rolling out VEMO safely | discovery is read-only; adoption/apply require consent; readiness is not certification; no force overwrite |
 | governance | `governance/contributing-framework-changes` | open a PR carrying a local framework change back to its repo | pushing a local framework improvement upstream | always a PR; identity/path resolved at runtime; never merges |
-| governance | `governance/publishing-skills` | place a skill into the home by its declared category + maintain the catalog | adding / moving / renaming a skill in VEMO_SKILLS | placement + registration only; adoption stays a user-consent decision |
+| governance | `governance/publishing-skills` | place a standard-frontmatter skill under an explicit category path and maintain the catalog | adding / moving / renaming a skill in VEMO_SKILLS | never guesses category; placement + registration only, while adoption stays a user-consent decision |
 | governance | `governance/announcing-skills` | announce newly-registered **skill(s)** as a celebratory Lark card (上新表 + optional 🏆 contribution leaderboard, instance-gated) | after a skill-hub release adds skills | skill-hub 上新 notify; group/identity/repo-url instance-owned; ledger identity-free; leaderboard gated by include_leaderboard |
 | governance | `governance/naming-skills` | validate a skill's name + description against the authoring naming rules (≤64 / charset / gerund / folder-match; desc what+when+keywords) | authoring / renaming / publishing a skill, or auditing the home | read-only validator; reports pass/fail, does not rename |
 | governance | `governance/announcing-framework-releases` | announce a **framework** version release as a Lark card (framework / old→new version / change-class / consumer-impact + optional 🏆 leaderboard, instance-gated) | after a framework release is tagged + push-verified | framework-update notify; confirm before send; group/maintainer instance-owned, repo-url runtime-resolved; leaderboard reuses the hub ledger + skill_hub maps |
 | governance | `governance/polishing-chinese-prose` | the canonical Chinese-prose authority — checkable rules in two bands (翻译腔 R14–R20 + 文牍腔 R33–R38) + EN→zh term table | authoring/reviewing Chinese deliverables, the README_zh mirror's fluency, or any Chinese agent reply | cited by name as the prose authority; 翻译腔 instance-activated, 文牍腔 agent-layer always-on |
 | governance | `governance/authoring-skills-with-evals` | author + eval-improve a skill via the repo's skill-creator harness (behavioral eval, trigger eval, train/test-split description tuning) | creating or revising a skill, or a description under/over-triggers | owns the eval loop; complements naming-skills + publishing-skills; validates and tunes, never adopts |
+| governance | `governance/auditing-public-releases` | audit source, reachable history, build inputs, archives, manifests, CI permissions, tags, licenses, and downloaded release assets | preparing/sanitizing a public repository or checking a ZIP, wheel, installer, tag, or GitHub release | readiness audit only; not a vulnerability/legal certification and never publishes, tags, or merges by itself |
 | research | `research/challenging-assumptions` | adversarial design partner — challenge assumptions, apply mental models | thinking through an ambiguous / high-stakes decision | advisory; does not produce the deliverable |
 | research | `research/reviewing-decisions` | review decision records (MADR) for completeness (6-field floor + cross-model red-team) | the research-solution agent finalizes the solution_document | advisory |
 | research | `research/structuring-solution-docs` | arc42-style solution-doc scaffolding (structure-as-checkable-rules) | authoring the solution / design doc after the survey | structural aid |
+| research | `research/curating-offline-knowledge-bases` | build a source ledger, honest A-E completeness levels, source/concept notes, prerequisite topology, lexical index, and integrity manifest | consolidating or auditing a personal/team offline knowledge base, including no-embedding retrieval | does not mirror restricted bodies or equate indexing with reading/mastery; retention/publication remain consumer-owned |
+| research | `research/validating-cpu-first-ai-products` | jointly validate demand, quality, latency, memory, privacy, licensing, and unit economics across heuristic/light/heavy and client/server candidates | evaluating a CPU-first, local-first, browser AI, lightweight-model, or distillation product path | produces frozen Go/Narrow/Stop evidence; does not authorize launch, promotion spend, or claims |
 | code | `code/reviewing-cpp-code` | review C/C++ for coding-standard + compiler-warning risks; spec-bound (reviews against a mounted coding spec) when present | a C/C++ file or change should be checked before commit | read-only analysis; reports, does not edit |
 | code | `code/optimizing-cpp-performance` | propose cache / NEON / multithread (**CPU**) optimizations for C/C++ hot paths | a hot-path C/C++ routine needs an optimization plan | read-only analysis; proposes code, does not edit |
 | code | `code/selecting-mobile-gpu-convolutions` | choose standard vs separable conv for mobile-**GPU** via three measured heuristics (first-frame ∝ kernel count, warmup ∝ arithmetic intensity, steady ∝ FLOPs ÷ util) | choosing a conv structure for a mobile-GPU model | read-only advisory; heuristics from one project — verify on-device; CPU hot-path opt → `optimizing-cpp-performance` |
@@ -153,6 +159,7 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | code | `code/loading-model-checkpoints` | load a PyTorch checkpoint robustly when state_dict nesting / key prefix / arch / in-channels are uncertain (pick prefix by max key-overlap, print missing/unexpected) | a checkpoint loads onto random weights or reports key mismatches | read/instantiate only; flags the weights_only security caveat; no train/tune |
 | code | `code/evaluating-segmentation-models` | evaluate seg/matting with the right metrics: IoU/mIoU + boundary-F for masks, SAD/MSE/Grad/Conn in the trimap band for matting, per-class and at edges | signing off a seg/matting model, comparing checkpoints, or checking a converted/quantized model | read/measure only, emits PASS/FAIL; rendering = rendering-html-eval-reports; device = validating-on-device-inference |
 | code | `code/quantizing-on-device-models` | quantize for mobile/NPU up a ladder (fp16 -> int8-dynamic -> full-int8 PTQ -> QAT); per-channel + asymmetric inputs, keep sensitive layers float, gate on accuracy-vs-latency | fp16 too slow/large on device, planning INT8, choosing a calibration set, or accuracy regressed after quant | planning + verify (decision-space parity, not raw logits); drives the converter, not vendored |
+| code | `code/packaging-windows-desktop-apps` | build a reproducible Windows EXE/portable archive or installer with locked dependencies, version metadata, licenses, manifest hashes, privacy scan, and clean-path smoke test | packaging a desktop/offline AI tool with PyInstaller or an equivalent Windows toolchain | packaging is not publishing; private state/unlicensed weights stay out and unsigned status must be disclosed |
 | visualization | `visualization/visualizing-processing-pipelines` | render a multi-step processing pipeline (image / data / ML) into one self-contained HTML report — per-stage before/after drag-to-compare slider, diff heatmap, inline base64 images, what/why/formula annotations, timing bars, pass/fail metrics; ships a pipeline-agnostic numpy+opencv builder for a static `.html` or an interactive parameter-slider server | visualizing / explaining / debugging / documenting / presenting an image / data / ML pipeline; before/after comparison sliders; an algorithm walkthrough or parameter-tuning playground; turning scattered intermediate results into one shareable file | render/explain aid — you drive the bundled builder, it does not run your pipeline; compare & diff need same-size BGR-uint8 pairs; base64-inline so downscale large frames (`display_width`); distinct from `rendering-html-eval-reports` (eval/training metrics) — this explains pipeline stages |
 
 ## Governance diagram
@@ -162,7 +169,7 @@ an unregistered skill is invisible to sync and contribute. (Render-don't-author;
 this from the specs.)
 ```mermaid
 flowchart LR
-  PUB["publishing-skills (REGISTER)<br/>declared category → place (create if new) + README"] -->|registers a skill| WS["VEMO_SKILLS home<br/>skills/&lt;category&gt;/&lt;name&gt;"]
+PUB["publishing-skills (REGISTER)<br/>explicit category path + standard frontmatter + README"] -->|registers a skill| WS["VEMO_SKILLS home<br/>skills/&lt;category&gt;/&lt;name&gt;"]
   WS -->|"submodule + bootstrap regen (BIND)"| CL[".claude/skills/&lt;name&gt;<br/>(gitignored build artifact)"]
   CL --> USE["session uses skill<br/>(prompt / keyword; adoption = user consent)"]
   subgraph meta["governance-meta skills (downstream of registration)"]
@@ -250,8 +257,8 @@ listed in that lifecycle order.
 ### Publish a skill — categorize + register (author / scout) — the precondition
 > "发布一个 skill" · "把这个 skill 归类" · "publish a skill" · "add a skill to VEMO_SKILLS"
 
-`publishing-skills` reads the skill's declared `category` (frontmatter), places it under `skills/<category>/<name>/` —
-**creating the category folder if it is new** (declare-and-create) — then updates the README (Skill Catalog + layout +
+`publishing-skills` receives an explicit category, validates standard portable frontmatter, and places the skill under
+`skills/<category>/<name>/` — **creating the category folder if it is new** — then updates the README (Skill Catalog + layout +
 Use-via-Prompt) and verifies the regen. **This is registration** — the precondition for the two steps below. It
 governs **placement + registration only**: a skill *entering a project's toolset* (adoption) stays a **user-consent
 decision** (the Skill Scout proposes → the user consents → publish runs).
@@ -343,10 +350,66 @@ trigger"), and **optimize** the description with a **train/test split** so it ca
 (`describe-improve`). The behavioral layer complements the static release scorer; a skill is done only when it passes
 both. The two model-in-the-loop commands need the `claude` CLI and skip cleanly without it.
 
+### Curate an offline knowledge base — provenance, topology, and lightweight retrieval
+> "consolidate my personal knowledge base" · "build an offline knowledge library" · "no-embedding RAG" · "audit source completeness"
+
+`curating-offline-knowledge-bases` separates source inventory, indexing, semantic study, and practiced mastery. It
+builds an A-E completeness ledger, source and concept notes, a prerequisite DAG, lexical-first retrieval, and
+manifest/link/secret checks. A catalog remains a catalog: it never upgrades discovered titles into "learned" content.
+
+### Transcribe long-form media — captions first, ASR fallback, visual verification
+> "transcribe this long video" · "there are no subtitles" · "extract audio and keyframes" · "turn this podcast into learning notes"
+
+`transcribing-long-form-media` processes authorized media into timestamped evidence. It prefers official captions,
+uses checkpointed local ASR only when needed, verifies names/numbers/formulas and informative frames, and emits a
+continuous timeline plus an original learning note without publishing a full third-party transcript by default.
+
+### Architect an auditable agent — typed tools, deterministic authority, durable state
+> "design a production agent architecture" · "separate LLM and deterministic logic" · "add human approval and an audit trail"
+
+`architecting-auditable-agent-workflows` assigns decision rights across the model, deterministic code, providers, and
+humans; then defines typed contracts, explicit states, immutable versions, idempotent recovery, provenance, independent
+validation, and a credential-free fixture path. It does not make multi-agent orchestration the default.
+
+### Plan a constraint-aware itinerary — real time, transit, locks, and local replan
+> "build a travel planner agent" · "make a feasible two-hour itinerary" · "replan without moving bookings"
+
+`planning-constraint-aware-itineraries` turns preferences and current provider facts into an item-level,
+timezone-aware schedule governed by hard/soft constraints and an independent validator. Coarse two-hour views remain a
+projection of real items; fixed/locked events survive scoped replanning, and unverified travel facts stay labelled.
+
+### Validate a CPU-first AI product — demand plus execution evidence
+> "is this AI feature viable on CPU?" · "benchmark a local-first model" · "decide Go, Narrow, or Stop"
+
+`validating-cpu-first-ai-products` freezes demand, quality, usability, performance, cost, privacy, and license gates;
+compares manual/heuristic/light/optimized/heavy candidates across client and server placements; versions recipes and
+golden cases; and returns Go/Narrow/Stop without treating a developer-machine demo as market proof.
+
+### Package a Windows desktop app — reproducible artifact and clean-path smoke
+> "package this as a Windows EXE" · "build a portable ZIP" · "make a PyInstaller release"
+
+`packaging-windows-desktop-apps` builds from a clean reviewed revision with locked dependencies, single-source version
+metadata, public docs/licenses, a per-file hash manifest, privacy scan, and unpacked smoke test in a fresh path. It
+produces the artifact and evidence but does not authorize publication.
+
+### Audit a public release — source, archive, CI, tag, and remote artifact
+> "run a public release audit" · "scan this release ZIP for private data" · "verify the tag and checksum"
+
+`auditing-public-releases` checks every public surface independently: source/build inputs, reachable Git history when
+required, dependencies/licenses, archive members and manifest parity, CI permissions, tag identity, and the downloaded
+remote artifact. A skipped surface is reported as a gap, never as a pass.
+
 ### Keyword triggers (中英对照)
 The trigger sub-table for the **Skill Catalog** above — the keywords that invoke each prompt-triggered skill (中英对照).
 | skill | 中文 | English |
 |---|---|---|
+| `curating-offline-knowledge-bases` | 离线知识库 · 个人知识库整合 · 来源完整性 · 学习拓扑 · 无向量 RAG | offline knowledge base · consolidate personal knowledge · source completeness · learning topology · no-embedding RAG |
+| `transcribing-long-form-media` | 长视频转写 · 无字幕提取文字 · 音频 ASR · 关键帧 OCR · 播客笔记 | transcribe long video · no subtitles · audio ASR · keyframe OCR · podcast notes |
+| `architecting-auditable-agent-workflows` | Agent 架构 · 确定性 Agent · typed tools · 人工审批 · 审计轨迹 | agent architecture · deterministic agent · typed tools · human approval · audit trail |
+| `planning-constraint-aware-itineraries` | 旅行规划 Agent · 两小时行程 · 时区营业时间 · 锁定局部重排 | travel planner agent · two-hour itinerary · timezone/opening hours · locked local replan |
+| `validating-cpu-first-ai-products` | CPU-first 产品验证 · 本地 AI · 浏览器推理 · 轻量模型 · Go/Narrow/Stop | CPU-first product validation · local-first AI · browser inference · lightweight model · Go/Narrow/Stop |
+| `packaging-windows-desktop-apps` | Windows 打包 · 生成 EXE · PyInstaller · 便携 ZIP · 干净环境冒烟 | package Windows app · build EXE · PyInstaller · portable ZIP · clean-path smoke |
+| `auditing-public-releases` | 公开发布审计 · 隐私扫描 · 发布包校验 · manifest/checksum · tag 核验 | public release audit · privacy scan · release archive · manifest/checksum · tag verification |
 | `syncing-frameworks` | 检查框架更新 · 同步框架 · 框架版本 | check framework updates · sync frameworks · framework version |
 | `governing-project-fleets` | 治理本机所有项目 · 扫描本地仓库 · 项目治理档位 · Fleet 就绪报告 | govern all PC projects · scan local repositories · project governance profiles · fleet readiness report |
 | `contributing-framework-changes` | 贡献框架 · 推框架改动 · 贡献回上游 | contribute framework · framework PR · contribute back upstream |

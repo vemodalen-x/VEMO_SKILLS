@@ -1,7 +1,6 @@
 ---
 name: polishing-chinese-prose
-category: governance
-description: The canonical Chinese-prose authority — checkable rules for Chinese output, in two bands. 翻译腔 band (R14–R20: active voice, no vague modifiers, sentence-splitting, unambiguous pronouns, consistent terminology, 的/地/得, consistent persona) + 文牍腔 band (R33–R39: verbs over noun-stacks, no self-coined abbreviations, ≤1 arrow-chain per paragraph, ≤1 parenthetical per sentence, the read-aloud test, term-preservation with human prose, no self-coined concept-terms / metaphor-as-jargon) + an EN→zh term table. Use when authoring/reviewing Chinese deliverables, reviewing the README_zh mirror's fluency, or when an agent replies to the user in Chinese. Other skills cite this by name as the prose authority; it does not restate their rules.
+description: 'The canonical Chinese-prose authority — checkable rules for Chinese output, in two bands. 翻译腔 band (R14–R20: active voice, no vague modifiers, sentence-splitting, unambiguous pronouns, consistent terminology, 的/地/得, consistent persona) + 文牍腔 band (R33–R39: verbs over noun-stacks, no self-coined abbreviations, ≤1 arrow-chain per paragraph, ≤1 parenthetical per sentence, the read-aloud test, term-preservation with human prose, no self-coined concept-terms / metaphor-as-jargon) + an EN→zh term table. Use when authoring/reviewing Chinese deliverables, reviewing the README_zh mirror''s fluency, or when an agent replies to the user in Chinese. Other skills cite this by name as the prose authority; it does not restate their rules.'
 allowed-tools: Read, Grep, Glob
 ---
 

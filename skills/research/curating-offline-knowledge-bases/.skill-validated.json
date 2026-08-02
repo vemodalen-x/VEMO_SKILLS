@@ -1,0 +1,72 @@
+{
+  "skill_name": "curating-offline-knowledge-bases",
+  "validated": true,
+  "tier": "lint",
+  "tier_meaning": "frontmatter + naming rules only; NOT a behavioral/trigger eval",
+  "validator": "tools/skill_creator.py",
+  "validator_sha": "ad54d24d2b0898cdcbb0311563cf97643ffe514035465aac9e642517ecbfbbd5",
+  "timestamp": "2026-08-02T15:38:19Z",
+  "git_commit": "fa6da91b6244d848fe92f49c1791ac35d5e2b32a",
+  "checks": [
+    {
+      "rule": "SKILL.md present",
+      "pass": true,
+      "evidence": "found"
+    },
+    {
+      "rule": "frontmatter parses",
+      "pass": true,
+      "evidence": "2 keys"
+    },
+    {
+      "rule": "name present",
+      "pass": true,
+      "evidence": "curating-offline-knowledge-bases"
+    },
+    {
+      "rule": "name charset (kebab)",
+      "pass": true,
+      "evidence": "curating-offline-knowledge-bases"
+    },
+    {
+      "rule": "name <= 64 chars",
+      "pass": true,
+      "evidence": "len=32"
+    },
+    {
+      "rule": "name gerund-led (verb+ing)",
+      "pass": true,
+      "evidence": "curating"
+    },
+    {
+      "rule": "name == directory",
+      "pass": true,
+      "evidence": "name='curating-offline-knowledge-bases' dir='curating-offline-knowledge-bases'"
+    },
+    {
+      "rule": "standard frontmatter keys",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "rule": "description present",
+      "pass": true,
+      "evidence": "len=556"
+    },
+    {
+      "rule": "description <= 1024 chars",
+      "pass": true,
+      "evidence": "len=556"
+    },
+    {
+      "rule": "description no angle brackets",
+      "pass": true,
+      "evidence": "ok"
+    },
+    {
+      "rule": "description has when-to-use cue",
+      "pass": true,
+      "evidence": "cue found"
+    }
+  ]
+}
