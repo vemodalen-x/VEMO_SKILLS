@@ -1,7 +1,6 @@
 ---
 name: loading-model-checkpoints
-category: code
-description: Load a PyTorch checkpoint into a model robustly when the state_dict nesting, key prefixes (model./module.), architecture, or input-channel count are uncertain. Use when a checkpoint silently loads onto random weights, load_state_dict reports missing/unexpected keys, a checkpoint comes from a different trainer (Lightning / DataParallel / raw torch), or you must infer the architecture and input channels before building the model. Picks the prefix variant by maximum key-overlap, prints missing/unexpected diagnostics, and flags the weights_only security caveat. Triggers: load a checkpoint, state_dict mismatch, missing/unexpected keys, strip module. prefix, wrong weights loaded, ckpt onto random weights.
+description: 'Load a PyTorch checkpoint into a model robustly when the state_dict nesting, key prefixes (model./module.), architecture, or input-channel count are uncertain. Use when a checkpoint silently loads onto random weights, load_state_dict reports missing/unexpected keys, a checkpoint comes from a different trainer (Lightning / DataParallel / raw torch), or you must infer the architecture and input channels before building the model. Picks the prefix variant by maximum key-overlap, prints missing/unexpected diagnostics, and flags the weights_only security caveat. Triggers: load a checkpoint, state_dict mismatch, missing/unexpected keys, strip module. prefix, wrong weights loaded, ckpt onto random weights.'
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 

@@ -1,7 +1,6 @@
 ---
 name: optimizing-cpp-performance
-category: code
-description: Analyze C/C++ for cache-access, ARM NEON SIMD vectorization, and multithreading optimization opportunities, with an embedded / image-processing lens. Use when a hot-path C/C++ routine needs a concrete optimization plan. Read-only analysis — proposes optimizations with code, does not edit.
+description: 'Analyze C/C++ for cache-access, ARM NEON SIMD vectorization, and multithreading optimization opportunities, with an embedded / image-processing lens. Use when a hot-path C/C++ routine needs a concrete optimization plan. Read-only analysis — proposes optimizations with code, does not edit.'
 allowed-tools: Read, Grep, Glob
 ---
 

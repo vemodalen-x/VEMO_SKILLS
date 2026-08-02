@@ -1,7 +1,6 @@
 ---
 name: reviewing-cpp-code
-category: code
-description: Review C/C++ source for coding-standard conformance and compiler-warning risks, with an embedded / DSP / image-processing lens (type safety, undefined behavior, resource management, stride/alignment hazards). When the project mounts a coding spec, reviews against that spec as the authority (read at runtime, cited by section); falls back to a generic checklist otherwise. Use when a C/C++ file or change should be checked before commit. Read-only analysis — reports findings, does not edit.
+description: 'Review C/C++ source for coding-standard conformance and compiler-warning risks, with an embedded / DSP / image-processing lens (type safety, undefined behavior, resource management, stride/alignment hazards). When the project mounts a coding spec, reviews against that spec as the authority (read at runtime, cited by section); falls back to a generic checklist otherwise. Use when a C/C++ file or change should be checked before commit. Read-only analysis — reports findings, does not edit.'
 allowed-tools: Read, Grep, Glob
 ---
 

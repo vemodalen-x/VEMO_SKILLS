@@ -1,7 +1,6 @@
 ---
 name: breaking-down-prds
-category: orchestration
-description: Decompose a PRD / requirements document into a structured, governable breakdown — functional & non-functional requirements, acceptance criteria, work-breakdown by stage/agent, requirement→stage traceability, and a coverage check. Use at project kickoff or a major new feature, when the orchestrator must turn a PRD into actionable, traceable work before research/build begins. Owned by Framework 0 (orchestration).
+description: 'Decompose a PRD / requirements document into a structured, governable breakdown — functional & non-functional requirements, acceptance criteria, work-breakdown by stage/agent, requirement→stage traceability, and a coverage check. Use at project kickoff or a major new feature, when the orchestrator must turn a PRD into actionable, traceable work before research/build begins. Owned by Framework 0 (orchestration).'
 ---
 
 # PRD Breakdown

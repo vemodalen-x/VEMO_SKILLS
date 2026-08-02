@@ -15,7 +15,7 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge" alt="License: MIT"></a>
   <a href="VERSION"><img src="https://img.shields.io/badge/version-VERSION_file-brightgreen?style=for-the-badge" alt="Version: see VERSION"></a>
-  <a href="skills"><img src="https://img.shields.io/badge/catalog-30_skills-0f766e?style=for-the-badge" alt="Skill catalog: 30 skills"></a>
+  <a href="skills"><img src="https://img.shields.io/badge/catalog-37_skills-0f766e?style=for-the-badge" alt="Skill catalog: 37 skills"></a>
   <a href="eval/out/report.json"><img src="https://img.shields.io/badge/selfcheck-10%2F10-16a34a?style=for-the-badge" alt="Selfcheck score: 10/10"></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/changelog-keep--a--changelog-orange?style=for-the-badge" alt="Changelog"></a>
 </p>
@@ -82,21 +82,21 @@ python3 bin/vemo-skills score /path/to/another/skill-home
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-本仓刻意保持小而可读：30 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
+本仓刻意保持小而可读：37 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
 可选引用模块放在同目录 `references/` 下。
 
 ## 布局（Layout）
 ```
-skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目在 SKILL.md frontmatter 声明
-  SKILL.md                        # 通用主体——零硬编码项目取值；携带 `category:`
+skills/<category>/<name>/         # 按功能类目；父目录就是类目来源
+  SKILL.md                        # 使用可移植的标准 frontmatter；零硬编码项目取值
   references/                     # 通用引用模块（可选，如 readme-style、technical-report-style）
 ```
-类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
-类目是功能分组，不是框架仓。
-- `orchestration/` — 阶段、交付、提示流程和运营类 skill：`breaking-down-prds`、`designing-diagnostic-prompts`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
-- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`governing-project-fleets`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
-- `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
-- `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`、`converting-pytorch-to-tflite`、`loading-model-checkpoints`、`evaluating-segmentation-models`、`quantizing-on-device-models`。
+类目采用**显式指定后创建**：发布者接收类目，新类目才创建文件夹——见 `CONVENTIONS.md`。
+类目由路径决定，不写入自定义 frontmatter；它是功能分组，不是框架仓。
+- `orchestration/` — 阶段、交付、提示流程和运营类 skill：`breaking-down-prds`、`designing-diagnostic-prompts`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`、`architecting-auditable-agent-workflows`、`planning-constraint-aware-itineraries`、`transcribing-long-form-media`。
+- `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`governing-project-fleets`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`、`auditing-public-releases`。
+- `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`、`curating-offline-knowledge-bases`、`validating-cpu-first-ai-products`。
+- `code/` — 代码审查、运行时和发布类 skill：`reviewing-cpp-code`、`optimizing-cpp-performance`（各自携带共享的 `references/embedded-cpp-rules.md`，保持一致）、`selecting-mobile-gpu-convolutions`、`validating-on-device-inference`、`gating-tflite-op-envelopes`（携带 `references/envelope_gate.py`）、`bumping-library-versions`、`converting-pytorch-to-tflite`、`loading-model-checkpoints`、`evaluating-segmentation-models`、`quantizing-on-device-models`、`packaging-windows-desktop-apps`。
 - `visualization/` — pipeline / 结果可视化 skill：`visualizing-processing-pipelines`（携带 `references/scripts/` 下的 numpy+opencv builder 与可直接运行的 `references/examples/` demo）。
 
 ## Skill 目录（Skill Catalog）
@@ -113,18 +113,24 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | orchestration | `orchestration/rendering-html-eval-reports` | 把算好的结果渲染成一份自含 HTML 报告（图 base64 内嵌、带 provenance 头）——评测型（逐类准确率对验收线、含弃判/拒识列的混淆矩阵、延迟分布、错例全收画廊）或训练实验型（实验阶梯、训练曲线、消融表、实测/推测标注、局限性） | 一次评测或一轮训练实验的结果要变成可分享的本地 HTML 工件 | 只渲染、不跑推理/不训练；评测型错例全收、判对抽样；按实例策略嵌去标识图、HTML 不入 git；发 wiki 找 `publishing-deliverables` |
 | orchestration | `orchestration/attending-group-mentions` | 群值守：按游标拉 @bot 提及、分类（要报告/数据/状态/问题/越权决策）、能办的办（用 bot 身份发文件/链接；数字只从指名台账或报告里引、禁编造），回复必 @ 提问人、用实例策略的中文（走 `polishing-chinese-prose`）；决策类转 @ 用户 | 群里有人 @ 机器人、要按需回复时 | 反应式应答（只在被 @ 时回、且回提问人）；决策一律上报不擅答；群/身份/游标/词表/open_id 实例所有；主动外推找 `announcing-skills`／`publishing-deliverables` |
 | orchestration | `orchestration/packaging-device-sdk-releases` | 把算法库打成可交付的手机 SDK 发布包：版本号由 `bumping-library-versions` 指派（按名引）、标准包结构（最小对外头 / 按 ABI 的 libs / 带许可标注的 models / RELEASE_NOTES / USAGE 使用说明 / 可编译的 examples/ 示例源 / THIRD_PARTY）、随包双报告（质量走 `rendering-html-eval-reports`、性能走 `validating-on-device-inference` + 内存系统差值法）、清单+sha+解包回验 | 一个已构建的算法库要打成带版本、可审计的手机 SDK 包 | 产物组装；组合版本 + 评测报告 + 上板验收三个 skill（自身管包结构/许可标注/内存差值法/发布校验）；USAGE 与示例照真实头文件写、禁发明接口；打包≠发布——对外发送由人/lead 拍板；库名/版本/平台/群实例所有 |
+| orchestration | `orchestration/architecting-auditable-agent-workflows` | 设计 typed、版本化的 Agent 工作流，明确 LLM/确定性代码/人的权限边界，并加入来源、独立校验、幂等与耐久恢复 | 构建生产 Agent、Copilot、工具调用自动化、长任务或 human-in-the-loop 流程 | 只定义架构与证据契约；阈值、权限和部署门归消费方 |
+| orchestration | `orchestration/planning-constraint-aware-itineraries` | 生成带时区、版本和硬/软约束的行程；交通/缓冲占真实时间，独立校验，支持锁定后的局部重排与导出回读 | 构建旅行规划 Agent，或校验/局部调整细颗粒度行程 | 不编造实时旅行事实，不让 LLM 文案覆盖不可行结论；官方旅行核验仍由旅行者完成 |
+| orchestration | `orchestration/transcribing-long-form-media` | 将获授权的长视频/音频转成带时间戳的学习证据：字幕优先、ASR 回退、关键帧/OCR 核验、断点与连续覆盖 | 转写或学习讲座、播放列表、播客、访谈和数小时录音 | 不绕过访问控制、不默认公开完整逐字稿；准确率主张须独立参考数据 |
 | governance | `governance/syncing-frameworks` | 报告锚定的框架子模块上游是否前进；在版本门上升级版本钉 | 会话开始，或要检查框架更新 | 只报告；应用 = 消费方版本门；从不自动 |
 | governance | `governance/governing-project-fleets` | 操作 VEMO 的本机项目注册表、策略档位、就绪报告与预览优先接管 | 治理本机全部 Git 项目、扫描仓库、选择档位或安全铺开 VEMO | 发现只读；采纳/应用须用户同意；就绪不等于认证；不强制覆盖 |
 | governance | `governance/contributing-framework-changes` | 开一个 PR，把本地框架改动带回其仓 | 要把本地框架改进推回上游 | 始终走 PR；身份与路径运行时解析；从不合并 |
-| governance | `governance/publishing-skills` | 按声明类目把 skill 放进主仓并维护目录 | 在 VEMO_SKILLS 新增 / 移动 / 改名 skill | 只负责放置与注册；是否采纳仍由用户决定 |
+| governance | `governance/publishing-skills` | 把标准 frontmatter 的 skill 放到显式指定的类目路径，并维护双语目录 | 在 VEMO_SKILLS 新增 / 移动 / 改名 skill | 不猜类目；只负责放置与注册，是否采纳仍由用户决定 |
 | governance | `governance/announcing-skills` | 把新注册的 **skill** 以喜庆 Lark 卡片公告（上新表 + 可选 🏆 累计贡献排行榜，按实例开关） | 一次 skill-hub 发布新增 skill 后 | skill 上新通知；群/身份/仓库地址实例所有；贡献名册身份无关；排行榜由 include_leaderboard 控 |
 | governance | `governance/naming-skills` | 按命名规范校验 skill 的 name 与 description（≤64 / 字符集 / 动名词 / 与父目录同名；desc 做什么+何时用+触发词） | 创作 / 改名 / 发布 skill，或审计主仓 | 只读校验器；报 pass/fail，不改名 |
 | governance | `governance/announcing-framework-releases` | 把**框架**版本发布以 Lark 卡片公告（框架 / 旧→新版本 / 变更分类 / 消费方影响） | 框架发布 tag 落定且 push 核验后 | 框架更新通知（无排行榜）；发送前确认；群/维护者实例所有，仓库地址运行时解析 |
 | governance | `governance/polishing-chinese-prose` | 中文文风的权威源——两段可检查规则（翻译腔 R14–R20 + 文牍腔 R33–R39）+ EN→zh 术语表 | 写/审中文交付物、审 README_zh 镜像通顺度，或 agent 用中文回复时 | 别的 skill 按名引为文风权威；翻译腔实例激活、文牍腔 agent 层 always-on |
 | governance | `governance/authoring-skills-with-evals` | 用 skill-creator 式流程做 skill 的创作与评测改进（行为 eval、触发 eval、训练/测试集切分的描述调优） | 创作或修订 skill，或描述触发不准（漏触发/误触发）时 | 拥有 eval 环节；与 naming-skills、publishing-skills 互补；只校验与调优，不采纳 |
+| governance | `governance/auditing-public-releases` | 审计源码、可达历史、构建输入、发布包、manifest、CI 权限、tag、许可和下载后的远端工件 | 准备/脱敏公开仓库，或检查 ZIP、wheel、installer、tag 和 GitHub Release | 只做发布就绪审计；不是漏洞/法律认证，也不自行发布、打 tag 或合并 |
 | research | `research/challenging-assumptions` | 对抗式设计伙伴——挑战假设、套用思维模型 | 思考一个模糊 / 高风险决策时 | 只作咨询；不产出交付物 |
 | research | `research/reviewing-decisions` | 审查决策记录（MADR）是否完整（6 字段底线 + 跨模型红队） | research-solution agent 定稿 solution_document 时 | 只作咨询 |
 | research | `research/structuring-solution-docs` | arc42 风格的方案文档脚手架（结构即可校验规则） | 调研后撰写方案 / 设计文档时 | 结构辅助 |
+| research | `research/curating-offline-knowledge-bases` | 建来源账本、诚实的 A-E 完整度、来源/概念笔记、前置拓扑、词法索引与完整性 manifest | 整合或审计个人/团队离线知识库，包括不存 embedding 的轻量检索 | 不镜像受限正文，不把索引等同阅读或掌握；保存/公开规则归消费方 |
+| research | `research/validating-cpu-first-ai-products` | 联合验证需求、质量、延迟、内存、隐私、许可和单位经济；比较启发式/轻/重模型与端/云放置 | 评估 CPU-first、本地 AI、浏览器推理、轻量模型或蒸馏产品路线 | 只产出冻结的 Go/Narrow/Stop 证据；不授权上线、投流或宣传 |
 | code | `code/reviewing-cpp-code` | 审查 C/C++ 编码规范与编译告警风险；挂载编码规范时以规范为权威逐条审 | 提交前要检查某段 C/C++ | 只读分析；只报告、不改代码 |
 | code | `code/optimizing-cpp-performance` | 为 C/C++ 热点路径提出 cache / NEON / 多线程（**CPU**）优化方案 | 某热点 C/C++ 例程需要优化方案 | 只读分析；给出代码、不改代码 |
 | code | `code/selecting-mobile-gpu-convolutions` | 用三条实测启发式（首帧∝kernel 数、预热∝算术强度、稳态∝FLOPs÷利用率）选标准 vs 可分离卷积，面向移动 **GPU** | 为移动 GPU 模型选卷积结构时 | 只读咨询；规律来自单一项目——须上板验证；CPU 热点优化见 `optimizing-cpp-performance` |
@@ -135,6 +141,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | code | `code/loading-model-checkpoints` | 当 state_dict 嵌套 / 前缀 / 架构 / 输入通道不确定时稳健加载 PyTorch checkpoint（按最大 key 重叠选前缀、打印 missing/unexpected） | checkpoint 加载到随机权重、或报 key 不匹配时 | 只读/实例化；标注 weights_only 安全注意；不训练/调参 |
 | code | `code/evaluating-segmentation-models` | 用对的指标评测分割/抠图：mask 用 IoU/mIoU + 边界 F，抠图用 trimap 未知带内的 SAD/MSE/Grad/Conn，分类别、看边缘 | 分割/抠图模型签收、比 checkpoint、或核查转换/量化后的模型 | 只读/测量、出 PASS/FAIL；渲染 = rendering-html-eval-reports；上板 = validating-on-device-inference |
 | code | `code/quantizing-on-device-models` | 为手机/NPU 沿阶梯量化（fp16 -> int8 动态 -> full-int8 PTQ -> QAT）；逐通道 + 输入非对称、敏感层留 float、按精度-时延预算过门 | fp16 端上太慢/太大、要做 INT8、选校准集、或量化后精度回退时 | 规划 + 验证（决策空间一致而非裸 logit）；驱动转换器、不自带 |
+| code | `code/packaging-windows-desktop-apps` | 打出可复现的 Windows EXE/便携包或安装器：锁依赖、统一版本元数据、许可、manifest 哈希、隐私扫描和干净路径冒烟 | 用 PyInstaller 或同类工具打包桌面/离线 AI 应用 | 打包不等于发布；私有状态和无许可权重不得入包，未签名状态必须明示 |
 | visualization | `visualization/visualizing-processing-pipelines` | 把多步处理 pipeline（图像 / 数据 / ML）渲成一份自含 HTML 报告——逐步骤前后拖拽对比滑块、差异热力图、内联 base64 图、what/why/formula 注解、耗时条、pass/fail 指标；携带一个 pipeline 无关的 numpy+opencv builder，可出静态 `.html` 或交互式参数滑块服务 | 要可视化 / 讲解 / 调试 / 归档 / 演示一条图像 / 数据 / ML pipeline；前后对比滑块；算法逐步图解或参数调试 playground；把散落的中间结果汇成一份可分享文件 | 渲染/讲解辅助——由你驱动 builder、它不替你跑 pipeline；对比与差异图需同尺寸 BGR-uint8 对；base64 内联故大图须降采样（`display_width`）；与 `rendering-html-eval-reports`（评测/训练指标）不同——本 skill 讲解 pipeline 各步骤 |
 
 ## 治理图（Governance diagram）
@@ -143,7 +150,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 （只渲染、不创作；`visualizing-governance` 从规格重新生成此图。）
 ```mermaid
 flowchart LR
-  PUB["publishing-skills (REGISTER)<br/>declared category → place (create if new) + README"] -->|registers a skill| WS["VEMO_SKILLS home<br/>skills/&lt;category&gt;/&lt;name&gt;"]
+  PUB["publishing-skills (REGISTER)<br/>explicit category path + standard frontmatter + README"] -->|registers a skill| WS["VEMO_SKILLS home<br/>skills/&lt;category&gt;/&lt;name&gt;"]
   WS -->|"submodule + bootstrap regen (BIND)"| CL[".claude/skills/&lt;name&gt;<br/>(gitignored build artifact)"]
   CL --> USE["session uses skill<br/>(prompt / keyword; adoption = user consent)"]
   subgraph meta["governance-meta skills (downstream of registration)"]
@@ -224,8 +231,8 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 ### 发布一个 skill——归类并注册（作者 / scout）——前提
 > "发布一个 skill" · "把这个 skill 归类" · "publish a skill" · "add a skill to VEMO_SKILLS"
 
-`publishing-skills` 读取 skill 声明的 `category`（frontmatter），把它放到 `skills/<category>/<name>/`——
-**若属新类目就建好文件夹**（声明即创建）——再更新 README（Skill 目录、布局、用提示词调用）并校验重新生成。
+`publishing-skills` 接收显式类目，校验可移植的标准 frontmatter，再把 skill 放到 `skills/<category>/<name>/`——
+**若属新类目就建好文件夹**——再更新 README（Skill 目录、布局、用提示词调用）并校验重新生成。
 **这一步就是注册**——下面两步的前提。它只治理**放置与注册**：一个 skill *进入项目工具集*（采纳）仍由**用户决定**
 （Skill Scout 提议 → 用户同意 → 发布执行）。
 
@@ -301,10 +308,59 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 *skipped*，绝不误判成"没触发"），最后用**训练/测试集切分**优化描述以防过拟合（`describe-improve`）。行为层与静态发布评分器
 互补；一个 skill 只有两层都过才算完成。两个依赖模型的命令需要 `claude` CLI，缺失时干净跳过。
 
+### 整理离线知识库——来源、拓扑与轻量检索
+> "整合我的个人知识库" · "做一个离线学习库" · "不存 embedding 的 RAG" · "审计来源完整性"
+
+`curating-offline-knowledge-bases` 把来源盘点、建索引、语义精读和真正掌握分开。它建立 A-E 完整度账本、
+来源/概念笔记、前置知识 DAG、词法优先检索和 manifest/链接/秘密检查；只有标题目录时，只会诚实标成目录。
+
+### 转写长视频/音频——字幕优先、ASR 回退、画面核验
+> "转写这个长视频" · "没有字幕怎么办" · "提取音频和关键帧" · "把播客整理成学习笔记"
+
+`transcribing-long-form-media` 把获授权媒体处理成带时间戳的证据：优先官方字幕，必要时才跑可断点的本地 ASR，
+再核对专名、数字、公式和有信息量的画面。最终产出连续时间轴和原创学习笔记，不默认公开第三方完整逐字稿。
+
+### 设计可审计 Agent——typed tools、确定性权限与耐久状态
+> "设计生产 Agent 架构" · "分开 LLM 和确定性逻辑" · "加入人工审批和审计轨迹"
+
+`architecting-auditable-agent-workflows` 先分清模型、确定性代码、provider 与人的决策权，再定义 typed 契约、
+显式状态、不可变版本、幂等恢复、来源、独立 validator 和免密 fixture 路径；它不会把多 Agent 当默认答案。
+
+### 规划有约束的行程——真实时间、交通、锁定与局部重排
+> "做旅行规划 Agent" · "生成可行的两小时行程" · "重排但别动已订项目"
+
+`planning-constraint-aware-itineraries` 把偏好和有来源的动态事实转成 item 级、带时区的确定性行程。
+两小时视图只是细颗粒度事项的投影；固定/锁定项目在局部重排中不动，未核验的营业、票价和交通保持明确标记。
+
+### 验证 CPU-first AI 产品——需求证据与运行证据一起过门
+> "这个 AI 功能能不能跑在 CPU" · "评测本地轻量模型" · "做 Go/Narrow/Stop 决策"
+
+`validating-cpu-first-ai-products` 先冻结需求、质量、可用性、性能、成本、隐私和许可门，再比较人工/启发式/
+轻量/优化/重模型以及端/云放置，版本化 recipe 和 golden case，避免把开发机 demo 当市场证明。
+
+### 打包 Windows 桌面应用——可复现工件与干净路径冒烟
+> "把它打成 Windows EXE" · "做便携 ZIP" · "做 PyInstaller 发布包"
+
+`packaging-windows-desktop-apps` 从干净的已评审 revision 构建，锁住依赖和版本，带齐公开文档/许可、逐文件
+哈希 manifest、隐私扫描，并在新路径解包冒烟。它只产出包和证据，不自行发布。
+
+### 审计公开发布——源码、包、CI、tag 与远端工件
+> "做公开发布审计" · "检查发布 ZIP 有没有私有数据" · "核验 tag 和 checksum"
+
+`auditing-public-releases` 分开检查所有公开面：源码/构建输入、必要时的 Git 历史、依赖/许可、发布包与 manifest、
+CI 权限、tag 身份，以及下载回来的远端工件。某一面没跑就记缺口，不会冒充通过。
+
 ### 关键词触发（中英对照）
 上文 **Skill 目录** 的触发词子表——每个提示词触发 skill 的调用关键词（中英对照）。
 | skill | 中文 | English |
 |---|---|---|
+| `curating-offline-knowledge-bases` | 离线知识库 · 个人知识库整合 · 来源完整性 · 学习拓扑 · 无向量 RAG | offline knowledge base · consolidate personal knowledge · source completeness · learning topology · no-embedding RAG |
+| `transcribing-long-form-media` | 长视频转写 · 无字幕提取文字 · 音频 ASR · 关键帧 OCR · 播客笔记 | transcribe long video · no subtitles · audio ASR · keyframe OCR · podcast notes |
+| `architecting-auditable-agent-workflows` | Agent 架构 · 确定性 Agent · typed tools · 人工审批 · 审计轨迹 | agent architecture · deterministic agent · typed tools · human approval · audit trail |
+| `planning-constraint-aware-itineraries` | 旅行规划 Agent · 两小时行程 · 时区营业时间 · 锁定局部重排 | travel planner agent · two-hour itinerary · timezone/opening hours · locked local replan |
+| `validating-cpu-first-ai-products` | CPU-first 产品验证 · 本地 AI · 浏览器推理 · 轻量模型 · Go/Narrow/Stop | CPU-first product validation · local-first AI · browser inference · lightweight model · Go/Narrow/Stop |
+| `packaging-windows-desktop-apps` | Windows 打包 · 生成 EXE · PyInstaller · 便携 ZIP · 干净环境冒烟 | package Windows app · build EXE · PyInstaller · portable ZIP · clean-path smoke |
+| `auditing-public-releases` | 公开发布审计 · 隐私扫描 · 发布包校验 · manifest/checksum · tag 核验 | public release audit · privacy scan · release archive · manifest/checksum · tag verification |
 | `syncing-frameworks` | 检查框架更新 · 同步框架 · 框架版本 | check framework updates · sync frameworks · framework version |
 | `governing-project-fleets` | 治理本机所有项目 · 扫描本地仓库 · 项目治理档位 · Fleet 就绪报告 | govern all PC projects · scan local repositories · project governance profiles · fleet readiness report |
 | `contributing-framework-changes` | 贡献框架 · 推框架改动 · 贡献回上游 | contribute framework · framework PR · contribute back upstream |

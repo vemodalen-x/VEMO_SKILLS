@@ -13,12 +13,12 @@
     {
       "name": "catalog parity",
       "pass": true,
-      "got": "30 skills; catalog parity clean"
+      "got": "37 skills; catalog parity clean"
     },
     {
       "name": "frontmatter layout",
       "pass": true,
-      "got": "30 SKILL.md files checked"
+      "got": "37 SKILL.md files checked"
     },
     {
       "name": "naming and descriptions",
@@ -63,12 +63,12 @@
     {
       "name": "skill-creator selftest passes",
       "pass": true,
-      "got": "[skill_creator selftest] 11/11 passed"
+      "got": "[skill_creator selftest] 13/13 passed"
     },
     {
       "name": "CLI catalog command",
       "pass": true,
-      "got": "code=0 count=30"
+      "got": "code=0 count=37"
     }
   ]
 }

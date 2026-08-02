@@ -1,7 +1,6 @@
 ---
 name: authoring-skills-with-evals
-category: governance
-description: Author, evaluate, and improve skills with an eval-driven loop instead of by intuition. Use when creating a new skill, revising an existing one, judging whether a skill's description actually triggers, or tuning that description for better trigger accuracy. Runs a with-skill-vs-baseline behavioral eval with variance, a trigger-rate eval, and a train/test-split description optimizer via the repo's skill-creator harness, modeled on Anthropic's official skill-creator. Triggers include create a skill, write a SKILL.md, run a skill eval, benchmark a skill, description not triggering, improve a skill description, skill quality, eval-driven authoring.
+description: 'Author, evaluate, and improve skills with an eval-driven loop instead of by intuition. Use when creating a new skill, revising an existing one, judging whether a skill''s description actually triggers, or tuning that description for better trigger accuracy. Runs a with-skill-vs-baseline behavioral eval with variance, a trigger-rate eval, and a train/test-split description optimizer via the repo''s skill-creator harness, modeled on Anthropic''s official skill-creator. Triggers include create a skill, write a SKILL.md, run a skill eval, benchmark a skill, description not triggering, improve a skill description, skill quality, eval-driven authoring.'
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 

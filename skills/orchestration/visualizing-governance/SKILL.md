@@ -1,7 +1,6 @@
 ---
 name: visualizing-governance
-category: orchestration
-description: Render the governance system's operation as diagrams — a mermaid flowchart of how frameworks/gates/agents run, a stateDiagram of the task seven-gate lifecycle, and an interactive markmap HTML overview for onboarding. Use when a README needs its governance diagram, when onboarding material is produced, or at release time to regenerate embedded SVGs. Owned by Framework 0 (orchestration).
+description: 'Render the governance system''s operation as diagrams — a mermaid flowchart of how frameworks/gates/agents run, a stateDiagram of the task seven-gate lifecycle, and an interactive markmap HTML overview for onboarding. Use when a README needs its governance diagram, when onboarding material is produced, or at release time to regenerate embedded SVGs. Owned by Framework 0 (orchestration).'
 ---
 
 # Governance Visualize

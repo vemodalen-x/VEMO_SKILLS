@@ -4,9 +4,9 @@
   "tier": "lint",
   "tier_meaning": "frontmatter + naming rules only; NOT a behavioral/trigger eval",
   "validator": "tools/skill_creator.py",
-  "validator_sha": "06491ed42e29bd2bffad744936f319833b35c7534cdb939bf027ddbcbc382ab4",
-  "timestamp": "2026-07-11T03:26:48Z",
-  "git_commit": "8ac5d7aa0ec080ccd731601bd33a10365b54a9ab",
+  "validator_sha": "ad54d24d2b0898cdcbb0311563cf97643ffe514035465aac9e642517ecbfbbd5",
+  "timestamp": "2026-08-02T15:38:18Z",
+  "git_commit": "fa6da91b6244d848fe92f49c1791ac35d5e2b32a",
   "checks": [
     {
       "rule": "SKILL.md present",
@@ -16,7 +16,7 @@
     {
       "rule": "frontmatter parses",
       "pass": true,
-      "evidence": "3 keys"
+      "evidence": "2 keys"
     },
     {
       "rule": "name present",
@@ -44,14 +44,9 @@
       "evidence": "name='governing-project-fleets' dir='governing-project-fleets'"
     },
     {
-      "rule": "category present",
+      "rule": "standard frontmatter keys",
       "pass": true,
-      "evidence": "governance"
-    },
-    {
-      "rule": "category == directory",
-      "pass": true,
-      "evidence": "category='governance' dir='governance'"
+      "evidence": "ok"
     },
     {
       "rule": "description present",

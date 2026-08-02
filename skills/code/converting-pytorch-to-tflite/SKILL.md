@@ -1,7 +1,6 @@
 ---
 name: converting-pytorch-to-tflite
-category: code
-description: Convert a trained PyTorch (or ONNX) model into a numerically faithful mobile TFLite — fp16 or int8-hybrid — and fold the camera colour transform into the first conv so the on-device model consumes the raw camera format (YUV/BGR) directly. Use when exporting a checkpoint to TFLite for on-device deployment, when a converted model's output drifts from the PyTorch reference, or when the runtime colour space differs from the training colour space. Covers reparameterize/deploy-before-trace, multi-stem colour folding, and a PyTorch-vs-TFLite parity gate. Triggers: export to tflite, pytorch/onnx to tflite, convert model for mobile, tflite output mismatch, YUV/BGR colour fold, fp16 vs int8 export.
+description: 'Convert a trained PyTorch (or ONNX) model into a numerically faithful mobile TFLite — fp16 or int8-hybrid — and fold the camera colour transform into the first conv so the on-device model consumes the raw camera format (YUV/BGR) directly. Use when exporting a checkpoint to TFLite for on-device deployment, when a converted model''s output drifts from the PyTorch reference, or when the runtime colour space differs from the training colour space. Covers reparameterize/deploy-before-trace, multi-stem colour folding, and a PyTorch-vs-TFLite parity gate. Triggers: export to tflite, pytorch/onnx to tflite, convert model for mobile, tflite output mismatch, YUV/BGR colour fold, fp16 vs int8 export.'
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
