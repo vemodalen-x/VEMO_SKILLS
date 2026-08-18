@@ -1,6 +1,6 @@
 {
-  "passed": 13,
-  "total": 13,
+  "passed": 16,
+  "total": 16,
   "rate": 1.0,
   "score": 10.0,
   "threshold": 9.5,
@@ -11,6 +11,11 @@
       "got": "10.0"
     },
     {
+      "name": "activation index parity",
+      "pass": true,
+      "got": "30 safe activated skills; tree parity clean"
+    },
+    {
       "name": "catalog parity",
       "pass": true,
       "got": "30 skills; catalog parity clean"
@@ -18,7 +23,7 @@
     {
       "name": "frontmatter layout",
       "pass": true,
-      "got": "30 SKILL.md files checked"
+      "got": "30 standard SKILL.md + OpenAI metadata packages checked"
     },
     {
       "name": "naming and descriptions",
@@ -69,6 +74,16 @@
       "name": "CLI catalog command",
       "pass": true,
       "got": "code=0 count=30"
+    },
+    {
+      "name": "registration rejects ambiguity and blocks invalid binding",
+      "pass": true,
+      "got": "activation index is not valid JSON; unregistered tree skills: code/reviewing-widgets/SKILL.md; duplicate flattened bind name: reviewing-widgets; duplicate_catalog_pass=False"
+    },
+    {
+      "name": "index-driven bind materializes metadata",
+      "pass": true,
+      "got": "code=0 skills=30 metadata=30"
     }
   ]
 }

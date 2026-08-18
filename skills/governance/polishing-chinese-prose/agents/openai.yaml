@@ -1,0 +1,4 @@
+interface:
+  display_name: "Polishing Chinese Prose"
+  short_description: "Guided workflow: Polishing Chinese Prose"
+  default_prompt: "Use $polishing-chinese-prose to apply its specialized workflow to this request."

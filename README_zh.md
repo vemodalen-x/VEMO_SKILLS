@@ -73,8 +73,9 @@ python3 bin/vemo-skills eval
 python3 bin/vemo-skills score /path/to/another/skill-home
 ```
 
-完整版本阈值是 **9.5/10**。评分器会检查目录一致性、frontmatter、命名、引用、重新生成绑定、版本发布、
-公开文档、安全解耦、可执行验证和 attribution governance。可执行 eval 会把当前报告写到 `eval/out/report.json`。
+完整版本阈值是 **9.5/10**。评分器会检查激活索引/文件树/目录三方一致性、当前 frontmatter、OpenAI UI
+元数据、命名、引用、重新生成绑定、版本发布、公开文档、安全解耦、可执行验证和 attribution governance。
+可执行 eval 会把当前报告写到 `eval/out/report.json`。
 
 ## 可视化地图（Visual map）
 
@@ -82,17 +83,23 @@ python3 bin/vemo-skills score /path/to/another/skill-home
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-本仓刻意保持小而可读：30 个 skill 分布在五个功能类目里，每个 `SKILL.md` 都带自己的 frontmatter，
-可选引用模块放在同目录 `references/` 下。
+本仓刻意保持小而可读：30 个可独立激活的 skill 插件包分布在五个功能类目里。`skills/index.json`
+是只含声明的注册入口；它声明可用性，不加载任何可执行插件代码。
 
 ## 布局（Layout）
 ```
-skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目在 SKILL.md frontmatter 声明
-  SKILL.md                        # 通用主体——零硬编码项目取值；携带 `category:`
+skills/index.json                 # 显式、有界激活清单（category/name/SKILL.md）
+skills/<category>/<name>/         # 一个可独立绑定的 skill 插件包
+  SKILL.md                        # 模型可见的 name/description + 通用工作流主体
+  agents/openai.yaml              # 产品 UI 元数据；默认提示明确写出 $<skill-name>
   references/                     # 通用引用模块（可选，如 readme-style、technical-report-style）
 ```
-类目是 **声明即创建**（skill 声明自己的 `category`；发布时若属新类目就建好文件夹）——见 `CONVENTIONS.md`。
-类目是功能分组，不是框架仓。
+类目是由路径派生的功能分组。发布时先与作者确定类目，需要时创建目录，再把规范化路径加入
+`skills/index.json`——见 `CONVENTIONS.md`。注册不等于采用；最终哪些可用能力进入活动工具集仍由消费方决定。
+
+VEMO_SKILLS 是**插件源目录**，不是一个单体安装插件。因此根目录不声明 `.codex-plugin/plugin.json`、hook、
+MCP server、app、marketplace 条目或安装策略。消费方可以按宿主要求打包选中的索引技能，但安装和权限由适配器负责；
+本仓只负责可复用能力包及其声明式可用性。
 - `orchestration/` — 阶段、交付、提示流程和运营类 skill：`breaking-down-prds`、`designing-diagnostic-prompts`、`publishing-deliverables`、`visualizing-governance`、`rendering-html-eval-reports`、`attending-group-mentions`、`packaging-device-sdk-releases`。
 - `governance/` — 跨框架的治理元 skill：`syncing-frameworks`、`governing-project-fleets`、`contributing-framework-changes`、`publishing-skills`、`announcing-skills`、`naming-skills`、`announcing-framework-releases`、`polishing-chinese-prose`、`authoring-skills-with-evals`。
 - `research/` — research-solution skill：`challenging-assumptions`、`reviewing-decisions`、`structuring-solution-docs`。
@@ -116,7 +123,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 | governance | `governance/syncing-frameworks` | 报告锚定的框架子模块上游是否前进；在版本门上升级版本钉 | 会话开始，或要检查框架更新 | 只报告；应用 = 消费方版本门；从不自动 |
 | governance | `governance/governing-project-fleets` | 操作 VEMO 的本机项目注册表、策略档位、就绪报告与预览优先接管 | 治理本机全部 Git 项目、扫描仓库、选择档位或安全铺开 VEMO | 发现只读；采纳/应用须用户同意；就绪不等于认证；不强制覆盖 |
 | governance | `governance/contributing-framework-changes` | 开一个 PR，把本地框架改动带回其仓 | 要把本地框架改进推回上游 | 始终走 PR；身份与路径运行时解析；从不合并 |
-| governance | `governance/publishing-skills` | 按声明类目把 skill 放进主仓并维护目录 | 在 VEMO_SKILLS 新增 / 移动 / 改名 skill | 只负责放置与注册；是否采纳仍由用户决定 |
+| governance | `governance/publishing-skills` | 放置标准 skill 包、激活索引路径并维护目录 | 在 VEMO_SKILLS 新增 / 移动 / 改名 skill | 只负责放置与注册；是否采纳仍由用户决定 |
 | governance | `governance/announcing-skills` | 把新注册的 **skill** 以喜庆 Lark 卡片公告（上新表 + 可选 🏆 累计贡献排行榜，按实例开关） | 一次 skill-hub 发布新增 skill 后 | skill 上新通知；群/身份/仓库地址实例所有；贡献名册身份无关；排行榜由 include_leaderboard 控 |
 | governance | `governance/naming-skills` | 按命名规范校验 skill 的 name 与 description（≤64 / 字符集 / 动名词 / 与父目录同名；desc 做什么+何时用+触发词） | 创作 / 改名 / 发布 skill，或审计主仓 | 只读校验器；报 pass/fail，不改名 |
 | governance | `governance/announcing-framework-releases` | 把**框架**版本发布以 Lark 卡片公告（框架 / 旧→新版本 / 变更分类 / 消费方影响） | 框架发布 tag 落定且 push 核验后 | 框架更新通知（无排行榜）；发送前确认；群/维护者实例所有，仓库地址运行时解析 |
@@ -143,7 +150,7 @@ skills/<category>/<name>/         # 按功能类目（skill_spec §9）；类目
 （只渲染、不创作；`visualizing-governance` 从规格重新生成此图。）
 ```mermaid
 flowchart LR
-  PUB["publishing-skills (REGISTER)<br/>declared category → place (create if new) + README"] -->|registers a skill| WS["VEMO_SKILLS home<br/>skills/&lt;category&gt;/&lt;name&gt;"]
+  PUB["publishing-skills (REGISTER)<br/>确定类目 → 放置 + index + README"] -->|activates a skill| WS["VEMO_SKILLS home<br/>skills/index.json + packages"]
   WS -->|"submodule + bootstrap regen (BIND)"| CL[".claude/skills/&lt;name&gt;<br/>(gitignored build artifact)"]
   CL --> USE["session uses skill<br/>(prompt / keyword; adoption = user consent)"]
   subgraph meta["governance-meta skills (downstream of registration)"]
@@ -224,9 +231,9 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 ### 发布一个 skill——归类并注册（作者 / scout）——前提
 > "发布一个 skill" · "把这个 skill 归类" · "publish a skill" · "add a skill to VEMO_SKILLS"
 
-`publishing-skills` 读取 skill 声明的 `category`（frontmatter），把它放到 `skills/<category>/<name>/`——
-**若属新类目就建好文件夹**（声明即创建）——再更新 README（Skill 目录、布局、用提示词调用）并校验重新生成。
-**这一步就是注册**——下面两步的前提。它只治理**放置与注册**：一个 skill *进入项目工具集*（采纳）仍由**用户决定**
+`publishing-skills` 与作者确定功能类目，把标准包放到 `skills/<category>/<name>/`，**若属新类目就建好文件夹**，
+再把路径激活到 `skills/index.json`，更新 README（Skill 目录、布局、用提示词调用）并校验绑定。
+**索引激活就是注册**——下面两步的前提。它只治理**放置与注册**：一个 skill *进入项目工具集*（采纳）仍由**用户决定**
 （Skill Scout 提议 → 用户同意 → 发布执行）。
 
 ### 同步——检查上游（只读；谁都能跑）
@@ -296,8 +303,8 @@ Install the VEMO_SKILLS skill hub into this project, end-to-end:
 ### 用 eval 写 skill：eval 驱动的创作（创建 / 修订 / 调触发）
 > "建一个带 eval 的 skill" · "author a skill with evals" · "skill 描述不触发" · "优化 skill 描述"
 
-`authoring-skills-with-evals` 跑一套 eval 驱动的创作流程（取自 Anthropic 官方 skill-creator，适配本主仓）：先 **lint**
-形态（`validate` 写出带诚实 `tier` 的 `.skill-validated.json`），再 **测触发**（`trigger-eval`，三态；基础设施故障记为
+`authoring-skills-with-evals` 跑一套 eval 驱动的创作流程（取自官方 skill-creator，适配本主仓）：先 **lint**
+源包（`validate` 默认只读；只有显式 `--marker` 才生成 gitignored 临时证据），再 **测触发**（`trigger-eval`，三态；基础设施故障记为
 *skipped*，绝不误判成"没触发"），最后用**训练/测试集切分**优化描述以防过拟合（`describe-improve`）。行为层与静态发布评分器
 互补；一个 skill 只有两层都过才算完成。两个依赖模型的命令需要 `claude` CLI，缺失时干净跳过。
 

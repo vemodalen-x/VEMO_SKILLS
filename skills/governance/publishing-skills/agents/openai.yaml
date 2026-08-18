@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publishing Skills"
+  short_description: "Guided workflow: Publishing Skills"
+  default_prompt: "Use $publishing-skills to apply its specialized workflow to this request."

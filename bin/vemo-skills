@@ -21,7 +21,7 @@ HELP = """vemo-skills <command>
   bind [--dest .claude/skills]       regenerate Claude Code skill copies
 
   authoring (eval-driven, modeled on Anthropic's official skill-creator):
-  validate <skill_dir>              lint frontmatter/naming + write .skill-validated.json (tier=lint)
+  validate <skill_dir> [--marker]   lint frontmatter/naming/UI metadata; marker is opt-in + gitignored
   trigger-eval <skill_dir> ...      measure whether the description triggers (needs claude CLI)
   describe-improve <skill_dir> ...  train/test-split description optimization (needs claude CLI)
   author-selftest                   hermetic self-test of the authoring harness (no model)

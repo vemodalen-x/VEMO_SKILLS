@@ -12,10 +12,9 @@ Design notes:
 - **One parser, not two.** Frontmatter is parsed by reusing
   ``vemo_skills_check.parse_frontmatter`` — this harness never rolls a second,
   divergent YAML-ish parser.
-- **Honest provenance tier.** ``validate`` writes ``.skill-validated.json`` with an
-  explicit ``tier`` field. ``tier: "lint"`` means only frontmatter + naming were
-  checked — it does NOT claim the skill passed behavioral eval. That claim is only
-  made when a trigger eval actually ran (``tier: "trigger"``).
+- **Ephemeral provenance tier.** ``validate --marker`` may write a gitignored
+  ``.skill-validated.json`` with an explicit tier. The default validation path is
+  read-only, so generated evidence never becomes part of the skill source package.
 - **Infra failure != no trigger.** The trigger harness returns a tri-state per run
   (``triggered`` / ``not_triggered`` / ``error``). Runs that could not execute are
   counted as errors and excluded from the trigger rate; if the ``claude`` CLI is
@@ -78,9 +77,9 @@ NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 def validate_skill(skill_dir: Path) -> tuple[bool, list[dict]]:
     """Lint a skill's frontmatter + naming. Returns (ok, per-rule checks).
 
-    Mirrors the ``naming-skills`` A1-A5 / B1-B3 rules and Anthropic's frontmatter
-    spec (kebab name <=64, description <=1024, no angle brackets). Category is the
-    VEMO_SKILLS-required extra field and must equal the parent directory.
+    Mirrors the ``naming-skills`` A1-A5 / B1-B3 rules and the current frontmatter
+    contract. Category is derived from the activation-index path, not exposed to
+    the model as trigger metadata.
     """
     skill_dir = Path(skill_dir)
     checks: list[dict] = []
@@ -101,8 +100,9 @@ def validate_skill(skill_dir: Path) -> tuple[bool, list[dict]]:
     rule("frontmatter parses", True, f"{len(fm)} keys")
 
     name = fm.get("name", "")
-    category = fm.get("category", "")
     desc = fm.get("description", "")
+    unexpected = sorted(set(fm) - _checker().ALLOWED_FRONTMATTER)
+    rule("frontmatter keys supported", not unexpected, ", ".join(unexpected) or "supported")
 
     rule("name present", bool(name), name or "<missing>")
     rule("name charset (kebab)", bool(NAME_RE.fullmatch(name or "")), name)
@@ -111,15 +111,16 @@ def validate_skill(skill_dir: Path) -> tuple[bool, list[dict]]:
          name.split("-", 1)[0] if name else "<missing>")
     rule("name == directory", name == skill_dir.name, f"name={name!r} dir={skill_dir.name!r}")
 
-    rule("category present", bool(category), category or "<missing>")
-    rule("category == directory", category == skill_dir.parent.name,
-         f"category={category!r} dir={skill_dir.parent.name!r}")
-
     rule("description present", bool(desc), f"len={len(desc)}")
     rule("description <= 1024 chars", len(desc) <= 1024, f"len={len(desc)}")
     rule("description no angle brackets", "<" not in desc and ">" not in desc, "ok" if "<" not in desc else "has < or >")
     rule("description has when-to-use cue", any(c in desc.lower() for c in USE_CUES),
          "cue found" if any(c in desc.lower() for c in USE_CUES) else "no 'use when'/'用于' cue")
+
+    openai_yaml = skill_dir / "agents" / "openai.yaml"
+    metadata = openai_yaml.read_text(encoding="utf-8", errors="replace") if openai_yaml.exists() else ""
+    rule("agents/openai.yaml present", bool(metadata), str(openai_yaml))
+    rule("default prompt names skill", f"${name}" in metadata if name else False, f"expected ${name}")
 
     ok = all(c["pass"] for c in checks)
     return ok, checks
@@ -457,20 +458,33 @@ def selftest() -> int:
 
     # 2. validate: good skill passes, bad skills fail on the right rule
     with tempfile.TemporaryDirectory() as td:
+        def write_metadata(skill_dir, name):
+            agents = skill_dir / "agents"
+            agents.mkdir()
+            (agents / "openai.yaml").write_text(
+                "interface:\n"
+                f'  display_name: "{name.replace("-", " ").title()}"\n'
+                f'  short_description: "Guided workflow for {name.replace("-", " ")}"\n'
+                f'  default_prompt: "Use ${name} to guide this request."\n',
+                encoding="utf-8",
+            )
+
         good = Path(td) / "code" / "reviewing-widgets"
         good.mkdir(parents=True)
         (good / "SKILL.md").write_text(
-            "---\nname: reviewing-widgets\ncategory: code\n"
+            "---\nname: reviewing-widgets\n"
             "description: Review widget code for defects. Use when a widget change needs a check before commit.\n"
             "---\n\n# Reviewing Widgets\n", encoding="utf-8")
+        write_metadata(good, "reviewing-widgets")
         ok, _ = validate_skill(good)
         check("validate accepts a good skill", ok, "")
 
         noun = Path(td) / "code" / "widget-reviewer"
         noun.mkdir(parents=True)
         (noun / "SKILL.md").write_text(
-            "---\nname: widget-reviewer\ncategory: code\n"
+            "---\nname: widget-reviewer\n"
             "description: Review widgets. Use when reviewing.\n---\n# x\n", encoding="utf-8")
+        write_metadata(noun, "widget-reviewer")
         ok_n, checks_n = validate_skill(noun)
         gerund_failed = any(c["rule"].startswith("name gerund") and not c["pass"] for c in checks_n)
         check("validate rejects a non-gerund name", (not ok_n) and gerund_failed, "")
@@ -478,8 +492,9 @@ def selftest() -> int:
         nocue = Path(td) / "code" / "scanning-things"
         nocue.mkdir(parents=True)
         (nocue / "SKILL.md").write_text(
-            "---\nname: scanning-things\ncategory: code\ndescription: Scans things thoroughly.\n---\n# x\n",
+            "---\nname: scanning-things\ndescription: Scans things thoroughly.\n---\n# x\n",
             encoding="utf-8")
+        write_metadata(nocue, "scanning-things")
         ok_c, checks_c = validate_skill(nocue)
         cue_failed = any("when-to-use" in c["rule"] and not c["pass"] for c in checks_c)
         check("validate rejects a description with no when-to-use cue", (not ok_c) and cue_failed, "")
@@ -513,9 +528,10 @@ def main(argv=None) -> int:
     p = argparse.ArgumentParser(description="Eval-driven skill authoring harness (see module docstring).")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    v = sub.add_parser("validate", help="lint frontmatter/naming + write .skill-validated.json (tier=lint)")
+    v = sub.add_parser("validate", help="lint frontmatter, naming, and agents/openai.yaml")
     v.add_argument("skill_dir")
-    v.add_argument("--no-marker", action="store_true", help="lint only; do not write the marker")
+    v.add_argument("--marker", action="store_true", help="write a gitignored lint-tier marker")
+    v.add_argument("--no-marker", action="store_true", help=argparse.SUPPRESS)
 
     t = sub.add_parser("trigger-eval", help="measure whether the description triggers (needs claude CLI)")
     t.add_argument("skill_dir")
@@ -543,7 +559,7 @@ def main(argv=None) -> int:
         ok, checks = validate_skill(Path(args.skill_dir))
         for c in checks:
             print(f"  [{'PASS' if c['pass'] else 'FAIL'}] {c['rule']}" + (f" — {c['evidence']}" if not c["pass"] else ""))
-        if ok and not args.no_marker:
+        if ok and args.marker and not args.no_marker:
             try:
                 mp = write_validation_marker(Path(args.skill_dir), checks, tier="lint")
                 print(f"wrote {mp} (tier=lint)")

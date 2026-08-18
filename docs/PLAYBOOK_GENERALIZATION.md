@@ -58,10 +58,11 @@ long prompt prose that a small script could check.
 ## Publish and Bind
 
 1. Draft or update the source skill under `skills/<category>/<name>/`.
-2. Run the naming/frontmatter checks through the repo tooling.
-3. Keep `README.md` and `README_zh.md` catalog rows in parity.
-4. Run `bin/vemo-skills selfcheck` and, for release work, `bin/vemo-skills eval`.
-5. Bind into a consumer project with `bin/vemo-skills bind --dest <consumer>/.claude/skills`.
+2. For a new skill, activate its path in `skills/index.json` and generate `agents/openai.yaml`.
+3. Run the naming/frontmatter/index checks through the repo tooling.
+4. Keep `README.md` and `README_zh.md` catalog rows in parity.
+5. Run `bin/vemo-skills selfcheck` and, for release work, `bin/vemo-skills eval`.
+6. Bind into a consumer project with `bin/vemo-skills bind --dest <consumer>/.claude/skills`.
 
 The generated `.claude/skills/<name>/` copies are build artifacts. Edit the source skill home, then bind again.
 
@@ -72,4 +73,3 @@ in scope, sufficiently verified, and accepted.
 
 If a playbook rule needs mechanical enforcement, implement it in VEMO as a validator, hook, CI gate, preset, or spec.
 If it is a reusable procedure that helps many repos but does not own the gate, implement it as a VEMO_SKILLS skill.
-

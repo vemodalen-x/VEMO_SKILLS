@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reviewing C++ Code"
+  short_description: "Guided workflow: Reviewing C++ Code"
+  default_prompt: "Use $reviewing-cpp-code to apply its specialized workflow to this request."

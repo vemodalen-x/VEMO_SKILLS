@@ -1,7 +1,7 @@
 ---
 name: attending-group-mentions
-category: orchestration
-description: Staff a team group chat — when someone @-mentions the bot, read what they asked and reply to that need. Pull new messages by cursor (per-instance cursor file), filter for @bot mentions since last handled, triage the request (report / data / status / question / over-authority decision), serve what is serviceable (send a file or link as the bot, answer numbers ONLY by quoting the named ledger/report — never fabricate), reply to the asker with a post @-tag, in instance-policy Chinese (via polishing-chinese-prose). Decision-class requests escalate ("已转负责人" + @user), never auto-answered. Use to run group-chat attendance / answer @bot mentions on demand. Identity-decoupled — group id, bot/user identity, cursor + wordlist paths, open_id map are instance values.
+description: >
+  Staff a team group chat — when someone @-mentions the bot, read what they asked and reply to that need. Pull new messages by cursor (per-instance cursor file), filter for @bot mentions since last handled, triage the request (report / data / status / question / over-authority decision), serve what is serviceable (send a file or link as the bot, answer numbers ONLY by quoting the named ledger/report — never fabricate), reply to the asker with a post @-tag, in instance-policy Chinese (via polishing-chinese-prose). Decision-class requests escalate ("已转负责人" + @user), never auto-answered. Use to run group-chat attendance / answer @bot mentions on demand. Identity-decoupled — group id, bot/user identity, cursor + wordlist paths, open_id map are instance values.
 allowed-tools: Read, Write, Bash
 ---
 

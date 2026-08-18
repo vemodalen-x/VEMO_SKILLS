@@ -1,0 +1,4 @@
+interface:
+  display_name: "Syncing Frameworks"
+  short_description: "Guided workflow: Syncing Frameworks"
+  default_prompt: "Use $syncing-frameworks to apply its specialized workflow to this request."

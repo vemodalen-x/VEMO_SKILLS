@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bumping Library Versions"
+  short_description: "Guided workflow: Bumping Library Versions"
+  default_prompt: "Use $bumping-library-versions to apply its specialized workflow to this request."

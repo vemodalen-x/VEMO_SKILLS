@@ -1,13 +1,13 @@
 ---
 name: publishing-skills
-category: governance
-description: Publish a skill into this shared skill home — auto-categorize by the skill's declared category (existing category → place into skills/<category>/<name>/; new category → create the folder), then maintain the README and verify regen. Use when adding, moving, or renaming a skill in VEMO_SKILLS. Placement + registration only — adoption (entering a project's toolset) stays a user-consent decision.
+description: >
+  Publish a standard skill package into this shared skill home — agree on its functional category, place it under skills/{category}/{name}/, activate it in skills/index.json, then maintain the README and verify binding. Use when adding, moving, or renaming a skill in VEMO_SKILLS. Placement + registration only — adoption stays a user-consent decision.
 ---
 
 # Skill Publish
 
-Place a skill into this shared skill home under its **declared category**, keep the README in lockstep, and verify the
-working-copy regen. This skill governs **placement + registration** inside the home — it does **not** adopt a skill into
+Place a standard skill package into this shared skill home, activate it explicitly, keep the README in lockstep, and
+verify binding. This skill governs **placement + registration** inside the home — it does **not** adopt a skill into
 any project's toolset (that is the Skill Scout's pipeline and always needs user consent; skill_spec §6).
 
 **Registration is the precondition for everything downstream.** The lifecycle is **register → bind (+consent = adopt)
@@ -16,16 +16,16 @@ any project's toolset (that is the Skill Scout's pipeline and always needs user 
 This skill performs the *register* stage; binding and sync/contribute are downstream of it.
 
 ## Model (read first)
-- **Category is declared, not guessed.** Every skill carries `category:` in its `SKILL.md` frontmatter (single source
-  of truth). The directory `skills/<category>/<name>/` is a **derived placement target**, not the source — if the
-  frontmatter and the path ever disagree, the frontmatter wins and the skill is in the wrong folder (a check, below).
+- **Activation is explicit.** `skills/index.json` is the single registration surface. Its normalized
+  `<category>/<name>/SKILL.md` path selects the category and package; a folder that is absent from the index is inert
+  and fails selfcheck. Repository placement metadata never enters model-visible frontmatter.
 - **Naming is gated, not assumed.** A skill's `name`/`description` must pass the **`naming-skills`** validator (the
   authority for skill naming — name ≤64 / `[a-z0-9-]` / no edge hyphen / **gerund** / name==dir; description
   non-empty / ≤1024 / what+when / keywords) **before** registration. This skill references that rule, it does not
   restate it (consolidate-with-pointers); the gate runs at Step 0.5 and the whole-tree check at Step 5.
-- **Categories are declare-and-create, not a fixed enum.** If `skills/<category>/` already exists → place into it. If
-  it does not → **create the folder** and record the new category. The category set is whatever the filesystem holds;
-  no hardcoded list (so this skill is correct for any home, not just this one — skill_spec §9 identity dimension).
+- **Categories are agreed-and-created, not a fixed enum.** Choose the functional category with the author. If
+  `skills/<category>/` does not exist, create it and record the new category. The category set remains filesystem and
+  index data, never a hardcoded enum.
   A category is a **functional grouping** (e.g. `governance/ orchestration/ research/`), not a framework repo.
 - **README is part of the deliverable.** Every add / move / rename / remove updates the README (**Skill-Catalog row** +
   category-layout line + Use-via-Prompt entry + keyword-triggers row where applicable). The README ⇄ skills consistency
@@ -45,10 +45,10 @@ This skill performs the *register* stage; binding and sync/contribute are downst
 ## Pre-Check (Step 0, mandatory)
 1. Confirm the working directory is a skill home (a `skills/` tree with a `README.md`, `VERSION`, `CHANGELOG.md`).
    If not → "Not a skill home (no skills/ + README/VERSION/CHANGELOG)" → **stop**.
-2. Read the incoming skill's `SKILL.md` frontmatter. If `name:` or `category:` is missing → ask the author to add the
-   declared category, **stop**. (Auto-categorize needs a declared value; it never guesses.)
-3. If the skill already exists under a *different* category than declared → this is a **move**, not a fresh publish;
-   confirm intent before relocating (and the README multiset check will flag the old row).
+2. Read the incoming skill's `SKILL.md` frontmatter. If `name:` or `description:` is missing, or repository-only
+   `category:` is present, stop and normalize the source package first.
+3. Agree on the target functional category with the author. If the skill already exists under another category, treat
+   this as a move and confirm intent before relocating.
 
 ## Step 0.5 — Naming gate (mandatory, before placement)
 Run the **`naming-skills`** validator on the incoming `SKILL.md` (it is the authority for skill naming; this skill
@@ -60,8 +60,8 @@ Any hard FAIL (incl. a non-gerund name — a hard rule in this ecosystem) → re
 fix the name/description, **stop**. Body/length advisories are INFO and do not block.
 
 ## Publish Flow
-### Step 1 — Read the declared category
-From the incoming `SKILL.md` frontmatter: `name:` and `category:`. These are the single source for placement.
+### Step 1 — Resolve package identity and category
+Read `name:` from `SKILL.md`; take category from the user's publishing decision or the existing indexed path.
 
 ### Step 2 — Resolve the target folder
 Target = `skills/<category>/<name>/`.
@@ -70,13 +70,17 @@ Target = `skills/<category>/<name>/`.
   `<category>` created" for the report and the CHANGELOG.
 
 ### Step 3 — Place the body (and references)
-Write `SKILL.md` (and any `references/`) under the target. For a **move**, relocate the existing folder
+Write `SKILL.md` and only necessary `agents/`, `references/`, `scripts/`, or `assets/` resources under the target.
+Generate/validate `agents/openai.yaml`. For a **move**, relocate the existing folder
 (`git mv skills/<old-cat>/<name> skills/<category>/<name>`) so history is preserved — never copy-then-delete.
+
+Add the normalized `<category>/<name>/SKILL.md` path to `skills/index.json`. This index mutation is the registration
+event; keep paths unique, local, bounded, and deterministic.
 
 ### Step 4 — Maintain the README (obligation)
 Update `README.md`:
-- **Skill Catalog** — add/update the skill's row: **category** (== `category:`) · **skill** (`` `<category>/<name>` ``
-  token, == `name:`) · **does** · **when to use** · **boundary**. Curated cells non-empty; derived cells equal frontmatter.
+- **Skill Catalog** — add/update the skill's row: **category** (== indexed path category) · **skill**
+  (`` `<category>/<name>` `` token, with `<name>` == frontmatter `name:`) · **does** · **when to use** · **boundary**.
   (Catalog-row format: `CONVENTIONS.md` §3. The `<category>/<name>` token is what the Step 5 multiset diff extracts.)
 - **Layout section** — ensure the `<category>/` line lists the skill (add the category line if the category is new).
 - **Use via Prompt** — add a trigger entry + a **Keyword-triggers sub-table** row **if** the skill is user-prompt-triggered.
@@ -85,12 +89,9 @@ Update `README.md`:
 `skills/orchestration/publishing-deliverables/references/readme-style.md` — incl. the bilingual pair.)
 
 ### Step 5 — Self-check (machine, before declaring done)
-- **README ⇄ skills multiset diff** (not a count compare). Build set A = README **Skill-Catalog** rows' `` `<category>/<name>` ``
-  skill tokens; set B = every `skills/*/*/SKILL.md` keyed by its frontmatter `name:` + `category:`. Assert **A == B** as
-  multisets; report `only-in-README` (orphan row) and `only-in-tree` (unregistered skill). Validate against the
-  **filesystem**, not a fixed list (categories are free-form).
-- **Declared-category ⇄ placement-path**: for every `SKILL.md`, assert `category:` == the `<dir>` it sits under.
-  Catches a skill in the wrong folder or a stale frontmatter value.
+- **Three-way parity**: README catalog tokens == `skills/index.json` references == filesystem
+  `skills/*/*/SKILL.md`. Report orphan rows, inert tree packages, dangling index references, and duplicates.
+- **Name ⇄ indexed path**: frontmatter `name:` equals the indexed `<name>` directory; category is path-derived.
 - **Identity grep-clean** (skill_spec §9): `grep -Ei '<org>|<account>'` on the new `SKILL.md` → 0 hits. (The home repo
   name as an example is allowed only if annotated "resolved at runtime".)
 - **Naming conformance (whole tree)** — run **`naming-skills`** over every `skills/*/*/SKILL.md` and assert all
@@ -98,7 +99,7 @@ Update `README.md`:
   what+when / keywords). A FAIL here means a mis-named or stale skill slipped in — fix before declaring done.
 - **Skill-Catalog completeness** (the row's *quality*; existence is already covered by the multiset diff above, so this
   does not re-assert it). For each `skills/*/*/SKILL.md`, in its Skill-Catalog row:
-  - **derived-equality** (deterministic): the row's **category** cell **== frontmatter `category:`**, and the **skill**
+  - **derived-equality** (deterministic): the row's **category** cell **== indexed path category**, and the **skill**
     token's `<name>` **== frontmatter `name:`**. (Equality, not just non-empty — the category column is the user-facing
     "what category is this" answer; a non-empty-only check would let it drift and re-introduce the confusion this fixes.)
   - **curated non-empty**: **does** / **when to use** / **boundary** cells are all non-empty.

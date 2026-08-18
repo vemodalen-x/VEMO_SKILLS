@@ -1,7 +1,7 @@
 ---
 name: selecting-mobile-gpu-convolutions
-category: code
-description: Decide between standard and separable (depthwise+pointwise) convolutions for mobile-GPU (OpenCL / TFLite delegate) deployment using three measured heuristics — first-frame time tracks OpenCL kernel count (not FLOPs), warmup gain tracks arithmetic intensity, steady-state time tracks FLOPs ÷ GPU utilization. Use at model-design time to narrow conv choices and on-device to confirm. Read-only advisory — heuristics from one anonymized field benchmark; verify on the target runtime. Reversal conditions (large channels / kernel fusion) apply.
+description: >
+  Decide between standard and separable (depthwise+pointwise) convolutions for mobile-GPU (OpenCL / TFLite delegate) deployment using three measured heuristics — first-frame time tracks OpenCL kernel count (not FLOPs), warmup gain tracks arithmetic intensity, steady-state time tracks FLOPs ÷ GPU utilization. Use at model-design time to narrow conv choices and on-device to confirm. Read-only advisory — heuristics from one anonymized field benchmark; verify on the target runtime. Reversal conditions (large channels / kernel fusion) apply.
 ---
 
 # Selecting Mobile-GPU Convolutions

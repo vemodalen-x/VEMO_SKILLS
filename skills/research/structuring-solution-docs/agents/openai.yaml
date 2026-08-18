@@ -1,0 +1,4 @@
+interface:
+  display_name: "Structuring Solution Docs"
+  short_description: "Guided workflow: Structuring Solution Docs"
+  default_prompt: "Use $structuring-solution-docs to apply its specialized workflow to this request."

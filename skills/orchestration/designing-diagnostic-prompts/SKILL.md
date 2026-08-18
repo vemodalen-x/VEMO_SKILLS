@@ -1,7 +1,7 @@
 ---
 name: designing-diagnostic-prompts
-category: orchestration
-description: Design structured diagnostic or tutoring prompts and agent workflows that interview the user, locate constraints, configure style/depth, produce a plan, and loop through assessment and feedback. Use when asked to create or improve a Human 3.0-style self-discovery prompt, a Mr. Ranedeer-style tutor prompt, a coaching/custom GPT prompt, an onboarding interview, a diagnostic agent, a personalized learning flow, or any multi-turn prompt that must ask questions before advising.
+description: >
+  Design structured diagnostic or tutoring prompts and agent workflows that interview the user, locate constraints, configure style/depth, produce a plan, and loop through assessment and feedback. Use when asked to create or improve a Human 3.0-style self-discovery prompt, a Mr. Ranedeer-style tutor prompt, a coaching/custom GPT prompt, an onboarding interview, a diagnostic agent, a personalized learning flow, or any multi-turn prompt that must ask questions before advising.
 ---
 
 # Diagnostic Prompt Design
@@ -46,4 +46,3 @@ Produce one of these, depending on the request:
 ## References
 
 - `references/source-patterns.md` — compact pattern extraction from Human 3.0 and Mr. Ranedeer.
-

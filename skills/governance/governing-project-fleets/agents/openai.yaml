@@ -1,0 +1,4 @@
+interface:
+  display_name: "Governing Project Fleets"
+  short_description: "Guided workflow: Governing Project Fleets"
+  default_prompt: "Use $governing-project-fleets to apply its specialized workflow to this request."

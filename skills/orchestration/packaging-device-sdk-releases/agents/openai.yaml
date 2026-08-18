@@ -1,0 +1,4 @@
+interface:
+  display_name: "Packaging Device SDK Releases"
+  short_description: "Guided workflow: Packaging Device SDK Releases"
+  default_prompt: "Use $packaging-device-sdk-releases to apply its specialized workflow to this request."

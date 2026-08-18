@@ -1,7 +1,7 @@
 ---
 name: naming-skills
-category: governance
-description: Validate and standardize a skill's name + description against the authoring naming rules — name ≤64 chars, lowercase letters/digits/hyphens only, no leading/trailing hyphen, name == parent folder, gerund (verb+ing) form; description ≤1024 chars, non-empty, says what-it-does + when-to-use with trigger keywords. Use when authoring, renaming, or publishing a skill, or auditing the home for naming conformance. Read-only validator — reports pass/fail per rule, does not rename.
+description: >
+  Validate and standardize a skill's name + description against the authoring naming rules — name ≤64 chars, lowercase letters/digits/hyphens only, no leading/trailing hyphen, name == parent folder, gerund (verb+ing) form; description ≤1024 chars, non-empty, says what-it-does + when-to-use with trigger keywords. Use when authoring, renaming, or publishing a skill, or auditing the home for naming conformance. Read-only validator — reports pass/fail per rule, does not rename.
 allowed-tools: Read, Grep, Glob
 ---
 
@@ -38,9 +38,12 @@ pass/fail per rule. This is **read-only analysis** — you report; you do **not*
    ("Use when …" / "用于 …").
 3. **Trigger keywords** — embeds the words a user/agent would say to invoke it (so discovery matches).
 
-### C. Optional frontmatter fields (validated only if present)
-- `license` — SPDX-style string. `compatibility` — **≤ 500 characters**. `metadata` — free map.
-  `allowed-tools` — comma list of tool names. Absence is **not** a failure; a present field must be well-formed.
+### C. Package metadata
+- Source frontmatter contains no repository placement key such as `category`; placement comes from
+  `skills/index.json`. Current compatibility fields (`license`, `metadata`, `allowed-tools`) are validated only when
+  present.
+- `agents/openai.yaml` contains quoted `display_name`, 25–64 character `short_description`, and a
+  `default_prompt` that explicitly names `$<skill-name>`.
 
 ### D. Body advisories (report as INFO, not fail)
 - Body is **step-by-step** and **≤ 500 lines**. Referenced files sit at **one directory level** beside `SKILL.md`
@@ -75,8 +78,8 @@ For each rule emit **PASS/FAIL** with the offending value on FAIL:
   when" or an equivalent trigger sentence). Missing the when-to-use clause → FAIL.
 - B3: trigger keywords present (the verbs/nouns a caller would say). Thin/keyword-less description → FAIL.
 
-### Step 4 — Validate optional fields (C) + body advisories (D)
-- Any present optional field well-formed (C); `compatibility ≤ 500`.
+### Step 4 — Validate package metadata (C) + body advisories (D)
+- Reject unsupported frontmatter and require valid `agents/openai.yaml` fields (C).
 - Body length + reference-depth advisories (D) → INFO rows (do not fail registration on these).
 
 ### Step 5 — Report

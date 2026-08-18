@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visualizing Processing Pipelines"
+  short_description: "Guided workflow: Visualizing Processing Pipelines"
+  default_prompt: "Use $visualizing-processing-pipelines to apply its specialized workflow to this request."
