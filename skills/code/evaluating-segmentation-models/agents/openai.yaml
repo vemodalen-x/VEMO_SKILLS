@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evaluating Segmentation Models"
+  short_description: "Guided workflow: Evaluating Segmentation Models"
+  default_prompt: "Use $evaluating-segmentation-models to apply its specialized workflow to this request."

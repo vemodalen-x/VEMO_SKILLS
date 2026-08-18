@@ -2,8 +2,9 @@
 
 VEMO_SKILLS governs a reusable skill home. Contributions should preserve three invariants:
 
-- `skills/<category>/<name>/SKILL.md` frontmatter is the source of truth for `name` and `category`.
-- README catalog tokens match the skill tree in both English and Chinese READMEs.
+- `SKILL.md` frontmatter owns model-visible identity/triggering; `skills/index.json` owns activation and path-derived category.
+- Activation index, skill tree, and both README catalogs contain the same skill identities.
+- Every registered package carries valid `agents/openai.yaml` UI metadata.
 - Generic skill bodies contain no project-specific values; those belong in the consuming project instance.
 
 ## Local checks

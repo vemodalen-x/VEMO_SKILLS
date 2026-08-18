@@ -1,0 +1,4 @@
+interface:
+  display_name: "Announcing Skills"
+  short_description: "Guided workflow: Announcing Skills"
+  default_prompt: "Use $announcing-skills to apply its specialized workflow to this request."

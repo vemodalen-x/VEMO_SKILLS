@@ -89,9 +89,9 @@ python3 bin/vemo-skills score /path/to/another/skill-home
 ```
 On Windows, use `python bin/vemo-skills ...` if `python3` is not installed.
 
-The release threshold is **9.5/10**. The scorer checks catalog parity, frontmatter, naming, references, regen binding,
-version hygiene, public docs, security decoupling, executable verification, and attribution governance. The executable
-eval writes its current report to `eval/out/report.json`.
+The release threshold is **9.5/10**. The scorer checks activation-index/tree/catalog parity, current frontmatter,
+OpenAI UI metadata, naming, references, regen binding, version hygiene, public docs, security decoupling, executable
+verification, and attribution governance. The executable eval writes its current report to `eval/out/report.json`.
 
 ## Visual map
 
@@ -99,17 +99,26 @@ eval writes its current report to `eval/out/report.json`.
   <img src="assets/catalog-map.svg" alt="VEMO_SKILLS catalog map">
 </p>
 
-The repository is intentionally small and inspectable: 30 skills across five functional categories, with each
-`SKILL.md` carrying its own frontmatter and optional `references/` folder.
+The repository is intentionally small and inspectable: 30 independently activatable skill packages across five
+functional categories. `skills/index.json` is the manifest-only registration surface; it declares availability but
+never loads executable plugin code.
 
 ## Layout
 ```
-skills/<category>/<name>/         # per functional category (skill_spec §9); category declared in SKILL.md frontmatter
-  SKILL.md                        # generic body — zero hardcoded project values; carries `category:`
+skills/index.json                 # explicit, bounded activation list (category/name/SKILL.md)
+skills/<category>/<name>/         # one independently bindable skill plugin package
+  SKILL.md                        # model-visible name/description + generic workflow body
+  agents/openai.yaml              # product UI metadata; default prompt names $<skill-name>
   references/                     # generic reference modules (optional, e.g. readme-style, technical-report-style)
 ```
-Categories are **declare-and-create** (a skill declares its `category`; publishing creates the folder if new) — see
-`CONVENTIONS.md`. A category is a functional grouping, not a framework repo.
+Categories are path-derived functional groupings. Publishing agrees on the category, creates the folder if needed,
+and activates the normalized package path in `skills/index.json` — see `CONVENTIONS.md`. Registration does not imply
+adoption; a consumer still decides which available capabilities enter its active toolset.
+
+VEMO_SKILLS is a **plugin source catalog**, not one monolithic installed plugin. It therefore does not declare a
+root `.codex-plugin/plugin.json`, hooks, MCP servers, apps, marketplace entries, or installation policy. A consumer
+may package selected indexed skills for its host, but that adapter owns installation and permissions; this repository
+owns reusable capability packages and their declarative availability only.
 - `orchestration/` — stage, delivery, prompt-flow, and operations skills: `breaking-down-prds`, `designing-diagnostic-prompts`, `publishing-deliverables`, `visualizing-governance`, `rendering-html-eval-reports`, `attending-group-mentions`, `packaging-device-sdk-releases`.
 - `governance/` — cross-framework governance-meta skills: `syncing-frameworks`, `governing-project-fleets`, `contributing-framework-changes`, `publishing-skills`, `announcing-skills`, `naming-skills`, `announcing-framework-releases`, `polishing-chinese-prose`, `authoring-skills-with-evals`.
 - `research/` — research-solution skills: `challenging-assumptions`, `reviewing-decisions`, `structuring-solution-docs`.
@@ -134,7 +143,7 @@ below (kept separate to keep this table readable). (Catalog-row format is a main
 | governance | `governance/syncing-frameworks` | report whether pinned framework submodules advanced upstream; bump pins on a version gate | session start, or checking for framework updates | reports only; apply = consumer version gate; never auto |
 | governance | `governance/governing-project-fleets` | operate VEMO's private PC-wide project registry, policy profiles, readiness reports, and preview-first onboarding | governing all local Git projects, scanning repositories, choosing profiles, or rolling out VEMO safely | discovery is read-only; adoption/apply require consent; readiness is not certification; no force overwrite |
 | governance | `governance/contributing-framework-changes` | open a PR carrying a local framework change back to its repo | pushing a local framework improvement upstream | always a PR; identity/path resolved at runtime; never merges |
-| governance | `governance/publishing-skills` | place a skill into the home by its declared category + maintain the catalog | adding / moving / renaming a skill in VEMO_SKILLS | placement + registration only; adoption stays a user-consent decision |
+| governance | `governance/publishing-skills` | place a standard skill package, activate its indexed path, and maintain the catalog | adding / moving / renaming a skill in VEMO_SKILLS | placement + registration only; adoption stays a user-consent decision |
 | governance | `governance/announcing-skills` | announce newly-registered **skill(s)** as a celebratory Lark card (上新表 + optional 🏆 contribution leaderboard, instance-gated) | after a skill-hub release adds skills | skill-hub 上新 notify; group/identity/repo-url instance-owned; ledger identity-free; leaderboard gated by include_leaderboard |
 | governance | `governance/naming-skills` | validate a skill's name + description against the authoring naming rules (≤64 / charset / gerund / folder-match; desc what+when+keywords) | authoring / renaming / publishing a skill, or auditing the home | read-only validator; reports pass/fail, does not rename |
 | governance | `governance/announcing-framework-releases` | announce a **framework** version release as a Lark card (framework / old→new version / change-class / consumer-impact + optional 🏆 leaderboard, instance-gated) | after a framework release is tagged + push-verified | framework-update notify; confirm before send; group/maintainer instance-owned, repo-url runtime-resolved; leaderboard reuses the hub ledger + skill_hub maps |
@@ -162,7 +171,7 @@ an unregistered skill is invisible to sync and contribute. (Render-don't-author;
 this from the specs.)
 ```mermaid
 flowchart LR
-  PUB["publishing-skills (REGISTER)<br/>declared category → place (create if new) + README"] -->|registers a skill| WS["VEMO_SKILLS home<br/>skills/&lt;category&gt;/&lt;name&gt;"]
+  PUB["publishing-skills (REGISTER)<br/>choose category → place + index + README"] -->|activates a skill| WS["VEMO_SKILLS home<br/>skills/index.json + packages"]
   WS -->|"submodule + bootstrap regen (BIND)"| CL[".claude/skills/&lt;name&gt;<br/>(gitignored build artifact)"]
   CL --> USE["session uses skill<br/>(prompt / keyword; adoption = user consent)"]
   subgraph meta["governance-meta skills (downstream of registration)"]
@@ -250,9 +259,9 @@ listed in that lifecycle order.
 ### Publish a skill — categorize + register (author / scout) — the precondition
 > "发布一个 skill" · "把这个 skill 归类" · "publish a skill" · "add a skill to VEMO_SKILLS"
 
-`publishing-skills` reads the skill's declared `category` (frontmatter), places it under `skills/<category>/<name>/` —
-**creating the category folder if it is new** (declare-and-create) — then updates the README (Skill Catalog + layout +
-Use-via-Prompt) and verifies the regen. **This is registration** — the precondition for the two steps below. It
+`publishing-skills` agrees on a functional category, places the standard package under `skills/<category>/<name>/`,
+**creating the category folder if it is new**, activates its path in `skills/index.json`, then updates the README
+(Skill Catalog + layout + Use-via-Prompt) and verifies binding. **Index activation is registration** — the precondition for the two steps below. It
 governs **placement + registration only**: a skill *entering a project's toolset* (adoption) stays a **user-consent
 decision** (the Skill Scout proposes → the user consents → publish runs).
 
@@ -336,10 +345,10 @@ but are different functions.
 ### Author a skill with evals: eval-driven authoring (create / revise / tune triggering)
 > "建一个带 eval 的 skill" · "author a skill with evals" · "skill 描述不触发" · "improve the skill description"
 
-`authoring-skills-with-evals` runs the eval-driven loop from Anthropic's official skill-creator, adapted to this
-home: **lint** the shape (`validate` writes `.skill-validated.json` with an honest `tier`), **measure** whether the
-description triggers (`trigger-eval`, tri-state; an infrastructure outage is reported *skipped*, never a false "no
-trigger"), and **optimize** the description with a **train/test split** so it cannot overfit the eval set
+`authoring-skills-with-evals` runs the eval-driven loop from the official skill-creator, adapted to this home:
+**lint** the source package (`validate` is read-only by default; `--marker` creates only gitignored ephemeral
+evidence), **measure** whether the description triggers (`trigger-eval`, tri-state; an infrastructure outage is
+reported *skipped*, never a false "no trigger"), and **optimize** the description with a **train/test split** so it cannot overfit the eval set
 (`describe-improve`). The behavioral layer complements the static release scorer; a skill is done only when it passes
 both. The two model-in-the-loop commands need the `claude` CLI and skip cleanly without it.
 

@@ -9,6 +9,10 @@ release so consumers can pin a complete skill home by tag.
 ## [1.3.0] - Unreleased
 
 ### Added
+- Declarative `skills/index.json` activation manifest: checker, catalog, bind, and eval now consume one explicit,
+  bounded registration surface and reject tree/index/README drift.
+- Standard `agents/openai.yaml` interface metadata for all 30 registered skills, generated with the current official
+  skill-creator tooling and validated for `$skill-name` default prompts.
 - New governance skill `governing-project-fleets`, which operates VEMO's private PC-wide control plane through a
   consent-gated inventory -> profile -> register -> assess -> preview -> apply -> verify workflow. It keeps discovery
   read-only, refuses force-overwrite guidance, and separates local readiness from certification or remote authority.
@@ -18,6 +22,12 @@ release so consumers can pin a complete skill home by tag.
 - `docs/PLAYBOOK_GENERALIZATION.md`: guidance for converting repo-local playbook procedures into reusable shared skills.
 
 ### Changed
+- Source `SKILL.md` files now pass the current official validator: repository-only `category` metadata moved to the
+  indexed path, and descriptions use strict-YAML folded scalars where needed.
+- Skill validation is read-only by default. Optional `.skill-validated.json` markers require `--marker`, are
+  gitignored, and no longer ship as plugin source.
+- Publishing/naming conventions now treat each skill folder as an independently bindable plugin package, separate
+  model-visible instructions from product UI metadata, and preserve adoption as a user-consent decision.
 - Catalog grows 28 -> 30 skills; README.md and README_zh.md catalog rows, layout, badge, and keyword-trigger table kept
   in parity.
 - `bin/vemo-skills` and `eval/run.py` now use the current Python interpreter instead of hardcoding `python3`, improving

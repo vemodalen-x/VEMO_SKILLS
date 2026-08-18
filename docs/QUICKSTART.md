@@ -26,7 +26,7 @@ python3 bin/vemo-skills catalog
 ```
 On Windows, use `python bin/vemo-skills ...` if `python3` is not installed.
 
-Each line is a stable `<category>/<skill>` token backed by
+Each line is a stable `<category>/<skill>` token activated by `skills/index.json` and backed by
 `skills/<category>/<skill>/SKILL.md`.
 
 ## 3. Bind Skills into a Consumer Project
@@ -37,7 +37,7 @@ From the hub root:
 python3 bin/vemo-skills bind --dest ../consumer-project/.claude/skills
 ```
 
-The bind command copies each complete skill folder, including any `references/`,
+The bind command copies each index-activated skill folder, including `agents/openai.yaml` and any `references/`,
 and flattens the category level:
 
 ```text
@@ -61,8 +61,9 @@ The public release threshold is `9.5/10`. The eval command writes
 
 Use the normal GitHub flow:
 
-1. Edit or add the skill under `skills/<category>/<name>/`.
-2. Keep `README.md` and `README_zh.md` catalog rows in parity.
-3. Update `CHANGELOG.md`.
-4. Run `python3 bin/vemo-skills selfcheck` and `python3 bin/vemo-skills eval`.
-5. Open a pull request.
+1. Edit or add the package under `skills/<category>/<name>/`; activate new packages in `skills/index.json`.
+2. Generate and validate `agents/openai.yaml` for new packages.
+3. Keep `README.md` and `README_zh.md` catalog rows in parity.
+4. Update `CHANGELOG.md`.
+5. Run `python3 bin/vemo-skills selfcheck` and `python3 bin/vemo-skills eval`.
+6. Open a pull request.

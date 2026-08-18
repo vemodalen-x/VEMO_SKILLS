@@ -10,10 +10,10 @@
 A skill becomes usable in stages, **in order**. Registration is the **gate stage**: nothing downstream can see a skill
 that is not registered.
 
-1. **Register (into the home)** — what `publishing-skills` does: write `skills/<category>/<name>/SKILL.md` with a declared
-   `category:` → place into / create the category folder → add the README Skill-Catalog row + Use-via-Prompt entry
-   (multiset-checked) → CHANGELOG entry + version bump. **This is the act of registration.** A skill not registered
-   here does not exist for any downstream stage.
+1. **Register (into the home)** — what `publishing-skills` does: place a standard skill package at
+   `skills/<category>/<name>/` → add its normalized `.../SKILL.md` path to `skills/index.json` → add the README
+   Skill-Catalog row + Use-via-Prompt entry (multiset-checked) → CHANGELOG entry + version bump. **Index activation
+   is the act of registration.** A tree-only skill is inert and fails selfcheck.
 2. **Bind (into a consuming project)** — a registered skill reaches a project by: pinning the VEMO_SKILLS submodule
    (commit/tag) → `team_bootstrap` regenerates it into `.claude/skills/<name>/` (byte-identical, §5) → the project's
    `project_profile.yaml` `shared_skills.provides` reflects it. **Registration ≠ adoption**: entering a team's *active
@@ -32,19 +32,24 @@ So the chain is **register → bind (+consent = adopt) → sync / contribute**. 
 conventions (the home's own responsibility); stages 2–3 are pointers to `team_bootstrap`, `syncing-frameworks`, and
 `contributing-framework-changes`.
 
-## 1. Category layout (declare-and-create)
+## 1. Category layout (path-derived and create-on-publish)
 - Skills live under `skills/<category>/<name>/`. A **category** is a functional grouping (`governance/`,
   `orchestration/`, `research/`, `code/`), **not** a framework repo — `governance/` is owned by no single framework,
   while a domain category like `code/` groups skills owned by a domain framework (skill_spec §7). (Rule: skill_spec §9.)
-- The category set is **declare-and-create, not a fixed enum**: a skill declares its `category`; publishing places it
-  under `skills/<category>/`, creating the folder if the category is new. The category set is whatever the filesystem
-  holds — there is no hardcoded list anywhere.
+- The category set is **path-derived, not a fixed enum**: publishing selects a functional category with the author,
+  places the package under `skills/<category>/`, and creates that folder when needed. The normalized activation-index
+  path is the machine declaration; category never enters model-visible frontmatter.
 - **Mechanism**: the `publishing-skills` skill (`skills/governance/publishing-skills/`) performs placement + registration.
 
-## 2. Declared-category field (single source of truth)
-- Every `SKILL.md` carries `category:` in frontmatter. The directory path is a **derived placement target**, not the
-  source. If frontmatter and path disagree, the **frontmatter wins** and the skill is mis-placed (a check, §5).
-- Frontmatter floor: `name:`, `category:`, `description:`.
+## 2. Standard skill package + explicit activation index
+- Every source `SKILL.md` follows the current validator contract. Its required model-visible frontmatter is `name:` +
+  `description:`; supported compatibility fields may remain, but repository placement metadata such as `category:`
+  is forbidden.
+- `skills/index.json` is the sole activation surface. It contains bounded, unique, repository-local
+  `<category>/<name>/SKILL.md` references. Checker, catalog, and bind consume this index; they do not infer activation
+  from arbitrary folders.
+- `agents/openai.yaml` carries quoted UI metadata. Every default prompt names `$<skill-name>`; product-specific
+  metadata stays outside `SKILL.md`, preserving progressive disclosure.
 - **Naming conformance**: `name:` and `description:` must pass the skill-naming rules — `name` ≤64 chars, lowercase
   letters/digits/hyphens only, no leading/trailing hyphen, **gerund (verb+ing)** form, and `name` == its parent folder;
   `description` non-empty / ≤1024 chars / what-it-does + when-to-use + trigger keywords. The **rule is owned by
@@ -59,7 +64,7 @@ conventions (the home's own responsibility); stages 2–3 are pointers to `team_
   R32 bilingual pair). R30: never hardcode a version number — point at `VERSION` + `CHANGELOG.md`.
 - **Skill-Catalog row format (home-local — like the §9 product-front-matter convention, NOT a generic entry-doc rule).**
   The README **Skill Catalog** carries one structured row per registered skill, with these columns:
-  - **category** — must **equal** the skill's frontmatter `category:` (a derived value, checked for equality).
+  - **category** — must **equal** the skill's activation-index path category (checked for equality).
   - **skill** — the `` `<category>/<name>` `` identifier token; `<name>` must **equal** the frontmatter `name:` (derived,
     checked for equality). This token is what the §4 multiset diff extracts as set A — **it must be preserved**.
   - **does** / **when to use** / **boundary** — curated one-line cells; each must be **non-empty** (no machine truth to
@@ -70,11 +75,11 @@ conventions (the home's own responsibility); stages 2–3 are pointers to `team_
   enforces this is `publishing-skills` Step 5 (catalog-column completeness + derived-equality + trigger coverage).
 
 ## 4. README ⇄ skills consistency check (machine, multiset — not count)
-- Set A = README **Skill-Catalog** rows' `` `<category>/<name>` `` skill tokens. Set B = every `skills/*/*/SKILL.md`
-  keyed by frontmatter `name:` + `category:`. Assert **A == B as multisets**; report `only-in-README` (orphan row) and
-  `only-in-tree` (unregistered skill). A multiset diff catches a rename / wrong-folder placement that a count compare
-  misses. (The catalog keeps the `<category>/<name>` token specifically so this extraction is unchanged.)
-- **Declared-category ⇄ placement-path**: for every `SKILL.md`, `category:` must equal the `<dir>` it sits under.
+- Set A = README **Skill-Catalog** rows' `` `<category>/<name>` `` tokens. Set B = activated references from
+  `skills/index.json`. Assert **A == B as multisets**, then independently assert index references == filesystem
+  `skills/*/*/SKILL.md`. This catches orphan rows, inert tree packages, dangling references, renames, and duplicates.
+- **Name ⇄ placement-path**: frontmatter `name:` must equal the indexed `<name>` directory; category is derived from
+  the indexed `<category>` segment.
 
 ## 5. Regen byte-identical (build-artifact rule)
 - A consuming project regenerates each skill into `.claude/skills/<name>/` (the Claude Code discovery root) — a

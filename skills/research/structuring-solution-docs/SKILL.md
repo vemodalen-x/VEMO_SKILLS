@@ -1,7 +1,7 @@
 ---
 name: structuring-solution-docs
-category: research
-description: Structure rules for a technical solution / design document (the research-solution framework's solution_document deliverable). Style-as-rules for document STRUCTURE — arc42 skeleton + MADR per-decision blocks — turned into checkable rules. Use when the research-solution agent authors the solution/design doc after the survey + recommendation. Owned by Framework 1 (research). Generic; project values live in the instance.
+description: >
+  Structure rules for a technical solution / design document (the research-solution framework's solution_document deliverable). Style-as-rules for document STRUCTURE — arc42 skeleton + MADR per-decision blocks — turned into checkable rules. Use when the research-solution agent authors the solution/design doc after the survey + recommendation. Owned by Framework 1 (research). Generic; project values live in the instance.
 ---
 
 # Solution-Doc Structure (arc42 + MADR, as checkable rules)

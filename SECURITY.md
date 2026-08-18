@@ -7,7 +7,7 @@ and identity decoupling.
 | Risk | Control |
 |---|---|
 | Project values leak into generic skill bodies | `vemo-skills selfcheck` scans for local paths, private org/account markers, and credential-like tokens |
-| README catalog drifts from `skills/**` | catalog parity check across `README.md` and `README_zh.md` |
+| Activation or README catalog drifts from `skills/**` | three-way index/tree/catalog parity across both READMEs |
 | Broken reference modules after category flattening | reference integrity + regen binding checks |
 | "Release-ready" claimed without evidence | executable eval writes `eval/out/report.json`; release threshold is `9.5/10` |
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Contributing Framework Changes"
+  short_description: "Guided workflow: Contributing Framework Changes"
+  default_prompt: "Use $contributing-framework-changes to apply its specialized workflow to this request."

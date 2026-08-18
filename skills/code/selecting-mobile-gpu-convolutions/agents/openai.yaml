@@ -1,0 +1,4 @@
+interface:
+  display_name: "Selecting Mobile GPU Convolutions"
+  short_description: "Guided workflow: Selecting Mobile GPU Convolutions"
+  default_prompt: "Use $selecting-mobile-gpu-convolutions to apply its specialized workflow to this request."

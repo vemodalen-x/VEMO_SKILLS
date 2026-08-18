@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publishing Deliverables"
+  short_description: "Guided workflow: Publishing Deliverables"
+  default_prompt: "Use $publishing-deliverables to apply its specialized workflow to this request."

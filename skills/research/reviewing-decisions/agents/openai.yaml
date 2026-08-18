@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reviewing Decisions"
+  short_description: "Guided workflow: Reviewing Decisions"
+  default_prompt: "Use $reviewing-decisions to apply its specialized workflow to this request."

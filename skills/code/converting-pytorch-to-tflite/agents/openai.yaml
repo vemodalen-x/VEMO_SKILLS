@@ -1,0 +1,4 @@
+interface:
+  display_name: "Converting PyTorch To TFLite"
+  short_description: "Guided workflow: Converting PyTorch To TFLite"
+  default_prompt: "Use $converting-pytorch-to-tflite to apply its specialized workflow to this request."

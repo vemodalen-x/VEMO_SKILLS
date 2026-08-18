@@ -1,0 +1,4 @@
+interface:
+  display_name: "Challenging Assumptions"
+  short_description: "Guided workflow: Challenging Assumptions"
+  default_prompt: "Use $challenging-assumptions to apply its specialized workflow to this request."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visualizing Governance"
+  short_description: "Guided workflow: Visualizing Governance"
+  default_prompt: "Use $visualizing-governance to apply its specialized workflow to this request."

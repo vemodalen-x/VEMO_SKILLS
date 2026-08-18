@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gating TFLite Op Envelopes"
+  short_description: "Guided workflow: Gating TFLite Op Envelopes"
+  default_prompt: "Use $gating-tflite-op-envelopes to apply its specialized workflow to this request."

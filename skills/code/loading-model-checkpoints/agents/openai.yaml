@@ -1,0 +1,4 @@
+interface:
+  display_name: "Loading Model Checkpoints"
+  short_description: "Guided workflow: Loading Model Checkpoints"
+  default_prompt: "Use $loading-model-checkpoints to apply its specialized workflow to this request."

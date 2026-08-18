@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rendering HTML Eval Reports"
+  short_description: "Guided workflow: Rendering HTML Eval Reports"
+  default_prompt: "Use $rendering-html-eval-reports to apply its specialized workflow to this request."

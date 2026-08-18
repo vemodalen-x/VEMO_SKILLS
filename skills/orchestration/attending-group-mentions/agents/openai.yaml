@@ -1,0 +1,4 @@
+interface:
+  display_name: "Attending Group Mentions"
+  short_description: "Guided workflow: Attending Group Mentions"
+  default_prompt: "Use $attending-group-mentions to apply its specialized workflow to this request."

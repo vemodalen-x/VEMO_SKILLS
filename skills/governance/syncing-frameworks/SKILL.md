@@ -1,7 +1,7 @@
 ---
 name: syncing-frameworks
-category: governance
-description: Check whether any governance framework pinned as a submodule has advanced upstream (new release/commit), report the diff, and apply pin bumps only on a user version gate. Use at session start (continuity check) or when the user asks to check for framework updates. Submodule model — NOT file-copy.
+description: >
+  Check whether any governance framework pinned as a submodule has advanced upstream (new release/commit), report the diff, and apply pin bumps only on a user version gate. Use at session start (continuity check) or when the user asks to check for framework updates. Submodule model — NOT file-copy.
 ---
 
 # Framework Sync

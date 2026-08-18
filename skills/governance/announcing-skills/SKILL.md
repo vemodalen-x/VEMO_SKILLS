@@ -1,7 +1,7 @@
 ---
 name: announcing-skills
-category: governance
-description: Announce newly-registered skill(s) to a team chat as a celebratory Feishu (Lark) interactive card — a 上新表 (version / category / summary / @contributor) plus an optional 🏆 cumulative contribution leaderboard read from the hub's contribution ledger (instance-gated by include_leaderboard). Use after a skill-hub release adds skills. Identity-decoupled — group, repo URL, and open_id map are instance values.
+description: >
+  Announce newly-registered skill(s) to a team chat as a celebratory Feishu (Lark) interactive card — a 上新表 (version / category / summary / @contributor) plus an optional 🏆 cumulative contribution leaderboard read from the hub's contribution ledger (instance-gated by include_leaderboard). Use after a skill-hub release adds skills. Identity-decoupled — group, repo URL, and open_id map are instance values.
 ---
 
 # Skill Announce

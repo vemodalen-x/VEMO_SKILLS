@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quantizing On Device Models"
+  short_description: "Guided workflow: Quantizing On Device Models"
+  default_prompt: "Use $quantizing-on-device-models to apply its specialized workflow to this request."

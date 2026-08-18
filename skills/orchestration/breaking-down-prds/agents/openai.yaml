@@ -1,0 +1,4 @@
+interface:
+  display_name: "Breaking Down PRDs"
+  short_description: "Guided workflow: Breaking Down PRDs"
+  default_prompt: "Use $breaking-down-prds to apply its specialized workflow to this request."

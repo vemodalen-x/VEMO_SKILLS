@@ -1,0 +1,4 @@
+interface:
+  display_name: "Optimizing C++ Performance"
+  short_description: "Guided workflow: Optimizing C++ Performance"
+  default_prompt: "Use $optimizing-cpp-performance to apply its specialized workflow to this request."

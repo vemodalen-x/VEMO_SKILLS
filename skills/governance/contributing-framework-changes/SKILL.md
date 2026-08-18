@@ -1,7 +1,7 @@
 ---
 name: contributing-framework-changes
-category: governance
-description: Contribute a local improvement to a governance framework back to that framework's repo via a pull request. Use when a local framework or skill-home change should be proposed upstream. Works for any contributor — write-access holders push a branch to the repo directly; contributors without write access fork and open a cross-repo PR. The path is chosen at runtime by probing the actual permission; no identity, org, or account is hardcoded.
+description: >
+  Contribute a local improvement to a governance framework back to that framework's repo via a pull request. Use when a local framework or skill-home change should be proposed upstream. Works for any contributor — write-access holders push a branch to the repo directly; contributors without write access fork and open a cross-repo PR. The path is chosen at runtime by probing the actual permission; no identity, org, or account is hardcoded.
 ---
 
 # Framework Contribute

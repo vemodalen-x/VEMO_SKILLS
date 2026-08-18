@@ -1,0 +1,4 @@
+interface:
+  display_name: "Authoring Skills With Evals"
+  short_description: "Guided workflow: Authoring Skills With Evals"
+  default_prompt: "Use $authoring-skills-with-evals to apply its specialized workflow to this request."

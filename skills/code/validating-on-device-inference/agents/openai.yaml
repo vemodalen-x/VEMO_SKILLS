@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validating On Device Inference"
+  short_description: "Guided workflow: Validating On Device Inference"
+  default_prompt: "Use $validating-on-device-inference to apply its specialized workflow to this request."

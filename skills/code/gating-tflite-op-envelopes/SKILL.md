@@ -1,7 +1,7 @@
 ---
 name: gating-tflite-op-envelopes
-category: code
-description: Statically gate a TFLite model against one or more target runtime envelopes — parse the flatbuffer (no runtime load) for custom ops + declared min_runtime_version, and emit PASS / REJECT with the offending operators and version per envelope. Use when screening a candidate .tflite or .task bundle for a runtime before adopting it (e.g. a host runtime and a device runtime), or recording a model card's runtime-compatibility verdict.
+description: >
+  Statically gate a TFLite model against one or more target runtime envelopes — parse the flatbuffer (no runtime load) for custom ops + declared min_runtime_version, and emit PASS / REJECT with the offending operators and version per envelope. Use when screening a candidate .tflite or .task bundle for a runtime before adopting it (e.g. a host runtime and a device runtime), or recording a model card's runtime-compatibility verdict.
 allowed-tools: Read, Bash, Glob
 ---
 

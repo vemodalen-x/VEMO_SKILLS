@@ -1,0 +1,4 @@
+interface:
+  display_name: "Designing Diagnostic Prompts"
+  short_description: "Guided workflow: Designing Diagnostic Prompts"
+  default_prompt: "Use $designing-diagnostic-prompts to apply its specialized workflow to this request."

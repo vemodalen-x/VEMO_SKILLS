@@ -1,7 +1,7 @@
 ---
 name: evaluating-segmentation-models
-category: code
-description: Evaluate a segmentation or image-matting model with the right metrics instead of eyeballing outputs. Use when accepting a trained seg/matting model, comparing two checkpoints, or judging whether a converted or quantized model still meets quality — computing IoU/mIoU and boundary-F for masks, and SAD/MSE/Grad/Conn in the trimap unknown band for matting, reported per-class and at edges. Distinguishes globally-similar-but-edge-wrong outputs (low mean error but high max_abs at thin structures). Triggers: evaluate segmentation, matting metrics, IoU / boundary F, SAD MSE Grad Conn, per-class accuracy, compare checkpoints, is this mask good, alpha matte quality.
+description: >
+  Evaluate a segmentation or image-matting model with the right metrics instead of eyeballing outputs. Use when accepting a trained seg/matting model, comparing two checkpoints, or judging whether a converted or quantized model still meets quality — computing IoU/mIoU and boundary-F for masks, and SAD/MSE/Grad/Conn in the trimap unknown band for matting, reported per-class and at edges. Distinguishes globally-similar-but-edge-wrong outputs (low mean error but high max_abs at thin structures). Triggers: evaluate segmentation, matting metrics, IoU / boundary F, SAD MSE Grad Conn, per-class accuracy, compare checkpoints, is this mask good, alpha matte quality.
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 

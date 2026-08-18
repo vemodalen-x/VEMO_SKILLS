@@ -1,0 +1,4 @@
+interface:
+  display_name: "Announcing Framework Releases"
+  short_description: "Guided workflow: Announcing Framework Releases"
+  default_prompt: "Use $announcing-framework-releases to apply its specialized workflow to this request."

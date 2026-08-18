@@ -1,0 +1,4 @@
+interface:
+  display_name: "Naming Skills"
+  short_description: "Guided workflow: Naming Skills"
+  default_prompt: "Use $naming-skills to apply its specialized workflow to this request."
